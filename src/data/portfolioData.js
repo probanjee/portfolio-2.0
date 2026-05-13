@@ -14,7 +14,7 @@ export const portfolioData = {
     location: "West Bengal, India",
     github: "https://github.com/probanjee",
     linkedin: "https://linkedin.com/in/prosun-banerjee-545942293",
-    website: "https://probanjee.github.io",
+    website: "https://probanjee.vercel.app/",
     resumeUrl: "/assets/Prosun_Banerjee_CV.pdf",
     avatarUrl: "/assets/avatar.png"
   },

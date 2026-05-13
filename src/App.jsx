@@ -79,7 +79,7 @@ export const App = () => {
                       <Linkedin className="w-4 h-4" />
                     </a>
                     <a 
-                      href="https://probanjee.github.io" 
+                      href="https://probanjee.vercel.app/" 
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="p-2.5 rounded-xl bg-white/5 border border-white/5 text-slate-400 hover:text-brand-primary hover:border-brand-primary/20 hover:bg-brand-primary/5 transition-all"
