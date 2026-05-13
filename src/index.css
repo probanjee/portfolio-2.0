@@ -1,0 +1,235 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-color: 3 7 18; /* #030712 - Rich deep dark navy */
+    --text-primary: 243 244 246; /* #F3F4F6 */
+    --text-secondary: 156 163 175; /* #9CA3AF */
+    --accent-primary: 59 130 246; /* #3B82F6 */
+    --accent-secondary: 139 92 246; /* #8B5CF6 */
+    --accent-glow: rgba(59, 130, 246, 0.15);
+  }
+
+  :root.light {
+    --bg-color: 243 244 246; /* #F3F4F6 - Soft light gray */
+    --text-primary: 17 24 39; /* #111827 */
+    --text-secondary: 75 85 99; /* #4B5563 */
+    --accent-primary: 37 99 235; /* #2563EB - Deeper blue */
+    --accent-secondary: 124 58 237; /* #7C3AED - Deeper violet */
+    --accent-glow: rgba(37, 99, 235, 0.08);
+  }
+
+  html, body, #root {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  html {
+    scroll-behavior: initial; /* Essential for Lenis to handle smooth scroll */
+    font-family: 'Inter', sans-serif;
+  }
+
+  body {
+    background-color: #030712;
+    color: #F3F4F6;
+    transition: background-color 0.4s ease, color 0.4s ease;
+  }
+
+  /* Robust Light Mode Override System */
+  html.light body {
+    background-color: #F8FAFC; /* Soft slate-50 background */
+    color: #0F172A; /* Slate 900 */
+  }
+
+  html.light h1, html.light h2, html.light h3, html.light h4, html.light .text-slate-100 {
+    color: #0F172A !important;
+  }
+
+  html.light .text-slate-300, html.light .text-slate-400 {
+    color: #475569 !important;
+  }
+
+  html.light .bg-slate-950\/40, html.light .bg-slate-950\/60, html.light .bg-slate-950\/80, html.light .bg-slate-950, html.light .bg-\[\#050B14\]\/80 {
+    background-color: rgba(255, 255, 255, 0.7) !important;
+    border-color: rgba(0, 0, 0, 0.08) !important;
+  }
+
+  html.light .bg-\[\#02050D\]\/30, html.light .bg-\[\#02050D\]\/40, html.light .bg-\[\#02050D\]\/50 {
+    background-color: rgba(241, 245, 249, 0.8) !important;
+  }
+
+  html.light .bg-\[\#02050D\] {
+    background-color: #F8FAFC !important;
+  }
+
+  html.light .border-white\/5, html.light .border-white\/15, html.light .border-white\/\[0\.03\], html.light .border-white\/\[0\.04\], html.light .border-white\/\[0\.02\] {
+    border-color: rgba(0, 0, 0, 0.08) !important;
+  }
+
+  html.light .glass-panel {
+    background: rgba(255, 255, 255, 0.6) !important;
+    border-color: rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05) !important;
+  }
+
+  /* Android & Mobile Readability Enhancement Suite (max-width: 767px) */
+  @media (max-width: 767px) {
+    /* 1. Boosted Dark Mode Typography Contrast */
+    body, p, span, div, h1, h2, h3, h4 {
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.85);
+    }
+    .text-slate-400, .text-slate-500, .text-gray-400, .text-zinc-400, .text-white\/40, .text-white\/50, .text-slate-600 {
+      color: #E2E8F0 !important; /* Slate 200 - exceptionally bright and crisp */
+    }
+    .text-slate-300 {
+      color: #F1F5F9 !important; /* Slate 100 */
+    }
+
+    /* 2. Boosted Light Mode Typography Contrast */
+    html.light body, html.light p, html.light span, html.light div, html.light h1, html.light h2, html.light h3, html.light h4 {
+      text-shadow: none !important;
+    }
+    html.light .text-slate-400, html.light .text-slate-500, html.light .text-gray-400, html.light .text-zinc-400, html.light .text-slate-300, html.light .text-slate-600 {
+      color: #1E293B !important; /* Slate 800 - exceptionally bold and clear */
+    }
+
+    /* 3. High-Contrast Mobile Glass Panels */
+    .glass-panel, .bg-slate-950\/40, .bg-slate-950\/60, .bg-slate-950\/80, .bg-\[\#02050D\]\/30, .bg-\[\#02050D\]\/40, .bg-\[\#02050D\]\/50, .bg-\[\#050B14\]\/80 {
+      background-color: rgba(2, 5, 13, 0.85) !important; /* Deep solid tech navy */
+      backdrop-filter: blur(12px) !important; /* Reduced GPU blur for sharper readability */
+      -webkit-backdrop-filter: blur(12px) !important;
+      border-color: rgba(255, 255, 255, 0.15) !important; /* Brighter border definition */
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05), 0 8px 32px rgba(0, 0, 0, 0.6) !important;
+    }
+
+    /* 4. High-Contrast Light Mode Mobile Glass Panels */
+    html.light .glass-panel, html.light .bg-slate-950\/40, html.light .bg-slate-950\/60, html.light .bg-slate-950\/80, html.light .bg-\[\#02050D\]\/30, html.light .bg-\[\#02050D\]\/40, html.light .bg-\[\#02050D\]\/50, html.light .bg-\[\#050B14\]\/80 {
+      background-color: rgba(255, 255, 255, 0.92) !important; /* High-opacity clean white */
+      border-color: rgba(0, 0, 0, 0.15) !important;
+      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.05), 0 8px 32px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    /* 5. Mobile Button & Navigation Link Clarity */
+    button, a, .group-hover\:text-white {
+      font-weight: 700 !important; /* Ensure labels are exceptionally bold */
+    }
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: rgba(var(--bg-color), 0.5);
+    backdrop-filter: blur(10px);
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: rgba(var(--accent-primary), 0.2);
+    border-radius: 9999px;
+    border: 2px solid rgba(var(--bg-color), 0.5);
+    transition: background 0.3s ease;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(var(--accent-primary), 0.4);
+  }
+}
+
+@layer components {
+  /* Premium Glassmorphic Panels */
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .light .glass-panel {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05);
+  }
+
+  /* Premium Glowing Borders / Hover effects */
+  .glow-border {
+    position: relative;
+  }
+  .glow-border::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(to right, rgba(59, 130, 246, 0.2), rgba(139, 92, 246, 0.2));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  
+  /* Animated gradient borders */
+  .glow-border-hover:hover::before {
+    background: linear-gradient(135deg, #3B82F6, #8B5CF6, #06B6D4);
+    opacity: 0.8;
+  }
+
+  /* Text Gradients */
+  .text-gradient {
+    background: linear-gradient(135deg, #3B82F6 0%, #8B5CF6 50%, #06B6D4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-secondary {
+    background: linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Card Hover Mechanics */
+  .card-hover-effect {
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease;
+  }
+  .card-hover-effect:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(var(--accent-primary), 0.15);
+    background: rgba(255, 255, 255, 0.06);
+  }
+  .light .card-hover-effect:hover {
+    box-shadow: 0 12px 40px rgba(31, 38, 135, 0.08);
+    background: rgba(255, 255, 255, 0.9);
+  }
+}
+
+/* Lenis CSS integration */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overflow: clip;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
