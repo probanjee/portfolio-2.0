@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prosun Banerjee | Portfolio</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- html2pdf.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <style>
+        :root {
+            /* Light Theme Color Palette */
+            --bg-color: #f3f4f6;
+            --text-primary: #111827;
+            --text-secondary: #4b5563;
+            --accent-primary: #3b82f6;
+            --accent-secondary: #8b5cf6;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.4);
+            --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+            --card-hover-shadow: 0 15px 35px 0 rgba(31, 38, 135, 0.12);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated Gradient Background */
+        .bg-blobs {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.6;
+            animation: float 20s infinite ease-in-out alternate;
+        }
+
+        .blob-1 {
+            top: -10%;
+            left: -10%;
+            width: 50vw;
+            height: 50vw;
+            background-color: rgba(59, 130, 246, 0.3);
+            animation-delay: 0s;
+        }
+
+        .blob-2 {
+            bottom: -10%;
+            right: -10%;
+            width: 60vw;
+            height: 60vw;
+            background-color: rgba(139, 92, 246, 0.3);
+            animation-delay: -5s;
+        }
+
+        .blob-3 {
+            top: 40%;
+            left: 50%;
+            width: 40vw;
+            height: 40vw;
+            background-color: rgba(16, 185, 129, 0.2);
+            animation-delay: -10s;
+            transform: translate(-50%, -50%);
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            33% {
+                transform: translate(5%, 10%) scale(1.1);
+            }
+
+            66% {
+                transform: translate(-5%, 5%) scale(0.9);
+            }
+
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+        }
+
+        /* Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        @media (min-width: 992px) {
+            .container {
+                grid-template-columns: 350px 1fr;
+                padding: 4rem 2rem;
+                align-items: start;
+            }
+        }
+
+        /* Glassmorphism Classes */
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: var(--glass-shadow);
+            transition: all 0.3s ease;
+        }
+
+        /* Typography */
+        h1,
+        h2,
+        h3,
+        h4 {
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        h2 i {
+            color: var(--accent-primary);
+        }
+
+        p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        /* Left Column - Profile */
+        .profile-section {
+            position: sticky;
+            top: 2rem;
+            text-align: center;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+            transition: transform 0.3s ease;
+        }
+
+        .profile-avatar:hover {
+            transform: scale(1.05) rotate(5deg);
+        }
+
+        .profile-name {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .typing-container {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            height: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-item:hover {
+            color: var(--accent-primary);
+        }
+
+        .contact-item i {
+            margin-top: 0.25rem;
+            color: var(--accent-secondary);
+            width: 20px;
+            text-align: center;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.5);
+            color: var(--text-primary);
+            border: 1px solid var(--glass-border);
+            margin-top: 1rem;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            transform: translateY(-2px);
+        }
+
+        /* Right Column Content */
+        .content-section {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        /* Timeline Items */
+        .timeline-item {
+            position: relative;
+            padding-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent-primary);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+            z-index: 1;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 1.5rem;
+            bottom: -1rem;
+            width: 2px;
+            background: var(--glass-border);
+        }
+
+        .timeline-item:last-child::after {
+            display: none;
+        }
+
+        .timeline-header {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 0.5rem;
+        }
+
+        @media (min-width: 640px) {
+            .timeline-header {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: baseline;
+            }
+        }
+
+        .timeline-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .timeline-subtitle {
+            font-size: 0.9rem;
+            color: var(--accent-secondary);
+            font-weight: 500;
+        }
+
+        .timeline-date {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            background: rgba(255, 255, 255, 0.5);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 0.25rem;
+        }
+
+        /* Skills */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .skill-category h3 {
+            font-size: 1rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid var(--glass-border);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+
+        .tag:hover {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.2);
+        }
+
+        /* Projects */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .projects-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: var(--card-hover-shadow);
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+
+        .project-icon {
+            font-size: 2rem;
+            color: var(--accent-primary);
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover .project-icon {
+            transform: scale(1.1);
+        }
+
+        .project-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-desc {
+            font-size: 0.9rem;
+            flex-grow: 1;
+        }
+
+        /* Certifications & Education (Simple list items) */
+        .list-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 12px;
+            transition: background 0.3s ease;
+        }
+
+        .list-item:hover {
+            background: rgba(255, 255, 255, 0.6);
+        }
+
+        .list-icon {
+            color: var(--accent-secondary);
+            font-size: 1.25rem;
+            margin-top: 0.1rem;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 4rem;
+            padding: 2rem;
+            text-align: center;
+            border-top: 1px solid var(--glass-border);
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .social-link:hover {
+            background: var(--accent-primary);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        .copyright {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .stagger-1 {
+            animation-delay: 0.1s;
+        }
+
+        .stagger-2 {
+            animation-delay: 0.2s;
+        }
+
+        .stagger-3 {
+            animation-delay: 0.3s;
+        }
+
+        .stagger-4 {
+            animation-delay: 0.4s;
+        }
+
+        .stagger-5 {
+            animation-delay: 0.5s;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Animated Background -->
+    <div class="bg-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <main class="container">
+
+        <!-- Left Column: Profile -->
+        <aside class="profile-section glass-panel fade-in-up">
+            <div class="profile-avatar">
+                <i class="fa-solid fa-user-astronaut"></i>
+            </div>
+
+            <h1 class="profile-name">Prosun Banerjee</h1>
+            <div class="typing-container">
+                <span id="typewriter"></span><span class="cursor">|</span>
+            </div>
+
+            <div class="contact-info">
+                <a href="mailto:prosunbanerjee8@gmail.com" class="contact-item">
+                    <i class="fa-solid fa-envelope"></i>
+                    <span>prosunbanerjee8@gmail.com</span>
+                </a>
+                <div class="contact-item">
+                    <i class="fa-solid fa-phone"></i>
+                    <span>+91-8653184011</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span>Ukhra, Andal, Paschim Bardhaman, West Bengal, India</span>
+                </div>
+            </div>
+
+            <button onclick="downloadCV()" class="btn btn-primary">
+                <i class="fa-solid fa-file-arrow-down"></i>
+                Download CV (PDF)
+            </button>
+
+            <a href="https://github.com/probanjee" target="_blank" class="btn btn-secondary">
+                <i class="fa-brands fa-github"></i>
+                View GitHub Profile
+            </a>
+        </aside>
+
+        <!-- Right Column: Content -->
+        <div class="content-section">
+
+            <!-- Summary -->
+            <section class="glass-panel fade-in-up stagger-1">
+                <h2><i class="fa-solid fa-bolt"></i> About Me</h2>
+                <p>
+                    Computer Science Engineering undergraduate specializing in software development and backend
+                    engineering. Passionate about designing scalable, secure, and maintainable applications with a
+                    strong emphasis on clean architecture and efficient system design. Possesses a solid foundation in
+                    software engineering principles, problem-solving, database management, and modern development
+                    practices, with a commitment to building reliable, high-performance, and production-ready software
+                    solutions.
+                </p>
+            </section>
+
+            <!-- Experience -->
+            <section class="glass-panel fade-in-up stagger-2">
+                <h2><i class="fa-solid fa-briefcase"></i> Experience</h2>
+
+                <div class="timeline-item">
+                    <div class="timeline-header">
+                        <div>
+                            <div class="timeline-title">C++ Programming Intern</div>
+                            <div class="timeline-subtitle">Code Alpha | WB</div>
+                        </div>
+                        <div class="timeline-date">01/2026 - 03/2026</div>
+                    </div>
+                    <p>Built console-based applications using C++. Strengthened object-oriented Programming and
+                        real-world coding practices.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-header">
+                        <div>
+                            <div class="timeline-title">C/C++ Programming Intern</div>
+                            <div class="timeline-subtitle">Cognifyz | WB</div>
+                        </div>
+                        <div class="timeline-date">01/2025 - 02/2025</div>
+                    </div>
+                    <p>Developed logic-based programs using C and C++, Improved problem-solving and code optimizing
+                        skills.</p>
+                </div>
+            </section>
+
+            <!-- Projects -->
+            <section class="glass-panel fade-in-up stagger-3">
+                <h2><i class="fa-solid fa-rocket"></i> Projects</h2>
+                <div class="projects-grid">
+
+                    <div class="project-card">
+                        <i class="fa-solid fa-shield-halved project-icon"></i>
+                        <h3 class="project-title">Honeypot System</h3>
+                        <p class="project-desc">Architected an enterprise security monitoring platform using Python
+                            (FastAPI/Pandas), Kafka, and React to intercept and classify intrusion vectors in real time,
+                            designing the complete microservices telemetry pipeline and signature engine, resulting in
+                            instantaneous threat visibility and automated severity-based alerting.</p>
+                    </div>
+
+                    <div class="project-card">
+                        <i class="fa-solid fa-lock project-icon"></i>
+                        <h3 class="project-title">File Encryption Tool</h3>
+                        <p class="project-desc">Developed a key-based file encryption/decryption system in C to ensure
+                            secure data handling, implementing the full logic, achieving reliable data protection with
+                            consistent integrity.</p>
+                    </div>
+
+                    <div class="project-card">
+                        <i class="fa-solid fa-heart-pulse project-icon"></i>
+                        <h3 class="project-title">Heuristic Workout App</h3>
+                        <p class="project-desc">Created a Python-based app for automated daily workout planning with
+                            notifications, designing the recommendation logic, leading to improved user consistency and
+                            engagement.</p>
+                    </div>
+
+                    <div class="project-card">
+                        <i class="fa-solid fa-code-merge project-icon"></i>
+                        <h3 class="project-title">Dynamic API Generator</h3>
+                        <p class="project-desc">Engineered a full-stack solution to automate API creation using
+                            JavaScript and backend frameworks, building the system end-to-end, significantly reducing
+                            manual development time.</p>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Skills -->
+            <section class="glass-panel fade-in-up stagger-4">
+                <h2><i class="fa-solid fa-layer-group"></i> Technical Skills</h2>
+                <div class="skills-grid">
+
+                    <div class="skill-category">
+                        <h3>Programming Languages</h3>
+                        <div class="skill-tags">
+                            <span class="tag">C/C++</span>
+                            <span class="tag">Python</span>
+                            <span class="tag">HTML</span>
+                            <span class="tag">CSS</span>
+                            <span class="tag">JS</span>
+                            <span class="tag">SQL</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <h3>Concepts</h3>
+                        <div class="skill-tags">
+                            <span class="tag">DSA</span>
+                            <span class="tag">OOP</span>
+                            <span class="tag">STL</span>
+                            <span class="tag">Cybersecurity Fundamentals</span>
+                            <span class="tag">Penetration Testing</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <h3>Tools & Platforms</h3>
+                        <div class="skill-tags">
+                            <span class="tag">OpenAI API</span>
+                            <span class="tag">GitHub</span>
+                            <span class="tag">Power BI</span>
+                            <span class="tag">AWS</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <h3>System Concepts</h3>
+                        <div class="skill-tags">
+                            <span class="tag">Automation Systems</span>
+                            <span class="tag">IoT Integration</span>
+                            <span class="tag">Sensor Data Processing</span>
+                            <span class="tag">Linux</span>
+                            <span class="tag">Kali Linux</span>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Education & Certifications -->
+            <section class="glass-panel fade-in-up stagger-5">
+                <h2><i class="fa-solid fa-graduation-cap"></i> Education & Certifications</h2>
+
+                <h3 style="margin-top: 1rem; margin-bottom: 0.5rem; font-size: 1.1rem;">Education</h3>
+                <div class="list-item">
+                    <i class="fa-solid fa-building-columns list-icon"></i>
+                    <div>
+                        <strong>B. Tech in Computer Science Engineering</strong><br>
+                        <span style="color: var(--text-secondary); font-size: 0.9rem;">Adamas University | 2023 - 2027
+                            (6.5 CGPA)</span>
+                    </div>
+                </div>
+                <div class="list-item">
+                    <i class="fa-solid fa-school list-icon"></i>
+                    <div>
+                        <strong>Higher Secondary</strong><br>
+                        <span style="color: var(--text-secondary); font-size: 0.9rem;">UKBI | 2022-2023 (61.9%)</span>
+                    </div>
+                </div>
+                <div class="list-item">
+                    <i class="fa-solid fa-book list-icon"></i>
+                    <div>
+                        <strong>Secondary</strong><br>
+                        <span style="color: var(--text-secondary); font-size: 0.9rem;">UKBI | 2020-2021 (86.5%)</span>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 2rem; margin-bottom: 0.5rem; font-size: 1.1rem;">Certifications & Training</h3>
+                <div class="list-item">
+                    <i class="fa-solid fa-certificate list-icon"></i>
+                    <div>
+                        <strong>National IP Awareness Mission</strong><br>
+                        <span style="color: var(--text-secondary); font-size: 0.9rem;">Govt. Of India</span>
+                    </div>
+                </div>
+                <div class="list-item">
+                    <i class="fa-solid fa-shield-virus list-icon"></i>
+                    <div>
+                        <strong>Great Learning Cyber Security</strong><br>
+                        <span style="color: var(--text-secondary); font-size: 0.9rem;">Tech Mahendra</span>
+                    </div>
+                </div>
+                <div class="list-item">
+                    <i class="fa-solid fa-robot list-icon"></i>
+                    <div>
+                        <strong>AIML Webinar</strong><br>
+                        <span style="color: var(--text-secondary); font-size: 0.9rem;">G.T.L Academy (Hosted by Grindx
+                            Technologies)</span>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="social-links">
+            <a href="https://github.com/prosunbanerjee8" target="_blank" class="social-link" title="GitHub"><i
+                    class="fa-brands fa-github"></i></a>
+            <a href="https://linkedin.com/in/prosunbanerjee8" target="_blank" class="social-link" title="LinkedIn"><i
+                    class="fa-brands fa-linkedin-in"></i></a>
+            <a href="https://probanjee.vercel.app/" target="_blank" class="social-link" title="Website"><i
+                    class="fa-solid fa-globe"></i></a>
+            <a href="mailto:prosunbanerjee8@gmail.com" class="social-link" title="Email"><i
+                    class="fa-solid fa-envelope"></i></a>
+        </div>
+        <p class="copyright">&copy; 2026 Prosun Banerjee. All rights reserved.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Typewriter Effect
+        const roles = [
+            "Junior Software Developer",
+            "C/C++ Enthusiast",
+            "Full-Stack Engineer",
+            "Problem Solver"
+        ];
+
+        let roleIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typewriterElement = document.getElementById('typewriter');
+        const typingSpeed = 100;
+        const deletingSpeed = 50;
+        const pauseEnd = 2000;
+
+        function type() {
+            const currentRole = roles[roleIndex];
+
+            if (isDeleting) {
+                typewriterElement.textContent = currentRole.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typewriterElement.textContent = currentRole.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let typeDelay = isDeleting ? deletingSpeed : typingSpeed;
+
+            if (!isDeleting && charIndex === currentRole.length) {
+                typeDelay = pauseEnd;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                roleIndex = (roleIndex + 1) % roles.length;
+                typeDelay = 500;
+            }
+
+            setTimeout(type, typeDelay);
+        }
+
+        // Initialize typewriter
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(type, 1000);
+
+            // Cursor blink effect
+            setInterval(() => {
+                const cursor = document.querySelector('.cursor');
+                cursor.style.opacity = cursor.style.opacity === '0' ? '1' : '0';
+            }, 500);
+        });
+
+        // Real PDF Download Logic using html2pdf.js with Clone & Render wrapper to fix blank PDFs
+        function downloadCV() {
+            const btn = document.querySelector('.btn-primary');
+            const originalText = btn.innerHTML;
+
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Generating PDF...';
+            btn.style.pointerEvents = 'none';
+
+            // Get the template element
+            const sourceElement = document.getElementById('cv-pdf-content');
+
+            // Create a temporary layout container that is inside document flow but invisible
+            const container = document.createElement('div');
+            container.style.height = '0';
+            container.style.overflow = 'hidden';
+            container.style.position = 'relative';
+            container.style.width = '100%';
+
+            // Clone the template
+            const element = sourceElement.cloneNode(true);
+
+            // Apply standard visible rendering styles for the canvas engine
+            element.style.position = 'relative';
+            element.style.left = '0';
+            element.style.visibility = 'visible';
+            element.style.display = 'block';
+
+            // Append the elements
+            container.appendChild(element);
+            document.body.appendChild(container);
+
+            const opt = {
+                margin: [0.3, 0.3, 0.3, 0.3],
+                filename: 'Prosun_Banerjee_CV.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2.5, useCORS: true, logging: false },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+
+            // Generate and save PDF from the visible cloned element
+            html2pdf().set(opt).from(element).save().then(() => {
+                // Clean up the temporary elements from DOM
+                document.body.removeChild(container);
+
+                btn.innerHTML = '<i class="fa-solid fa-check"></i> CV Downloaded';
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.style.pointerEvents = 'auto';
+                }, 2000);
+            }).catch(err => {
+                console.error("PDF generation error: ", err);
+
+                // Clean up container in case of error
+                if (document.body.contains(container)) {
+                    document.body.removeChild(container);
+                }
+
+                alert("Failed to generate PDF. Initiating print backup...");
+                window.print();
+
+                btn.innerHTML = originalText;
+                btn.style.pointerEvents = 'auto';
+            });
+        }
+
+        // Add subtle hover tracking for glass panels
+        document.querySelectorAll('.glass-panel, .project-card').forEach(panel => {
+            panel.addEventListener('mousemove', e => {
+                const rect = panel.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+            });
+        });
+    </script>
+
+    <!-- Offscreen Printable CV Container (Optimized for standard 1-page PDF Resume) -->
+    <div id="cv-pdf-content"
+        style="position: absolute; left: -9999px; visibility: hidden; width: 750px; background: #ffffff; color: #111827; padding: 40px; font-family: 'Inter', sans-serif; line-height: 1.5; box-sizing: border-box; border-radius: 1px;">
+        <!-- Header -->
+        <div style="border-bottom: 2px solid #3b82f6; padding-bottom: 15px; margin-bottom: 20px;">
+            <h1
+                style="font-size: 26px; font-weight: 800; color: #111827; margin: 0 0 5px 0; text-transform: uppercase; letter-spacing: -0.5px;">
+                PROSUN BANERJEE</h1>
+            <div
+                style="font-size: 13px; font-weight: 600; color: #3b82f6; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;">
+                Junior Software Developer</div>
+            <div
+                style="display: flex; flex-wrap: wrap; gap: 12px; font-size: 10.5px; color: #4b5563; font-weight: 500;">
+                <span><i class="fa-solid fa-location-dot" style="color: #3b82f6;"></i> West Bengal, India</span>
+                <span><i class="fa-solid fa-phone" style="color: #3b82f6;"></i> +91-8653184011</span>
+                <span><i class="fa-solid fa-envelope" style="color: #3b82f6;"></i> prosunbanerjee8@gmail.com</span>
+                <span><i class="fa-brands fa-linkedin" style="color: #3b82f6;"></i> LinkedIn</span>
+                <span><i class="fa-brands fa-github" style="color: #3b82f6;"></i> GitHub</span>
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div style="margin-bottom: 18px;">
+            <h2
+                style="font-size: 13px; font-weight: 700; color: #111827; border-bottom: 1px solid #e5e7eb; padding-bottom: 3px; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">
+                Summary</h2>
+            <p style="font-size: 11px; color: #374151; margin: 0; text-align: justify; line-height: 1.6;">
+                Undergraduate in Computer Science Engineering with real-world experience in full-stack application
+                engineering, secure system design, and software development. Skilled at creating scalable,
+                high-performance solutions that focus on clean architecture, data security, and efficient API design. A
+                solid understanding of algorithmic problem-solving and object-oriented principles, along with hands-on
+                experience with cybersecurity and working on real-world projects. Very motivated and detail-oriented,
+                looking for software development jobs where I can make a difference by creating production-ready
+                solutions in fast-paced settings.
+            </p>
+        </div>
+
+        <!-- Technical Skills -->
+        <div style="margin-bottom: 18px;">
+            <h2
+                style="font-size: 13px; font-weight: 700; color: #111827; border-bottom: 1px solid #e5e7eb; padding-bottom: 3px; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">
+                Technical Skills</h2>
+            <div style="font-size: 11px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; line-height: 1.5;">
+                <div>
+                    <strong style="color: #111827;">Programming:</strong> <span style="color: #374151;">C/C++, Python,
+                        HTML, CSS, JS, SQL</span>
+                </div>
+                <div>
+                    <strong style="color: #111827;">Concepts:</strong> <span style="color: #374151;">DSA, OOP, STL,
+                        Cybersecurity & PenTesting</span>
+                </div>
+                <div>
+                    <strong style="color: #111827;">Tools & Platforms:</strong> <span style="color: #374151;">OpenAI
+                        API, GitHub, Power BI, AWS</span>
+                </div>
+                <div>
+                    <strong style="color: #111827;">System Concepts:</strong> <span style="color: #374151;">Automation,
+                        IoT Integration, Sensor Processing, Linux, Kali</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Experience -->
+        <div style="margin-bottom: 18px;">
+            <h2
+                style="font-size: 13px; font-weight: 700; color: #111827; border-bottom: 1px solid #e5e7eb; padding-bottom: 3px; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">
+                Experience</h2>
+
+            <div style="margin-bottom: 10px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 2px;">
+                    <strong style="font-size: 11.5px; color: #111827;">C++ Programming Intern</strong>
+                    <span style="font-size: 11px; color: #4b5563; font-weight: 500;">01/2026 - 03/2026</span>
+                </div>
+                <div style="font-size: 11px; color: #3b82f6; font-weight: 600; margin-bottom: 2px;">Code Alpha | WB
+                </div>
+                <p style="font-size: 11px; color: #374151; margin: 0; line-height: 1.4;">Built console-based
+                    applications using C++. Strengthened object-oriented Programming and real-world coding practices.
+                </p>
+            </div>
+
+            <div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 2px;">
+                    <strong style="font-size: 11.5px; color: #111827;">C/C++ Programming Intern</strong>
+                    <span style="font-size: 11px; color: #4b5563; font-weight: 500;">01/2025 - 02/2025</span>
+                </div>
+                <div style="font-size: 11px; color: #3b82f6; font-weight: 600; margin-bottom: 2px;">Cognifyz | WB</div>
+                <p style="font-size: 11px; color: #374151; margin: 0; line-height: 1.4;">Developed logic-based programs
+                    using C and C++, Improved problem-solving and code optimizing skills.</p>
+            </div>
+        </div>
+
+        <!-- Projects -->
+        <div style="margin-bottom: 18px;">
+            <h2
+                style="font-size: 13px; font-weight: 700; color: #111827; border-bottom: 1px solid #e5e7eb; padding-bottom: 3px; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">
+                Key Projects</h2>
+
+            <div style="margin-bottom: 8px; line-height: 1.4;">
+                <strong style="font-size: 11.5px; color: #111827;">1. Honeypot System</strong>
+                <span style="font-size: 11px; color: #374151;">— Built a security monitoring solution using C++17 and
+                    web technologies to detect and log intrusion attempts. Developed core logic and interactive
+                    dashboard for real-time attack visibility.</span>
+            </div>
+
+            <div style="margin-bottom: 8px; line-height: 1.4;">
+                <strong style="font-size: 11.5px; color: #111827;">2. File Encryption Tool</strong>
+                <span style="font-size: 11px; color: #374151;">— Developed key-based file encryption/decryption system
+                    in C to ensure secure data handling and integrity.</span>
+            </div>
+
+            <div style="margin-bottom: 8px; line-height: 1.4;">
+                <strong style="font-size: 11.5px; color: #111827;">3. Heuristic Workout App</strong>
+                <span style="font-size: 11px; color: #374151;">— Created a Python-based application for daily workout
+                    planning with automated recommendation logic and notification systems.</span>
+            </div>
+
+            <div style="line-height: 1.4;">
+                <strong style="font-size: 11.5px; color: #111827;">4. Dynamic API Generator</strong>
+                <span style="font-size: 11px; color: #374151;">— Engineered a full-stack solution to automate API
+                    creation using JavaScript and backend frameworks, significantly reducing development
+                    overhead.</span>
+            </div>
+        </div>
+
+        <!-- Education & Certifications -->
+        <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 20px;">
+            <div>
+                <h2
+                    style="font-size: 13px; font-weight: 700; color: #111827; border-bottom: 1px solid #e5e7eb; padding-bottom: 3px; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">
+                    Education</h2>
+                <div style="margin-bottom: 6px; font-size: 11px; line-height: 1.4;">
+                    <strong style="color: #111827;">B. Tech in Computer Science Engineering</strong><br>
+                    <span style="color: #4b5563;">Adamas University | 2023 - 2027 (6.5 CGPA)</span>
+                </div>
+                <div style="margin-bottom: 6px; font-size: 11px; line-height: 1.4;">
+                    <strong style="color: #111827;">Higher Secondary</strong><br>
+                    <span style="color: #4b5563;">UKBI | 2022 - 2023 (61.9%)</span>
+                </div>
+                <div style="font-size: 11px; line-height: 1.4;">
+                    <strong style="color: #111827;">Secondary</strong><br>
+                    <span style="color: #4b5563;">UKBI | 2020 - 2021 (86.5%)</span>
+                </div>
+            </div>
+
+            <div>
+                <h2
+                    style="font-size: 13px; font-weight: 700; color: #111827; border-bottom: 1px solid #e5e7eb; padding-bottom: 3px; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">
+                    Certifications</h2>
+                <div style="font-size: 10.5px; color: #374151; line-height: 1.5;">
+                    <div style="margin-bottom: 6px;"><strong style="color: #111827;">National IP Awareness</strong> —
+                        Govt. Of India</div>
+                    <div style="margin-bottom: 6px;"><strong style="color: #111827;">Cyber Security</strong> — Great
+                        Learning (Tech Mahindra)</div>
+                    <div><strong style="color: #111827;">AIML Webinar</strong> — G.T.L Academy</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
