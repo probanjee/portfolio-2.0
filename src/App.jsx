@@ -9,6 +9,7 @@ import CinematicLoader from './components/loader/CinematicLoader';
 import Navbar from './components/navigation/Navbar';
 import Home from './pages/Home';
 import ProjectDetails from './pages/ProjectDetails';
+import ProsenjitChatbot from './components/chatbot/ProsenjitChatbot';
 
 export const App = () => {
   const [loading, setLoading] = useState(true);
@@ -26,6 +27,9 @@ export const App = () => {
 
               {/* Header Navigation overlay */}
               <Navbar />
+
+              {/* Prosenjit AI Assistant Floating Chatbot */}
+              <ProsenjitChatbot />
 
               {/* Main routing area */}
               <main className="flex-grow max-w-7xl mx-auto px-4 sm:px-6 w-full pt-16">

@@ -206,8 +206,13 @@ export const Hero = () => {
                   <img 
                     src={orbSlides[currentSlide].src} 
                     alt={orbSlides[currentSlide].alt} 
+                    onError={(e) => {
+                      // Fallback gracefully if image is delayed or fails
+                      e.target.onerror = null;
+                      e.target.style.display = 'none';
+                    }}
                     className={`w-full h-full rounded-full transition-all duration-500 select-none pointer-events-none ${
-                      orbSlides[currentSlide].type === 'avatar' ? 'object-contain' : 'object-cover'
+                      orbSlides[currentSlide].type === 'avatar' ? 'object-contain font-mono text-[0px]' : 'object-cover font-mono text-[0px]'
                     } object-center`}
                   />
                   {orbSlides[currentSlide].type === 'photo' && (
