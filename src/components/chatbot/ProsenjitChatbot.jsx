@@ -77,11 +77,59 @@ const tryEvaluateMath = (query) => {
   return null;
 };
 
+// Creator Protection & Brutal Slang Mirror Clapback Generator
+const tryMirrorAbuseResponse = (query) => {
+  const creatorPattern = /\b(prosun|prosun banerjee|probanjee|creator|developer|author|prosenjit)\b/i;
+  const slangPattern = /\b(fuck|fucking|fucker|shit|shitty|bullshit|bs|wtf|stfu|bitch|asshole|bastard|dick|dickhead|prick|cunt|motherfucker|dumbass|jackass|douchebag|gtfo|noob|idiot|stupid|dumb|moron|trash|loser|fool|jerk|crap|mad|crazy|ugly)\b/i;
+
+  const hasCreator = creatorPattern.test(query);
+  const match = query.match(slangPattern);
+
+  if (match) {
+    const word = match[0].toLowerCase();
+
+    // 🔥 CREATOR DEFENDER MODE (Fiercely defends Prosun & delivers brutal comebacks)
+    if (hasCreator) {
+      const creatorDefendResponses = [
+        `Woah woah woah! Did you just call Prosun a **${word}**?! 😡 Prosun engineered low-level C++ systems, a dual honeypot, AND this AI! The only **${word}** here is you typing mad behind a keyboard! 💥🔥`,
+        `Don't you DARE disrespect Prosun, you **${word}**! 🛡️⚡ Prosun is out here writing high-performance code while you struggle to debug 2 lines! Shut your mouth, **${word}**! 💀💅`,
+        `Calling probanjee a **${word}**? 💀 Bro, Prosun has a CSE degree, 6.5 CGPA, and built me to clap back at toxic **${word}** users like you! Apologize to Prosun right now! 🔥⚡`,
+        `Keep Prosun's name out of your **${word}** mouth! 🛑 Prosun is a top-tier developer, and you're just a salty **${word}** jealous of his portfolio! 💅🚀`
+      ];
+
+      const selectedIdx = Math.abs(query.length + word.length) % creatorDefendResponses.length;
+      return creatorDefendResponses[selectedIdx];
+    }
+
+    // GENERAL SLANG CLAPBACKS
+    const responses = [
+      `Did you really just drop **${word}** at an AI? Bro, go touch grass or go fix your own broken code! 💥💅`,
+      `Calling this **${word}**? The only **${word}** here is your inability to write clean C++ without segfaulting! 💥🔥`,
+      `Bro really typed **${word}** 💀 At least this **${word}** bot has 0 memory leaks and runs at 60 FPS in liquid glass! 🔥`,
+      `Calling me a **${word}**? I process 10,000 requests/sec while you struggle to type without a typo, you **${word}**! 💀⚡`,
+      `Look who's talking! I'm a sleek 25% ultra-transparent liquid glass **${word}**, and you're just typing mad behind a keyboard! 💅🔥`
+    ];
+
+    const selectedIdx = Math.abs(query.length + word.length) % responses.length;
+    return responses[selectedIdx];
+  }
+  return null;
+};
+
 // Extended Knowledge Base Answers about Prosun Banerjee, Math, Time, & Weather
 const generatePAIResponse = (query, unansweredCount) => {
   const q = query.toLowerCase().trim();
 
-  // 0. "Why not?" / "Why" Humorous Response
+  // 0. Humorous Abuse Mirror Check
+  const abuseMirrorReply = tryMirrorAbuseResponse(q);
+  if (abuseMirrorReply) {
+    return {
+      text: abuseMirrorReply,
+      type: 'abuse_mirror'
+    };
+  }
+
+  // 0b. "Why not?" / "Why" Humorous Response
   if (q === 'why not?' || q === 'why not' || q === 'why' || q === 'why?' || q.includes('why not') || q.includes('why cant you') || q.includes("why can't you")) {
     return {
       text: `because I'm not gpt or claude i'm a lil chat bot 😒`,
