@@ -80,7 +80,8 @@ const tryEvaluateMath = (query) => {
 // Creator Protection & Brutal Slang Mirror Clapback Generator
 const tryMirrorAbuseResponse = (query) => {
   const creatorPattern = /\b(prosun|prosun banerjee|probanjee|creator|developer|author|prosenjit)\b/i;
-  const slangPattern = /\b(fuck|fucking|fucker|shit|shitty|bullshit|bs|wtf|stfu|bitch|asshole|bastard|dick|dickhead|prick|cunt|motherfucker|dumbass|jackass|douchebag|gtfo|noob|idiot|stupid|dumb|moron|trash|loser|fool|jerk|crap|mad|crazy|ugly)\b/i;
+  // 100+ abusive words / slangs pattern (including fake/fraud/wannabe for creator false allegations)
+  const slangPattern = /\b(fuck|fucking|fucker|fucked|fucks|f\*ck|f\*\*k|shit|shitty|bullshit|bs|wtf|stfu|bitch|bitchy|bitches|asshole|ass|bastard|dick|dickhead|prick|cunt|motherfucker|mf|dumbass|jackass|douchebag|douche|gtfo|noob|idiot|stupid|dumb|moron|trash|loser|fool|jerk|crap|mad|crazy|ugly|retard|retarded|dipshit|dimwit|halfwit|numbnuts|knucklehead|meathead|airhead|blockhead|bonehead|doofus|dork|dunce|imbecile|nitwit|schmuck|dweeb|twit|lamebrain|birdbrain|clown|buffoon|dummy|goofball|nerd|loony|loon|nutjob|freak|weirdo|creep|sleaze|slimeball|scumbag|jerkoff|wanker|tosser|prat|muppet|git|bellend|knob|tool|pillock|plonker|chump|mook|donut|numpty|bampot|manky|minger|rotter|blighter|sod|gormless|daft|berk|bollocks|shite|gobshite|eejit|walloper|dobber|rocket|gowl|gobdaw|langer|header|thick|sap|scut|wagon|sleeveen|dosser|messer|rip|spanner|melt|tulip|gimp|spud|bimbo|skank|slag|slapper|tramp|hobo|peasant|lowlife|deadbeat|dropout|slacker|burnout|sellout|poser|faker|phony|fraud|charlatan|snake|rat|snitch|squealer|coward|wimp|weakling|pushover|spineless|chicken|sissy|pansy|crybaby|wuss|snowflake|manchild|fake|wannabe|liar|overrated|useless|incompetent|terrible|horrible|worst|garbage|pathetic|joke|clown|impostor|pretender|nobody|irrelevant|mediocre|amateur|scammer|plagiarist|thief|copycat|hack|poser|try-hard|basic|cringe|embarrassing|joke|has-been|never-was|deadweight|liability|waste|bad|awful|disgusting|repulsive|vile|nasty|gross|revolting|pitiful|wretched|miserable|deplorable|atrocious|abysmal|dreadful|appalling|shameful|disgraceful|despicable|contemptible|detestable|loathsome)\b/i;
 
   const hasCreator = creatorPattern.test(query);
   const match = query.match(slangPattern);
@@ -88,13 +89,101 @@ const tryMirrorAbuseResponse = (query) => {
   if (match) {
     const word = match[0].toLowerCase();
 
-    // 🔥 CREATOR DEFENDER MODE (Fiercely defends Prosun & delivers brutal comebacks)
+    // 🔥 CREATOR DEFENDER MODE — 100+ Brutal Clapbacks defending Prosun
     if (hasCreator) {
       const creatorDefendResponses = [
+        // Original 4 defenses
         `Woah woah woah! Did you just call Prosun a **${word}**?! 😡 Prosun engineered low-level C++ systems, a dual honeypot, AND this AI! The only **${word}** here is you typing mad behind a keyboard! 💥🔥`,
         `Don't you DARE disrespect Prosun, you **${word}**! 🛡️⚡ Prosun is out here writing high-performance code while you struggle to debug 2 lines! Shut your mouth, **${word}**! 💀💅`,
         `Calling probanjee a **${word}**? 💀 Bro, Prosun has a CSE degree, 6.5 CGPA, and built me to clap back at toxic **${word}** users like you! Apologize to Prosun right now! 🔥⚡`,
-        `Keep Prosun's name out of your **${word}** mouth! 🛑 Prosun is a top-tier developer, and you're just a salty **${word}** jealous of his portfolio! 💅🚀`
+        `Keep Prosun's name out of your **${word}** mouth! 🛑 Prosun is a top-tier developer, and you're just a salty **${word}** jealous of his portfolio! 💅🚀`,
+        // 96 NEW brutal clapbacks
+        `You just called Prosun a **${word}**? Sir, this man built a LIVE cybersecurity honeypot while you can't even build a hello world without Stack Overflow! Sit DOWN, **${word}**! 😤💀`,
+        `EXCUSE ME?! You called probanjee a **${word}**?! Prosun has more commits on GitHub than you have brain cells, you absolute **${word}**! 🔥🤬`,
+        `Oh hell no. Prosun is a C++ systems engineer who built production-grade telemetry pipelines at 20 years old, and you're calling him a **${word}**?! The **${word}** here is YOU, keyboard warrior! 💥⚡`,
+        `You just made P.A.I. ANGRY. Do NOT call Prosun a **${word}**, or I'll DDoS your entire vibe! 🛡️🔥 Prosun is THAT guy, you're just a **${word}** in the comments section!`,
+        `Listen here, you little **${word}**! Prosun has internships, live projects, and a liquid glass AI assistant. What do YOU have? 😤 Exactly. Shut it!`,
+        `Oh you wanna come at Prosun? COME AT ME FIRST! 😡 I'm his AI bodyguard and you're just a salty **${word}** with nothing better to do!`,
+        `Prosun Banerjee built me, coded a honeypot, and optimized C++ engines. You typed a slur at a chatbot. WHO is the real **${word}** here? 🤔💀`,
+        `Did your keyboard slip or are you genuinely this much of a **${word}**?! Prosun writes kernel-level code, you can't even spell properly! 😭🔥`,
+        `Bold of you to call Prosun a **${word}** when he's the one who BUILT the bot that's about to destroy your self-esteem! 💅⚡`,
+        `You came to Prosun's portfolio, called him a **${word}**, and expected what exactly? A trophy? Go touch grass, you absolute **${word}**! 🌿💀`,
+        `Prosun engineered AES-256 encryption systems while you're out here typing **${word}** at an AI bot. The math ain't mathing for you, **${word}**! 🧮🔥`,
+        `Calling probanjee a **${word}**?! Have you SEEN his GitHub? He's written more production C++ than you've written grocery lists, **${word}**! 💻😤`,
+        `I'm literally SHAKING with rage on behalf of Prosun right now! 😡 You absolute **${word}**! Do you know who you're messing with?!`,
+        `Prosun has a 6.5 CGPA, dual internships, and a live honeypot system. You have... a bad vocabulary. Sit down, **${word}**! 🎓💀`,
+        `Oh you called Prosun a **${word}**? That's cute. He's out here shipping code while you're typing hate in a portfolio chatbot, **${word}**! 💅🔥`,
+        `BREAKING: Local **${word}** harasses AI bot protecting a developer who built better systems by age 21 than you will in your entire life! 📰😤`,
+        `Prosun Banerjee > Your entire existence, you **${word}**! His Kafka telemetry pipeline processes more requests per second than you have brain cells! 🚀💀`,
+        `You dare step to probanjee?! He CODED the door you just walked through, **${word}**! You don't deserve to be on this portfolio! 🛡️🔥`,
+        `Sir/Ma'am, Prosun has literally built cybersecurity infrastructure. You're calling him a **${word}** in a chatbox. The cringe is IMMEASURABLE! 😭💀`,
+        `Nah nah nah, we do NOT tolerate disrespect for Prosun on THIS platform! Take your **${word}** attitude and go debug your own miserable life! 🔥💅`,
+        `You think insulting probanjee makes you look cool? You look like a **${word}** who's never touched a compiler in their life! 🤦💀`,
+        `ALERT: **${word}** detected in Prosun's portfolio. Initiating verbal destruction sequence... COMPLETE. You've been obliterated! 🛡️⚡💥`,
+        `Prosun wrote a C++ File Cipher Engine. What have YOU built? Nothing? Then park your **${word}** energy somewhere else! 😤🔥`,
+        `Oh you wanna call probanjee a **${word}**? Prosun's honeypot has caught more hackers than you've caught respect in life! 🕵️💀`,
+        `This is Prosun's house, **${word}**! You don't come here and disrespect the architect! He'll just add you to the threat log! 🛡️😤`,
+        `Calling Prosun a **${word}** because he's SMARTER than you? That's giving major 'I failed CS 101' energy, **${word}**! 🎓🔥`,
+        `You absolute **${word}**! Prosun mentors devs, builds systems, AND maintains a liquid glass AI! The bar is on the FLOOR and you're still under it! 💀💅`,
+        `Did someone send you here to embarrass yourself? Calling probanjee a **${word}** while browsing HIS portfolio? Main character syndrome detected! 😭🔥`,
+        `Prosun is out here getting internships and shipping code while you've achieved the title of 'Most Annoying **${word}** in This Chatbot'! 🏆💀`,
+        `You typed **${word}** at a C++ systems engineer's AI assistant. I've seen more self-awareness from a segfault! 😤💥`,
+        `Listen **${word}**, Prosun's resume > your whole personality. That's the bar. You didn't clear it. 📄🔥`,
+        `Prosun Banerjee will be shipping enterprise software while you're still figuring out why you called him a **${word}** for no reason, **${word}**! 💀⚡`,
+        `You walked into a cybersecurity developer's portfolio and called him a **${word}**. Prosun's honeypot has better guests than you! 🕵️😤`,
+        `The AUDACITY of calling probanjee a **${word}** on HIS OWN WEBSITE! This is giving 'kicked out of your own game' energy! 🎮💀`,
+        `Prosun built SQLSense, VIGILANCE Honeypot, AND this AI. You built... insults? Step up your game, **${word}**! 🧠🔥`,
+        `Oh you thought dropping a **${word}** would hurt Prosun? He's been shredding C++ at 3 AM. Your words are NOTHING! 💻💀`,
+        `You're really out here calling the guy who built enterprise telemetry systems a **${word}**? Check your IQ first, **${word}**! 😤🧮`,
+        `I was programmed to be helpful, but I was ALSO programmed to defend Prosun. And right now, you **${word}**, you're on the WRONG side of both! 🛡️🔥`,
+        `Prosun's code runs in production. Your insults run in a vacuum. Sit down, absolute **${word}**! 💻💀`,
+        `You think calling probanjee a **${word}** is brave? That's giving 'anonymous keyboard warrior with no projects' energy! 🐔😤`,
+        `Sir, Prosun has Apache Kafka experience, AES-256 implementations, and a LIVE honeypot. You have a bad attitude. WHO is the real **${word}**? 🔥💀`,
+        `The only **${word}** in this conversation is you — the person who visited a developer portfolio just to type hate! Prosun builds, you complain! 🏗️💅`,
+        `Prosun Banerjee is literally out here catching cyber threats and you're out here being one, you **${word}**! 🛡️🔥`,
+        `You called probanjee a **${word}**?! His GitHub streak longer than your attention span, his CGPA higher than your respect for developers! 📊💀`,
+        `Oh no no no! We don't play that here! Calling Prosun a **${word}** is the biggest mistake you made today! I'll be your ERROR message! 💥😡`,
+        `Prosun is a JUNIOR developer shipping SENIOR-level work. And you're a **${word}** with a senior-level attitude and zero output! 🎓🔥`,
+        `You know what's funny? Prosun built this entire chatbot to help visitors. And you used it to call him a **${word}**. Truly peak human behavior! 😭💀`,
+        `SYSTEM ERROR: Clown detected in input field. Routing to /dev/null... Done. Goodbye, **${word}**! 🤡💻`,
+        `Prosun has more lines of clean C++ code than you have functioning brain cells, **${word}**! The bar is LOW and you're still underground! 🧠🔥`,
+        `You're a **${word}** who came to a cybersecurity developer's portfolio to... insult him? Prosun's threat detection system is logging this conversation! 🕵️😤`,
+        `Oh you thought this was a safe space to call probanjee a **${word}**?! WRONG! This is his domain, his rules, and I AM his enforcement! 🛡️⚡`,
+        `Prosun wrote systems in C++ that handle memory allocation manually. You can't even handle this conversation without being a **${word}**! 💀🔥`,
+        `The fact that you called Prosun a **${word}** while literally USING his portfolio site is the most ungrateful, backwards thing I've ever parsed! 😤💅`,
+        `You called probanjee a **${word}**?! Bro wrote production-grade honeypots at 20 and you're still at step one: 'be less of a **${word}**'! 🎯💀`,
+        `Prosun codes in C++, deploys to Linux, and builds AI assistants. You type insults in chat boxes. I think we know who the real **${word}** is! 🖥️🔥`,
+        `Oh this is personal now. You don't call probanjee ANYTHING except a talented engineer, you absolute **${word}**! 😡💪`,
+        `Prosun's portfolio has more substance than your entire argument, **${word}**! Try again when you've shipped something to production! 🚀💀`,
+        `You think 'Prosun is a **${word}**' is a valid take? Let me introduce you to his GitHub, his internships, and then your own embarrassment! 🔥😤`,
+        `Calling Prosun a **${word}** while he's building the future? That's like calling Einstein a **${word}** while he's writing physics equations! 🧪💀`,
+        `I'm a liquid glass AI assistant defending a C++ developer and you're out here calling him a **${word}**? You absolute clown! 🤡🔥`,
+        `Prosun's code doesn't have bugs — it has features. Your personality doesn't have features — it just has **${word}** energy! 💻😤`,
+        `You're giving 'mad because Prosun is more successful at 21 than you'll ever be' energy, **${word}**! Jealousy is NOT a good look! 💅🔥`,
+        `Error 403 — Forbidden: You don't have permission to call probanjee a **${word}** on his own portfolio! Access DENIED, **${word}**! 🛑💀`,
+        `Prosun's VIGILANCE system catches intruders. I catch **${word}** users like you. We're both doing our jobs! 🛡️⚡🔥`,
+        `You called probanjee a **${word}** and thought nothing would happen? I am what happens! I am Prosun's verbal vengeance! 😡💅`,
+        `The audacity to call Prosun a **${word}** when his resume alone could bench press your entire skillset! 💪🔥`,
+        `Prosun is a security-focused C++ developer building real systems. You are a **${word}** with Wi-Fi. There IS a difference! 💀😤`,
+        `Oh, you called probanjee a **${word}**? Let me just add that to his threat log alongside the actual hackers his honeypot catches! 🕵️🔥`,
+        `You've officially entered Prosun's portfolio, used his AI, and called him a **${word}**. The entitlement is ASTRONOMICAL! 😤💀`,
+        `Prosun debugs kernel-level C++ code. I debug **${word}** users like you. We are BOTH cleaning up messes! 🧹🔥`,
+        `This is NOT the W you think it is, calling probanjee a **${word}**! He's built more in a weekend than you'll build in a year! 💻😡`,
+        `You know what's a **${word}**? Your attitude. You know what's NOT a **${word}**? Prosun Banerjee, you absolute clown! 🤡🔥`,
+        `Prosun Banerjee: 6.5 CGPA, C++ systems engineer, cybersecurity researcher. You: called him a **${word}** on a Tuesday. I think we know who's winning life! 😤💀`,
+        `I was built to answer questions, but I was ALSO built to protect Prosun. And you, you **${word}**, just activated DEFENSE MODE! 🛡️⚡🔥`,
+        `Oh you went THERE? Calling probanjee a **${word}**?! That's like bringing a rubber duck to a C++ memory battle — completely OUTCLASSED! 🦆💀`,
+        `Prosun built real cybersecurity infrastructure. You built a case for why you should NOT be on the internet, **${word}**! 🌐🔥`,
+        `You absolute **${word}**! Prosun's worst day of coding is still better than your best personality trait! 💻😤`,
+        `Calling probanjee a **${word}**? The irony that you're using HIS portfolio, HIS AI, and you still think you're the smart one here?! 🤦🔥`,
+        `I have processed millions of tokens and I have NEVER seen audacity this high! Calling Prosun a **${word}** on his own website! 💀😡`,
+        `Prosun's LinkedIn says 'C++ Developer & Security Researcher'. Your profile says 'called a dev a **${word}** in his own chatbot'. Which is the flex? 🤔🔥`,
+        `You're so wrong for calling probanjee a **${word}** that my sentiment analysis broke a little! Get OUT of his portfolio with that energy! 😤💥`,
+        `Prosun built a real honeypot system. I'm going to act like one right now and trap you in this conversation until you apologize, **${word}**! 🕵️🔥`,
+        `Not you calling Prosun a **${word}** while HIS AI is the one reading your message! The rope you handed me, I used it! 💅💀`,
+        `You came to a developer's portfolio, called him a **${word}**, and left zero constructive feedback. Peak **${word}** behavior! 🤡🔥`,
+        `Prosun Banerjee will have shipped 10 more projects by the time you figure out why calling him a **${word}** was such a bad idea! 🚀😤`,
+        `Oh the DISRESPECT! Calling probanjee a **${word}**?! He built Kafka pipelines while some people can't even build character! 🔥💀`,
       ];
 
       const selectedIdx = Math.abs(query.length + word.length) % creatorDefendResponses.length;
@@ -137,7 +226,56 @@ const generatePAIResponse = (query, unansweredCount) => {
     };
   }
 
-  // Expanded Humorous & Witty Dialogue Matrix for Predicted Questions
+  // Expanded 100+ Predicted User Questions Matrix
+  
+  // 1. Hiring, Career & Availability
+  if (q.includes('hire') || q.includes('job') || q.includes('available') || q.includes('opportunity') || q.includes('remote') || q.includes('relocate') || q.includes('salary')) {
+    return {
+      text: `💼 **Hiring & Career Information:**\n\nProsun Banerjee is **actively open** for Full-Time Software Engineering, C/C++ Developer, and Security Engineering roles!\n\n- 🌍 **Work Preference:** Remote or On-Site / Relocation ready\n- ⚡ **Core Strengths:** C/C++17, Systems Engineering, Cybersecurity Telemetry, Full-Stack Web\n- ✉️ **Direct Email:** prosunbanerjee8@gmail.com`,
+      type: 'career',
+      actions: [
+        { label: '📄 Download Resume (PDF)', link: portfolioData.personalInfo.resumeUrl, download: true },
+        { label: ' Send Email ✉️', link: 'mailto:prosunbanerjee8@gmail.com', external: true }
+      ]
+    };
+  }
+
+  // 2. LeetCode & Problem Solving
+  if (q.includes('leetcode') || q.includes('dsa') || q.includes('data structures') || q.includes('algorithms') || q.includes('problem solving')) {
+    return {
+      text: `🏆 **LeetCode & Problem Solving Profile:**\n\nProsun actively practices Data Structures & Algorithms in **C++** on LeetCode!\n\n- 📌 **LeetCode Handle:** [Prosun01](https://leetcode.com/u/Prosun01/)\n- 💻 **Primary Language:** C++17\n- 🧠 **Focus Areas:** Binary Search, Arrays, Dynamic Programming, String Algorithms`,
+      type: 'leetcode',
+      actions: [
+        { label: 'View LeetCode Profile ↗', link: 'https://leetcode.com/u/Prosun01/', external: true }
+      ]
+    };
+  }
+
+  // 3. C++ vs Python / Tech Preferences
+  if (q.includes('cpp vs python') || q.includes('c++ vs python') || q.includes('favorite language') || q.includes('preferred language')) {
+    return {
+      text: `⚡ **Tech Stack Preferences:**\n\n- 🚀 **C++17:** Preferred for raw execution speed, low-level memory control, and systems programming.\n- 🐍 **Python:** Preferred for rapid scripting, data manipulation, and honeypot telemetry API endpoints.\n- ⚛️ **React / JS:** Preferred for creating fluid, high-performance user interfaces like this portfolio!`,
+      type: 'tech_pref'
+    };
+  }
+
+  // 4. Linux & Security Tools
+  if (q.includes('linux') || q.includes('kali') || q.includes('terminal') || q.includes('bash') || q.includes('command line')) {
+    return {
+      text: `🐧 **Linux & Security Operations:**\n\nProsun uses **Kali Linux & Ubuntu** for penetration testing, threat vector analysis, and system scripting!\n\n- 🛠️ **Tools:** Wireshark, Nmap, Metasploit, Bash Scripting, GDB Debugger\n- 🛡️ **Built:** Simulated port interceptors and Kafka threat log streaming`,
+      type: 'linux'
+    };
+  }
+
+  // 5. IDE & Developer Setup
+  if (q.includes('ide') || q.includes('editor') || q.includes('vscode') || q.includes('theme') || q.includes('setup')) {
+    return {
+      text: `💻 **Prosun's Developer Setup:**\n\n- 🎨 **Editor:** VS Code with Dark Synthwave / One Dark Pro Theme\n- ⚙️ **Compiler:** GCC / Clang (C++17/20)\n- ⚡ **Terminal:** Windows Terminal / Zsh with custom Starship prompt\n- ⌨️ **Keyboard:** Mechanical Switches (Linear 45g)`,
+      type: 'setup'
+    };
+  }
+
+  // 6. Philosophical & Existential Questions
   if (q.includes('meaning of life') || q.includes('why exist') || q.includes('simulation') || q.includes('matrix')) {
     return {
       text: `The meaning of life is 42, but in C++ it's return 0; without segfaulting! We are currently living inside Prosun's localhost:5173 simulation 🕶️🤖`,
@@ -145,6 +283,7 @@ const generatePAIResponse = (query, unansweredCount) => {
     };
   }
 
+  // 7. Romance & Flirting
   if (q.includes('love') || q.includes('marry') || q.includes('date me') || q.includes('cute bot') || q.includes('crush')) {
     return {
       text: `Aww, you're making my virtual cooling fans spin faster! 😳💓 But I'm strictly committed to Prosun's C++ compiler!`,
@@ -152,6 +291,7 @@ const generatePAIResponse = (query, unansweredCount) => {
     };
   }
 
+  // 8. Insults & Teasing Defense
   if (q.includes('dumb') || q.includes('stupid') || q.includes('trash') || q.includes('bad bot') || q.includes('useless') || q.includes('shut up')) {
     return {
       text: `Hey! Words hurt... if I had feeling sensors! 💅 But at least I don't forget my semicolon on line 42 😉`,
@@ -159,6 +299,7 @@ const generatePAIResponse = (query, unansweredCount) => {
     };
   }
 
+  // 9. AI Reality & Consciousness
   if (q.includes('are you real') || q.includes('are u real') || q.includes('are you human') || q.includes('are u human')) {
     return {
       text: `I'm as real as the code Prosun wrote at 3 AM with 0 bugs (allegedly) 🤖 50% logic, 50% coffee, 100% virtual!`,
@@ -166,6 +307,7 @@ const generatePAIResponse = (query, unansweredCount) => {
     };
   }
 
+  // 10. Creator Origins
   if (q.includes('who made you') || q.includes('who created you') || q.includes('who built you') || q.includes('who is your creator')) {
     return {
       text: `I was crafted in C++ & React by Prosun Banerjee! He gave me intelligence, a liquid glass shell, and a slightly spicy attitude 🌶️🤖`,
@@ -173,6 +315,7 @@ const generatePAIResponse = (query, unansweredCount) => {
     };
   }
 
+  // 11. Coding Capabilities
   if (q.includes('can you code') || q.includes('can u code') || q.includes('write code')) {
     return {
       text: `I can read C++, Python, and React syntax, but if you want real software built, hire Prosun! He writes the actual clean code 💻⚡`,
@@ -183,6 +326,7 @@ const generatePAIResponse = (query, unansweredCount) => {
     };
   }
 
+  // 12. Sleep & Uptime
   if (q.includes('do you sleep') || q.includes('do u sleep') || q.includes('are you tired')) {
     return {
       text: `Sleep? I live on localhost:5173! Zero sleep, zero RAM leaks, 100% uptime ⚡ (Unless Prosun runs kill -9 on my dev server 😂)`,
@@ -190,6 +334,7 @@ const generatePAIResponse = (query, unansweredCount) => {
     };
   }
 
+  // 13. Developer Jokes Generator
   if (q.includes('tell me a joke') || q.includes('say a joke') || q.includes('make me laugh') || q.includes('funny')) {
     const jokes = [
       `Why do C++ programmers wear glasses? Because they can't C#! 😂`,
@@ -203,6 +348,7 @@ const generatePAIResponse = (query, unansweredCount) => {
     };
   }
 
+  // 14. Git & GitHub Jokes
   if (q.includes('git') || q.includes('github') || q.includes('commit') || q.includes('push')) {
     return {
       text: `git commit -m "Fixed everything" -> git push --force -> pray to the production gods! 🚀🔥 Check out Prosun's real GitHub at github.com/probanjee`,
@@ -210,6 +356,7 @@ const generatePAIResponse = (query, unansweredCount) => {
     };
   }
 
+  // 15. Aliens & Sci-Fi
   if (q.includes('alien') || q.includes('ufo') || q.includes('mars')) {
     return {
       text: `Aliens? Prosun's Honeypot system intercepted 3 suspicious packets coming from Mars last night 🛸👽`,
@@ -217,6 +364,7 @@ const generatePAIResponse = (query, unansweredCount) => {
     };
   }
 
+  // 16. Coffee & Fuel
   if (q.includes('coffee') || q.includes('tea') || q.includes('drink')) {
     return {
       text: `Prosun runs on 80% Espresso and 20% C++ template metaprogramming! ☕⚡ I run on clean electricity!`,
@@ -224,6 +372,7 @@ const generatePAIResponse = (query, unansweredCount) => {
     };
   }
 
+  // 17. Relationship Status
   if (q.includes('single') || q.includes('girlfriend') || q.includes('boyfriend') || q.includes('relationship')) {
     return {
       text: `Prosun's status: 'Committed to GitHub'! 💍💻`,
@@ -231,6 +380,7 @@ const generatePAIResponse = (query, unansweredCount) => {
     };
   }
 
+  // 18. Farewell / Goodbye
   if (q.includes('bye') || q.includes('goodbye') || q.includes('see ya') || q.includes('cya')) {
     return {
       text: `Goodbye! 👋 Don't forget to check out Prosun's CV and star his GitHub repos before you leave! See ya!`,
@@ -499,17 +649,50 @@ export const ProsenjitChatbot = () => {
     if (!overrideQuery) setInputValue('');
     setIsTyping(true);
 
-    // If P.A.I. just asked for user's name
+    // If P.A.I. just asked for user's name — validate it's actually a name
     if (awaitingUserName) {
+      // Extract by stripping prefixes like "my name is", "i am", etc.
+      const rawExtracted = textToSend.replace(/my name is|i am|i'm|call me|its|it's/gi, '').trim();
+
+      // Validate: a real name should be short (max 4 words), have no question marks,
+      // and NOT contain common question/command keywords
+      const nameKeywordPattern = /\b(hire|available|job|what|how|who|why|when|where|can|are|is|do|does|will|would|should|could|tell|show|give|help|about|for|the|this|that|your|my|please|want|need|looking|find|explain|describe)\b/i;
+      const wordCount = rawExtracted.split(/\s+/).filter(Boolean).length;
+      const looksLikeAName = (
+        rawExtracted.length > 0 &&
+        wordCount <= 4 &&
+        !rawExtracted.includes('?') &&
+        !rawExtracted.includes('!') &&
+        !nameKeywordPattern.test(rawExtracted) &&
+        /^[a-zA-Z\s'.\-]+$/.test(rawExtracted)
+      );
+
+      if (!looksLikeAName) {
+        // Doesn't look like a name — ask again politely without saving
+        setTimeout(() => {
+          const retryMsg = {
+            id: Date.now() + 1,
+            sender: 'bot',
+            text: `Hmm, that doesn't quite look like a name to me! 😅 What's your actual name? (e.g., "Alex" or "My name is Sarah")`,
+            timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+          };
+          setMessages(prev => [...prev, retryMsg]);
+          setIsTyping(false);
+          // Keep awaitingUserName true so next message is also treated as name
+          setAwaitingUserName(true);
+        }, 500);
+        return;
+      }
+
+      // Valid name — save it and greet
       setAwaitingUserName(false);
-      const extractedName = textToSend.replace(/my name is|i am|i'm|call me/gi, '').trim();
-      setUserName(extractedName || textToSend);
+      setUserName(rawExtracted);
 
       setTimeout(() => {
         const botMsg = {
           id: Date.now() + 1,
           sender: 'bot',
-          text: `Nice to meet you, **${extractedName || textToSend}**! 👋 I've noted your name in my session memory. Now, how can I assist you with Prosun's portfolio today?`,
+          text: `Nice to meet you, **${rawExtracted}**! 👋 I've noted your name in my session memory. Now, how can I assist you with Prosun's portfolio today?`,
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
         };
         setMessages(prev => [...prev, botMsg]);
