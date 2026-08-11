@@ -481,6 +481,19 @@ const generatePAIResponse = (query, unansweredCount) => {
     };
   }
 
+  // 9. Dynamic API Middleware Generator / APIForge Project
+  if (q.includes('api generator') || q.includes('middleware') || q.includes('apiforge') || q.includes('api forge') || q.includes('api-automation') || q.includes('express api')) {
+    const apiP = portfolioData.projects.find(p => p.id === 'api-automation-generator');
+    return {
+      text: `⚡ **Dynamic API Middleware Generator**\n\n${apiP?.longDescription}\n\n**Key Features & Benchmarks:**\n- **Dev Speedup:** ${apiP?.metrics.devSpeedup}\n- **Output Format:** ${apiP?.metrics.outputType}\n- **Features:** ${apiP?.metrics.features}\n- **Tech Stack:** Node.js, Express, React, TailwindCSS`,
+      type: 'project',
+      actions: [
+        { label: 'Try Live APIForge 🚀', link: apiP?.demoLink, external: true },
+        { label: 'View GitHub Code ↗', link: apiP?.codeLink, external: true }
+      ]
+    };
+  }
+
   // 9. Skills & Tools
   if (q.includes('skill') || q.includes('language') || q.includes('tool') || q.includes('python') || q.includes('kafka') || q.includes('aws') || q.includes('docker')) {
     return {

@@ -31,12 +31,13 @@ export const Button = ({
   );
 
   if (href) {
+    const isExternal = href.startsWith('http://') || href.startsWith('https://') || href.startsWith('//');
     return (
       <a
         href={href}
         download={download}
-        target={download ? "_blank" : undefined}
-        rel={download ? "noopener noreferrer" : undefined}
+        target={download || isExternal ? "_blank" : undefined}
+        rel={download || isExternal ? "noopener noreferrer" : undefined}
         className={`${baseStyles} ${variants[variant]} ${className}`}
       >
         {buttonContent}
