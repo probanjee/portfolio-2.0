@@ -122,7 +122,7 @@ export const portfolioData = {
         notificationModel: "Win10toast Background Engine"
       },
       codeLink: "https://github.com/probanjee/Heuristic-Workout-App",
-      demoLink: "#"
+      demoLink: "https://heuristic-workout-app-seven.vercel.app/"
     },
     {
       id: "api-automation-generator",

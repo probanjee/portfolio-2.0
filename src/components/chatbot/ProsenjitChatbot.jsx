@@ -494,7 +494,21 @@ const generatePAIResponse = (query, unansweredCount) => {
     };
   }
 
-  // 9. Skills & Tools
+  // 10. Heuristic Adaptive Workout App
+  if (q.includes('workout') || q.includes('heuristic') || q.includes('fitness') || q.includes('routine')) {
+    const workoutP = portfolioData.projects.find(p => p.id === 'workout-planning-app');
+    return {
+      text: `🏋️ **Heuristic Adaptive Workout App**\n\n${workoutP?.longDescription}\n\n**Key Features & Metrics:**\n- **Routine Adherence:** ${workoutP?.metrics.retentionRate}\n- **Plan Generation Speed:** ${workoutP?.metrics.processingTime}\n- **Notification Model:** ${workoutP?.metrics.notificationModel}\n- **Tech Stack:** Python, Automation, Heuristics, OS Notifications, JSON DB`,
+      type: 'project',
+      actions: [
+        { label: 'Launch Simulation 🚀', link: workoutP?.demoLink, external: true },
+        { label: 'View Case Study', link: '/projects/heuristic-workout-app' },
+        { label: 'GitHub Repository ↗', link: workoutP?.codeLink, external: true }
+      ]
+    };
+  }
+
+  // 11. Skills & Tools
   if (q.includes('skill') || q.includes('language') || q.includes('tool') || q.includes('python') || q.includes('kafka') || q.includes('aws') || q.includes('docker')) {
     return {
       text: `⚡ **Technical Skill Matrix for Prosun Banerjee:**\n\n🔹 **Programming Languages:** C/C++, C++17, Python, JavaScript (ES6+), SQL, HTML5/CSS3, Java\n🛡️ **Cybersecurity & QA:** Threat Vector Analysis, Cryptography, Kali Linux, Penetration Testing, Unit Testing (Jest, JUnit)\n🛠️ **Cloud & Infrastructure:** Git/GitHub, AWS, Azure, Docker, Linux/OS Scripting, Apache Kafka, CI/CD, Jira, Power BI`,
