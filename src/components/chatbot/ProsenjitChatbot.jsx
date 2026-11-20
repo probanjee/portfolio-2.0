@@ -630,6 +630,13 @@ export const ProsenjitChatbot = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [showScrollBottomBtn, setShowScrollBottomBtn] = useState(false);
   
+  // Mobile Responsiveness, Viewport & Form-Focus Avoidance States
+  const [isMobileScreen, setIsMobileScreen] = useState(false);
+  const [isFooterVisible, setIsFooterVisible] = useState(false);
+  const [isFieldFocused, setIsFieldFocused] = useState(false);
+  const [visualViewportHeight, setVisualViewportHeight] = useState(null);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
   // Custom State for Escalation Sequence & User Name Memory
   const [unansweredCount, setUnhandledCount] = useState(0);
   const [awaitingUserName, setAwaitingUserName] = useState(false);
@@ -638,6 +645,96 @@ export const ProsenjitChatbot = () => {
   const messagesEndRef = useRef(null);
   const messagesFeedRef = useRef(null);
   const inputRef = useRef(null);
+
+  // Screen width & mobile detector
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobileScreen(window.innerWidth < 640);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Reduced motion preference
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const media = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setPrefersReducedMotion(media.matches);
+    const listener = (e) => setPrefersReducedMotion(e.matches);
+    media.addEventListener('change', listener);
+    return () => media.removeEventListener('change', listener);
+  }, []);
+
+  // Visual Viewport tracking for mobile virtual keyboards (prevents clipping the composer)
+  useEffect(() => {
+    if (typeof window === 'undefined' || !window.visualViewport) return;
+    const updateViewport = () => {
+      if (window.innerWidth < 640 && isOpen) {
+        setVisualViewportHeight(window.visualViewport.height);
+      } else {
+        setVisualViewportHeight(null);
+      }
+    };
+    window.visualViewport.addEventListener('resize', updateViewport);
+    window.visualViewport.addEventListener('scroll', updateViewport);
+    updateViewport();
+    return () => {
+      window.visualViewport.removeEventListener('resize', updateViewport);
+      window.visualViewport.removeEventListener('scroll', updateViewport);
+    };
+  }, [isOpen]);
+
+  // Form field focus tracking: hide launcher on mobile when user focuses an external input
+  useEffect(() => {
+    const handleFocusIn = (e) => {
+      const tag = e.target?.tagName?.toLowerCase();
+      if (tag === 'input' || tag === 'textarea') {
+        if (!e.target.closest('#pai-chatbot-container')) {
+          setIsFieldFocused(true);
+        }
+      }
+    };
+    const handleFocusOut = (e) => {
+      const tag = e.target?.tagName?.toLowerCase();
+      if (tag === 'input' || tag === 'textarea') {
+        setIsFieldFocused(false);
+      }
+    };
+    document.addEventListener('focusin', handleFocusIn);
+    document.addEventListener('focusout', handleFocusOut);
+    return () => {
+      document.removeEventListener('focusin', handleFocusIn);
+      document.removeEventListener('focusout', handleFocusOut);
+    };
+  }, []);
+
+  // Footer visibility tracker: elevates launcher when user scrolls into footer
+  useEffect(() => {
+    const footerEl = document.querySelector('footer');
+    if (!footerEl) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsFooterVisible(entry.isIntersecting);
+      },
+      { threshold: 0.1 }
+    );
+    observer.observe(footerEl);
+    return () => observer.disconnect();
+  }, []);
+
+  // Prevent background body scroll when mobile bottom sheet is active
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (isOpen && window.innerWidth < 640) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -803,320 +900,365 @@ export const ProsenjitChatbot = () => {
   };
 
   return (
-    <div className="fixed bottom-5 right-5 z-50 flex flex-col items-end pointer-events-auto">
-      
-      {/* Compact Manga Style Speech Bubble */}
-      <AnimatePresence>
-        {!isOpen && showMangaBubble && (
-          <motion.div
-            initial={{ opacity: 0, y: 10, scale: 0.85 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 8, scale: 0.85 }}
-            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            onClick={() => setIsOpen(true)}
-            className="mb-2 mr-1 cursor-pointer group relative z-20"
-          >
-            <div className="relative px-2.5 py-1 rounded-xl bg-[#091124]/90 border border-cyan-400/50 shadow-[0_6px_20px_rgba(6,182,212,0.25)] text-slate-100 backdrop-blur-2xl flex items-center space-x-1.5 group-hover:border-cyan-300 group-hover:shadow-[0_8px_25px_rgba(6,182,212,0.35)] transition-all">
-              
-              <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-white/15 via-transparent to-white/5 opacity-60 pointer-events-none" />
-
-              <span className="text-xs shrink-0">💬</span>
-              
-              <div className="text-left font-mono text-[10px] leading-tight">
-                <span className="font-extrabold text-cyan-300 tracking-wider uppercase flex items-center space-x-1">
-                  <span>HI! 👋</span>
-                  <Sparkles className="w-2.5 h-2.5 text-cyan-300 inline animate-pulse" />
-                </span>
-              </div>
-
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setShowMangaBubble(false);
-                }}
-                className="ml-0.5 p-0.5 rounded-full text-slate-400 hover:text-white hover:bg-white/10 transition-colors shrink-0"
-                title="Dismiss"
-              >
-                <X className="w-3 h-3" />
-              </button>
-
-              <div className="absolute -bottom-1.5 right-5 w-2.5 h-2.5 bg-[#091124] border-r border-b border-cyan-400/50 rotate-45 group-hover:border-cyan-300 transition-colors" />
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Reduced Height 25% Ultra-Transparent Glass Modal Window */}
+    <>
+      {/* Mobile Backdrop Overlay when Bottom Sheet is Open */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: 15, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 15, scale: 0.95 }}
-            transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-            className="mb-3 w-[88vw] sm:w-[340px] max-h-[380px] h-[52vh] rounded-2xl bg-[#040914]/25 backdrop-blur-xl border border-cyan-500/40 shadow-[0_16px_48px_rgba(0,0,0,0.5)] flex flex-col overflow-hidden text-slate-100 selection:bg-cyan-500/30 relative"
-          >
-            {/* Liquid Glass Highlight Reflection */}
-            <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-white/15 via-transparent to-transparent pointer-events-none rounded-t-2xl" />
-
-            {/* Ultra-Transparent Header */}
-            <div className="px-3.5 py-2.5 bg-white/[0.03] backdrop-blur-md border-b border-white/10 flex items-center justify-between relative z-10">
-              <div className="flex items-center space-x-2">
-                <div className="relative w-6.5 h-6.5 flex items-center justify-center">
-                  <div className="w-6.5 h-6.5 rounded-lg bg-gradient-to-tr from-brand-primary/40 to-cyan-500/40 border border-cyan-400/50 flex items-center justify-center text-cyan-300 shadow-inner">
-                    <Bot className="w-3.5 h-3.5 text-cyan-300" />
-                  </div>
-                  <span className="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-emerald-400 border border-[#070D1D] animate-pulse" />
-                </div>
-                <div>
-                  <div className="flex items-center space-x-1.5">
-                    <h3 className="font-mono text-xs font-bold tracking-wider text-slate-100 flex items-center space-x-1">
-                      <span>P.A.I.</span>
-                      <Zap className="w-3 h-3 text-cyan-400 fill-cyan-400/30" />
-                    </h3>
-                    <span className="text-[9px] font-mono px-1 py-0.5 rounded bg-cyan-500/10 text-cyan-300 border border-cyan-500/30">
-                      v2.0
-                    </span>
-                  </div>
-                  <p className="text-[8.5px] font-mono text-emerald-400/90 flex items-center space-x-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping inline-block" />
-                    <span>ONLINE</span>
-                  </p>
-                </div>
-              </div>
-
-              {/* Action Buttons */}
-              <div className="flex items-center space-x-1">
-                <button
-                  onClick={handleReset}
-                  className="p-1 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-white/10 transition-colors"
-                  title="Reset Chat"
-                >
-                  <RotateCcw className="w-3.5 h-3.5" />
-                </button>
-                <button
-                  onClick={() => setIsOpen(false)}
-                  className="p-1 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-white/10 transition-colors"
-                  title="Close P.A.I."
-                >
-                  <X className="w-3.5 h-3.5" />
-                </button>
-              </div>
-            </div>
-
-            {/* Chat Messages Feed with Lenis Scroll Interception Fix */}
-            <div
-              data-lenis-prevent
-              ref={messagesFeedRef}
-              onScroll={handleScroll}
-              className="flex-1 min-h-0 p-3 overflow-y-auto space-y-3 custom-scrollbar relative z-10 text-[11px] overscroll-contain"
-            >
-              {messages.map((msg) => (
-                <div
-                  key={msg.id}
-                  className={`flex flex-col ${msg.sender === 'user' ? 'items-end' : 'items-start'}`}
-                >
-                  <div className="flex items-end space-x-1.5 max-w-[90%]">
-                    {msg.sender === 'bot' && (
-                      <div className="w-6 h-6 rounded-lg bg-cyan-500/20 border border-cyan-400/30 flex items-center justify-center text-cyan-300 shrink-0 mb-0.5">
-                        <Bot className="w-3.5 h-3.5" />
-                      </div>
-                    )}
-                    <div
-                      className={`p-2.5 rounded-xl leading-relaxed ${
-                        msg.sender === 'user'
-                          ? 'bg-[#1e1e1e]/95 border border-cyan-500/50 text-[#d4d4d4] font-mono text-[11px] rounded-br-none shadow-md shadow-black/60 backdrop-blur-md'
-                          : 'bg-[#060D1E]/40 border border-white/10 backdrop-blur-md text-slate-200 rounded-bl-none shadow-sm'
-                      }`}
-                    >
-                      <div className="whitespace-pre-wrap font-sans">
-                        {msg.sender === 'user' ? (
-                          <div className="font-mono text-[11px]">
-                            <span className="text-[#569cd6] font-bold mr-1.5">$</span>
-                            {renderCodeSyntax(msg.text)}
-                          </div>
-                        ) : (
-                          msg.text.split('\n').map((line, idx) => {
-                            const parts = line.split(/(\*\*.*?\*\*)/g);
-                            return (
-                              <span key={idx} className={idx > 0 ? 'block mt-1' : ''}>
-                                {parts.map((part, pIdx) => {
-                                  if (part.startsWith('**') && part.endsWith('**')) {
-                                    return (
-                                      <strong key={pIdx} className="font-semibold text-cyan-300">
-                                        {part.slice(2, -2)}
-                                      </strong>
-                                    );
-                                  }
-                                  return part;
-                                })}
-                              </span>
-                            );
-                          })
-                        )}
-                      </div>
-
-                      {/* Interactive Action Chips */}
-                      {msg.actions && msg.actions.length > 0 && (
-                        <div className="mt-2 pt-1.5 border-t border-white/10 flex flex-wrap gap-1">
-                          {msg.actions.map((act, aIdx) => (
-                            act.link ? (
-                              <a
-                                key={aIdx}
-                                href={act.link}
-                                download={act.download}
-                                target={act.external ? "_blank" : "_self"}
-                                rel={act.external ? "noopener noreferrer" : ""}
-                                className="inline-flex items-center space-x-1 text-[9.5px] font-mono px-2 py-0.5 rounded bg-cyan-500/15 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 transition-all"
-                              >
-                                <span>{act.label}</span>
-                                <ExternalLink className="w-2.5 h-2.5" />
-                              </a>
-                            ) : (
-                              <button
-                                key={aIdx}
-                                onClick={() => handleSend(act.query)}
-                                className="text-[9.5px] font-mono px-2 py-0.5 rounded bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 transition-all text-left"
-                              >
-                                {act.label}
-                              </button>
-                            )
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  <span className="text-[8px] font-mono text-slate-500 mt-0.5 px-1">
-                    {msg.timestamp}
-                  </span>
-                </div>
-              ))}
-
-              {/* Typing indicator */}
-              {isTyping && (
-                <div className="flex items-center space-x-1.5">
-                  <div className="w-6 h-6 rounded-lg bg-cyan-500/20 border border-cyan-400/30 flex items-center justify-center text-cyan-300 shrink-0">
-                    <Bot className="w-3.5 h-3.5 animate-pulse" />
-                  </div>
-                  <div className="p-2 rounded-xl bg-[#060D1E]/40 border border-white/10 backdrop-blur-md rounded-bl-none flex items-center space-x-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
-                    <span className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse delay-150" />
-                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse delay-300" />
-                  </div>
-                </div>
-              )}
-              <div ref={messagesEndRef} />
-            </div>
-
-            {/* Floating Scroll to Bottom Button */}
-            <AnimatePresence>
-              {showScrollBottomBtn && (
-                <motion.button
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 10 }}
-                  onClick={scrollToBottom}
-                  className="absolute bottom-14 right-4 z-20 px-2 py-1 rounded-full bg-[#09152b]/95 border border-cyan-400/50 text-cyan-300 font-mono text-[9px] shadow-lg flex items-center space-x-1 hover:bg-cyan-500/20 transition-all cursor-pointer backdrop-blur-md"
-                >
-                  <span>Scroll to bottom</span>
-                  <span className="text-[10px]">↓</span>
-                </motion.button>
-              )}
-            </AnimatePresence>
-
-            {/* Ultra-Transparent Input Bar with Real-Time IDE Syntax Highlighting */}
-            <div className="p-2 bg-white/[0.03] backdrop-blur-md border-t border-white/10 relative z-10">
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  handleSend();
-                }}
-                className="flex items-center space-x-1.5"
-              >
-                {/* Input with Real-time IDE Syntax Highlighting */}
-                <div className="relative flex-1">
-                  <input
-                    ref={inputRef}
-                    type="text"
-                    value={inputValue}
-                    onChange={(e) => setInputValue(e.target.value)}
-                    placeholder="Ask me anything about Prosun..."
-                    className="w-full bg-black/30 backdrop-blur-md border border-white/15 rounded-xl px-2.5 py-1.5 text-[10.5px] text-slate-100 placeholder-slate-400 focus:outline-none focus:border-cyan-400/60 focus:ring-1 focus:ring-cyan-400/50 transition-all font-mono"
-                  />
-                </div>
-                <button
-                  type="submit"
-                  disabled={!inputValue.trim()}
-                  className="p-2 rounded-xl bg-gradient-to-r from-brand-primary to-cyan-500 text-white disabled:opacity-40 disabled:cursor-not-allowed hover:shadow-lg hover:shadow-cyan-500/30 transition-all shrink-0"
-                >
-                  <Send className="w-3.5 h-3.5" />
-                </button>
-              </form>
-
-              <div className="flex items-center justify-end mt-1 px-1 text-[8.5px] text-slate-500 font-mono">
-                <span>Press Enter ↵</span>
-              </div>
-            </div>
-
-          </motion.div>
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: prefersReducedMotion ? 0 : 0.2 }}
+            onClick={() => setIsOpen(false)}
+            className="fixed inset-0 bg-black/75 backdrop-blur-sm z-40 sm:hidden"
+            aria-hidden="true"
+          />
         )}
       </AnimatePresence>
 
-      {/* Sleek Compact Floating Capsule / Pill Widget with 2 Concentric Liquid Glass Orbiting Rings */}
-      <motion.button
-        onClick={() => setIsOpen(!isOpen)}
-        whileHover={{ scale: 1.04, y: -2 }}
-        whileTap={{ scale: 0.96 }}
-        className="relative group flex items-center space-x-2.5 px-3 py-1.5 rounded-full bg-[#080E1E]/85 backdrop-blur-2xl border border-cyan-400/50 shadow-[0_6px_20px_rgba(6,182,212,0.25)] text-slate-100 hover:border-cyan-300 hover:shadow-[0_8px_25px_rgba(6,182,212,0.35)] transition-all cursor-pointer overflow-visible"
+      {/* Floating Container for Launcher & Desktop Floating Window */}
+      <div
+        id="pai-chatbot-container"
+        className={`fixed z-50 transition-all duration-300 ease-out pointer-events-auto flex flex-col items-end
+          right-[calc(1rem+env(safe-area-inset-right,0px))] sm:right-5
+          ${isFooterVisible ? 'bottom-[calc(5rem+env(safe-area-inset-bottom,0px))] sm:bottom-5' : 'bottom-[calc(1.25rem+env(safe-area-inset-bottom,0px))] sm:bottom-5'}
+          ${isFieldFocused && !isOpen ? 'opacity-0 pointer-events-none translate-y-4 sm:opacity-100 sm:pointer-events-auto sm:translate-y-0' : 'opacity-100 translate-y-0'}
+        `}
       >
-        {/* Liquid Glass Highlight Reflection */}
-        <div className="absolute inset-0 rounded-full bg-gradient-to-r from-white/20 via-cyan-400/10 to-transparent opacity-80 group-hover:opacity-100 transition-opacity pointer-events-none" />
+        {/* Compact Manga Style Speech Bubble (Desktop Only) */}
+        <AnimatePresence>
+          {!isOpen && showMangaBubble && (
+            <motion.div
+              initial={{ opacity: 0, y: 10, scale: 0.85 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 8, scale: 0.85 }}
+              transition={{ duration: prefersReducedMotion ? 0 : 0.3, ease: [0.16, 1, 0.3, 1] }}
+              onClick={() => setIsOpen(true)}
+              className="mb-2 mr-1 cursor-pointer group relative z-20 hidden sm:block"
+            >
+              <div className="relative px-2.5 py-1 rounded-xl bg-[#091124]/90 border border-cyan-400/50 shadow-[0_6px_20px_rgba(6,182,212,0.25)] text-slate-100 backdrop-blur-2xl flex items-center space-x-1.5 group-hover:border-cyan-300 group-hover:shadow-[0_8px_25px_rgba(6,182,212,0.35)] transition-all">
+                <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-white/15 via-transparent to-white/5 opacity-60 pointer-events-none" />
+                <span className="text-xs shrink-0">💬</span>
+                <div className="text-left font-mono text-[10px] leading-tight">
+                  <span className="font-extrabold text-cyan-300 tracking-wider uppercase flex items-center space-x-1">
+                    <span>HI! 👋</span>
+                    <Sparkles className="w-2.5 h-2.5 text-cyan-300 inline animate-pulse" />
+                  </span>
+                </div>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowMangaBubble(false);
+                  }}
+                  className="ml-0.5 p-0.5 rounded-full text-slate-400 hover:text-white hover:bg-white/10 transition-colors shrink-0"
+                  title="Dismiss"
+                  aria-label="Dismiss greeting"
+                >
+                  <X className="w-3 h-3" />
+                </button>
+                <div className="absolute -bottom-1.5 right-5 w-2.5 h-2.5 bg-[#091124] border-r border-b border-cyan-400/50 rotate-45 group-hover:border-cyan-300 transition-colors" />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
-        {/* Compact Avatar Container with 2 Concentric Liquid Glass Orbiting Rings */}
-        <div className="relative shrink-0 z-10 w-7 h-7 flex items-center justify-center">
-          
-          {/* LIQUID GLASS RING 1: Outer Glass Orbit */}
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 7, repeat: Infinity, ease: "linear" }}
-            className="absolute inset-0 rounded-full border border-cyan-400/60 bg-gradient-to-br from-cyan-400/20 via-transparent to-purple-500/20 backdrop-blur-md shadow-[0_0_8px_rgba(6,182,212,0.3)] pointer-events-none"
+        {/* Modal Window: Responsive Bottom Sheet on Mobile, Floating Glass Modal on Desktop */}
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={
+                isMobileScreen
+                  ? { opacity: 0, y: '100%' }
+                  : { opacity: 0, y: 15, scale: 0.95 }
+              }
+              animate={
+                isMobileScreen
+                  ? { opacity: 1, y: 0 }
+                  : { opacity: 1, y: 0, scale: 1 }
+              }
+              exit={
+                isMobileScreen
+                  ? { opacity: 0, y: '100%' }
+                  : { opacity: 0, y: 15, scale: 0.95 }
+              }
+              transition={{ duration: prefersReducedMotion ? 0 : 0.25, ease: [0.16, 1, 0.3, 1] }}
+              style={{
+                height: isMobileScreen && visualViewportHeight ? `${visualViewportHeight}px` : undefined,
+                maxHeight: isMobileScreen && visualViewportHeight ? `${visualViewportHeight}px` : undefined
+              }}
+              className="fixed inset-x-0 bottom-0 z-50 h-[86vh] max-h-[86dvh] rounded-t-3xl bg-[#040914]/95 backdrop-blur-2xl border-t border-x border-cyan-500/40 shadow-[0_-16px_48px_rgba(0,0,0,0.85)] flex flex-col overflow-hidden text-slate-100 selection:bg-cyan-500/30
+                sm:static sm:inset-auto sm:mb-3 sm:w-[360px] sm:max-h-[500px] sm:h-[55vh] sm:rounded-2xl sm:bg-[#040914]/40 sm:border sm:border-cyan-500/40 sm:shadow-[0_16px_48px_rgba(0,0,0,0.6)]"
+            >
+              {/* Mobile Drag Handle Cue */}
+              <div className="w-10 h-1 rounded-full bg-white/20 mx-auto mt-2 sm:hidden shrink-0" aria-hidden="true" />
+
+              {/* Liquid Glass Highlight Reflection */}
+              <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-white/15 via-transparent to-transparent pointer-events-none rounded-t-2xl sm:rounded-t-2xl" />
+
+              {/* Header */}
+              <div className="px-4 py-3 sm:px-3.5 sm:py-2.5 bg-white/[0.03] backdrop-blur-md border-b border-white/10 flex items-center justify-between relative z-10 shrink-0">
+                <div className="flex items-center space-x-2">
+                  <div className="relative w-7 h-7 sm:w-6.5 sm:h-6.5 flex items-center justify-center">
+                    <div className="w-7 h-7 sm:w-6.5 sm:h-6.5 rounded-lg bg-gradient-to-tr from-brand-primary/40 to-cyan-500/40 border border-cyan-400/50 flex items-center justify-center text-cyan-300 shadow-inner">
+                      <Bot className="w-4 h-4 sm:w-3.5 sm:h-3.5 text-cyan-300" />
+                    </div>
+                    <span className="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-emerald-400 border border-[#070D1D] animate-pulse" />
+                  </div>
+                  <div>
+                    <div className="flex items-center space-x-1.5">
+                      <h3 className="font-mono text-xs font-bold tracking-wider text-slate-100 flex items-center space-x-1">
+                        <span>P.A.I.</span>
+                        <Zap className="w-3 h-3 text-cyan-400 fill-cyan-400/30" />
+                      </h3>
+                      <span className="text-[9px] font-mono px-1 py-0.5 rounded bg-cyan-500/10 text-cyan-300 border border-cyan-500/30">
+                        v2.0
+                      </span>
+                    </div>
+                    <p className="text-[8.5px] font-mono text-emerald-400/90 flex items-center space-x-1">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping inline-block" />
+                      <span>ONLINE</span>
+                    </p>
+                  </div>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="flex items-center space-x-1">
+                  <button
+                    onClick={handleReset}
+                    className="p-2 sm:p-1 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-white/10 transition-colors"
+                    title="Reset Chat"
+                    aria-label="Reset chat"
+                  >
+                    <RotateCcw className="w-4 h-4 sm:w-3.5 sm:h-3.5" />
+                  </button>
+                  <button
+                    onClick={() => setIsOpen(false)}
+                    className="p-2 sm:p-1 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 active:bg-white/20 transition-colors"
+                    title="Close P.A.I."
+                    aria-label="Close P.A.I."
+                  >
+                    <X className="w-5 h-5 sm:w-4 sm:h-4 text-slate-200" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Chat Messages Feed with Lenis Scroll Interception Fix */}
+              <div
+                data-lenis-prevent
+                ref={messagesFeedRef}
+                onScroll={handleScroll}
+                className="flex-1 min-h-0 p-3.5 sm:p-3 overflow-y-auto space-y-3 custom-scrollbar relative z-10 text-[11px] overscroll-contain"
+              >
+                {messages.map((msg) => (
+                  <div
+                    key={msg.id}
+                    className={`flex flex-col ${msg.sender === 'user' ? 'items-end' : 'items-start'}`}
+                  >
+                    <div className="flex items-end space-x-1.5 max-w-[90%]">
+                      {msg.sender === 'bot' && (
+                        <div className="w-6 h-6 rounded-lg bg-cyan-500/20 border border-cyan-400/30 flex items-center justify-center text-cyan-300 shrink-0 mb-0.5">
+                          <Bot className="w-3.5 h-3.5" />
+                        </div>
+                      )}
+                      <div
+                        className={`p-2.5 rounded-xl leading-relaxed ${
+                          msg.sender === 'user'
+                            ? 'bg-[#1e1e1e]/95 border border-cyan-500/50 text-[#d4d4d4] font-mono text-[11px] rounded-br-none shadow-md shadow-black/60 backdrop-blur-md'
+                            : 'bg-[#060D1E]/40 border border-white/10 backdrop-blur-md text-slate-200 rounded-bl-none shadow-sm'
+                        }`}
+                      >
+                        <div className="whitespace-pre-wrap font-sans">
+                          {msg.sender === 'user' ? (
+                            <div className="font-mono text-[11px]">
+                              <span className="text-[#569cd6] font-bold mr-1.5">$</span>
+                              {renderCodeSyntax(msg.text)}
+                            </div>
+                          ) : (
+                            msg.text.split('\n').map((line, idx) => {
+                              const parts = line.split(/(\*\*.*?\*\*)/g);
+                              return (
+                                <span key={idx} className={idx > 0 ? 'block mt-1' : ''}>
+                                  {parts.map((part, pIdx) => {
+                                    if (part.startsWith('**') && part.endsWith('**')) {
+                                      return (
+                                        <strong key={pIdx} className="font-semibold text-cyan-300">
+                                          {part.slice(2, -2)}
+                                        </strong>
+                                      );
+                                    }
+                                    return part;
+                                  })}
+                                </span>
+                              );
+                            })
+                          )}
+                        </div>
+
+                        {/* Interactive Action Chips */}
+                        {msg.actions && msg.actions.length > 0 && (
+                          <div className="mt-2 pt-1.5 border-t border-white/10 flex flex-wrap gap-1">
+                            {msg.actions.map((act, aIdx) => (
+                              act.link ? (
+                                <a
+                                  key={aIdx}
+                                  href={act.link}
+                                  download={act.download}
+                                  target={act.external ? "_blank" : "_self"}
+                                  rel={act.external ? "noopener noreferrer" : ""}
+                                  className="inline-flex items-center space-x-1 text-[9.5px] font-mono px-2 py-0.5 rounded bg-cyan-500/15 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 transition-all"
+                                >
+                                  <span>{act.label}</span>
+                                  <ExternalLink className="w-2.5 h-2.5" />
+                                </a>
+                              ) : (
+                                <button
+                                  key={aIdx}
+                                  onClick={() => handleSend(act.query)}
+                                  className="text-[9.5px] font-mono px-2 py-0.5 rounded bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 transition-all text-left"
+                                >
+                                  {act.label}
+                                </button>
+                              )
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    <span className="text-[8px] font-mono text-slate-500 mt-0.5 px-1">
+                      {msg.timestamp}
+                    </span>
+                  </div>
+                ))}
+
+                {/* Typing indicator */}
+                {isTyping && (
+                  <div className="flex items-center space-x-1.5">
+                    <div className="w-6 h-6 rounded-lg bg-cyan-500/20 border border-cyan-400/30 flex items-center justify-center text-cyan-300 shrink-0">
+                      <Bot className="w-3.5 h-3.5 animate-pulse" />
+                    </div>
+                    <div className="p-2 rounded-xl bg-[#060D1E]/40 border border-white/10 backdrop-blur-md rounded-bl-none flex items-center space-x-1">
+                      <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse delay-150" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse delay-300" />
+                    </div>
+                  </div>
+                )}
+                <div ref={messagesEndRef} />
+              </div>
+
+              {/* Floating Scroll to Bottom Button */}
+              <AnimatePresence>
+                {showScrollBottomBtn && (
+                  <motion.button
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    onClick={scrollToBottom}
+                    className="absolute bottom-16 sm:bottom-14 right-4 z-20 px-2 py-1 rounded-full bg-[#09152b]/95 border border-cyan-400/50 text-cyan-300 font-mono text-[9px] shadow-lg flex items-center space-x-1 hover:bg-cyan-500/20 transition-all cursor-pointer backdrop-blur-md"
+                  >
+                    <span>Scroll to bottom</span>
+                    <span className="text-[10px]">↓</span>
+                  </motion.button>
+                )}
+              </AnimatePresence>
+
+              {/* Input Bar with Safe Area Handling */}
+              <div className="p-2.5 sm:p-2 bg-slate-950/95 sm:bg-white/[0.03] backdrop-blur-md border-t border-white/10 relative z-10 shrink-0 pb-[calc(0.75rem+env(safe-area-inset-bottom,0px))] sm:pb-2">
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    handleSend();
+                  }}
+                  className="flex items-center space-x-1.5"
+                >
+                  <div className="relative flex-1">
+                    <input
+                      ref={inputRef}
+                      type="text"
+                      value={inputValue}
+                      onChange={(e) => setInputValue(e.target.value)}
+                      placeholder="Ask me anything about Prosun..."
+                      className="w-full bg-black/40 sm:bg-black/30 backdrop-blur-md border border-white/15 rounded-xl px-3 py-2 sm:px-2.5 sm:py-1.5 text-xs sm:text-[10.5px] text-slate-100 placeholder-slate-400 focus:outline-none focus:border-cyan-400/60 focus:ring-1 focus:ring-cyan-400/50 transition-all font-mono"
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={!inputValue.trim()}
+                    aria-label="Send Message"
+                    className="p-2.5 sm:p-2 rounded-xl bg-gradient-to-r from-brand-primary to-cyan-500 text-white disabled:opacity-40 disabled:cursor-not-allowed hover:shadow-lg hover:shadow-cyan-500/30 transition-all shrink-0 cursor-pointer"
+                  >
+                    <Send className="w-4 h-4 sm:w-3.5 sm:h-3.5" />
+                  </button>
+                </form>
+
+                <div className="hidden sm:flex items-center justify-end mt-1 px-1 text-[8.5px] text-slate-500 font-mono">
+                  <span>Press Enter ↵</span>
+                </div>
+              </div>
+
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Floating Capsule / Compact FAB Launcher */}
+        {(!isOpen || !isMobileScreen) && (
+          <motion.button
+            onClick={() => setIsOpen(!isOpen)}
+            whileHover={prefersReducedMotion ? {} : { scale: 1.05, y: -2 }}
+            whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
+            aria-label={isOpen ? "Close P.A.I. AI Assistant" : "Open P.A.I. AI Assistant"}
+            className="relative group flex items-center justify-center p-2.5 sm:px-3 sm:py-1.5 rounded-full bg-[#080E1E]/90 sm:bg-[#080E1E]/85 backdrop-blur-2xl border border-cyan-400/50 shadow-[0_6px_20px_rgba(6,182,212,0.25)] text-slate-100 hover:border-cyan-300 hover:shadow-[0_8px_25px_rgba(6,182,212,0.35)] transition-all cursor-pointer overflow-visible w-12 h-12 sm:w-auto sm:h-auto min-w-[48px] min-h-[48px] sm:min-w-0 sm:min-h-0 sm:space-x-2.5 touch-manipulation"
           >
-            <span className="absolute -top-0.5 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-cyan-300 shadow-[0_0_6px_#22d3ee] border border-white" />
-          </motion.div>
+            {/* Liquid Glass Highlight Reflection */}
+            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-white/20 via-cyan-400/10 to-transparent opacity-80 group-hover:opacity-100 transition-opacity pointer-events-none" />
 
-          {/* LIQUID GLASS RING 2: Inner Glass Orbit */}
-          <motion.div
-            animate={{ rotate: -360 }}
-            transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
-            className="absolute inset-[2px] rounded-full border border-purple-400/60 bg-gradient-to-tr from-purple-500/20 via-transparent to-cyan-300/20 backdrop-blur-sm shadow-[0_0_6px_rgba(168,85,247,0.3)] pointer-events-none"
-          >
-            <span className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-purple-300 shadow-[0_0_6px_#c084fc] border border-white" />
-          </motion.div>
+            {/* Compact Avatar Container with Concentric Orbiting Rings */}
+            <div className="relative shrink-0 z-10 w-7 h-7 flex items-center justify-center">
+              
+              {/* LIQUID GLASS RING 1: Outer Glass Orbit */}
+              <motion.div
+                animate={prefersReducedMotion ? {} : { rotate: 360 }}
+                transition={{ duration: 7, repeat: Infinity, ease: "linear" }}
+                className="absolute inset-0 rounded-full border border-cyan-400/60 bg-gradient-to-br from-cyan-400/20 via-transparent to-purple-500/20 backdrop-blur-md shadow-[0_0_8px_rgba(6,182,212,0.3)] pointer-events-none"
+              >
+                <span className="absolute -top-0.5 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-cyan-300 shadow-[0_0_6px_#22d3ee] border border-white" />
+              </motion.div>
 
-          {/* Center Robot Avatar Core */}
-          <div className="relative w-5 h-5 rounded-full bg-[#050B18] border border-cyan-300/70 backdrop-blur-xl flex items-center justify-center text-cyan-300 group-hover:border-cyan-200 transition-colors shadow-inner z-10">
-            <Bot className="w-3 h-3 text-cyan-300 group-hover:scale-110 transition-transform" />
-          </div>
+              {/* LIQUID GLASS RING 2: Inner Glass Orbit */}
+              <motion.div
+                animate={prefersReducedMotion ? {} : { rotate: -360 }}
+                transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
+                className="absolute inset-[2px] rounded-full border border-purple-400/60 bg-gradient-to-tr from-purple-500/20 via-transparent to-cyan-300/20 backdrop-blur-sm shadow-[0_0_6px_rgba(168,85,247,0.3)] pointer-events-none"
+              >
+                <span className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-purple-300 shadow-[0_0_6px_#c084fc] border border-white" />
+              </motion.div>
 
-          {/* Green Online Dot */}
-          <span className="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-emerald-400 border border-[#080E1E] z-20 shadow-[0_0_4px_#34d399]" />
-        </div>
+              {/* Center Robot Avatar Core */}
+              <div className="relative w-5 h-5 rounded-full bg-[#050B18] border border-cyan-300/70 backdrop-blur-xl flex items-center justify-center text-cyan-300 group-hover:border-cyan-200 transition-colors shadow-inner z-10">
+                <Bot className="w-3 h-3 text-cyan-300 group-hover:scale-110 transition-transform" />
+              </div>
 
-        {/* Compact Widget Label */}
-        <div className="text-left z-10 pr-0.5 font-mono">
-          <div className="flex items-center space-x-1">
-            <span className="text-[11px] font-bold tracking-wider text-slate-100 font-sans">
-              P.A.I.
-            </span>
-            <Sparkles className="w-3 h-3 text-cyan-300 fill-cyan-300/40 animate-pulse" />
-          </div>
-          <p className="text-[9px] text-cyan-300/90 group-hover:text-cyan-200 transition-colors leading-none mt-0.5">
-            {isOpen ? 'Close P.A.I.' : 'How can I assist you today?'}
-          </p>
-        </div>
-      </motion.button>
+              {/* Green Online Dot */}
+              <span className="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-emerald-400 border border-[#080E1E] z-20 shadow-[0_0_4px_#34d399]" />
+            </div>
 
-    </div>
+            {/* Desktop-only Widget Label */}
+            <div className="hidden sm:block text-left z-10 pr-0.5 font-mono">
+              <div className="flex items-center space-x-1">
+                <span className="text-[11px] font-bold tracking-wider text-slate-100 font-sans">
+                  P.A.I.
+                </span>
+                <Sparkles className="w-3 h-3 text-cyan-300 fill-cyan-300/40 animate-pulse" />
+              </div>
+              <p className="text-[9px] text-cyan-300/90 group-hover:text-cyan-200 transition-colors leading-none mt-0.5">
+                {isOpen ? 'Close P.A.I.' : 'How can I assist you today?'}
+              </p>
+            </div>
+          </motion.button>
+        )}
+
+      </div>
+    </>
   );
 };
 

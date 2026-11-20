@@ -47,7 +47,7 @@ export const App = () => {
               </main>
 
               {/* Footer Section */}
-              <footer className="mt-20 border-t border-white/5 bg-[#02050D]/30 backdrop-blur-premium py-10 transition-colors">
+              <footer className="mt-20 border-t border-white/5 bg-[#02050D]/30 backdrop-blur-premium pt-10 pb-24 sm:pb-10 transition-colors">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row justify-between items-center gap-6">
                   
                   {/* Left segment */}

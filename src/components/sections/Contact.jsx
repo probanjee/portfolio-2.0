@@ -137,7 +137,7 @@ export const Contact = () => {
           
           {/* Left Column: Believable Junior positioning details Card (Spans 5 Cols) */}
           <div className="lg:col-span-5 space-y-6">
-            <Card hoverEffect={false} className="p-6 sm:p-8 space-y-6 border border-white/[0.03] bg-[#02050D]/30 backdrop-blur-md relative overflow-hidden">
+            <Card hoverEffect={false} className="p-5 sm:p-8 space-y-6 border border-white/[0.03] bg-[#02050D]/30 backdrop-blur-md relative overflow-hidden">
               <div className="absolute top-0 right-0 w-24 h-24 bg-brand-primary/5 rounded-full filter blur-xl animate-pulse" />
               
               <div className="space-y-4">
@@ -262,7 +262,7 @@ export const Contact = () => {
 
           {/* Right Column: Secure Form (Spans 7 Cols) */}
           <div className="lg:col-span-7">
-            <Card hoverEffect={false} className="p-6 sm:p-8 border border-white/[0.03]">
+            <Card hoverEffect={false} className="p-5 sm:p-8 border border-white/[0.03]">
               <form onSubmit={handleSecureSend} className="space-y-6 font-mono text-xs">
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
@@ -278,7 +278,7 @@ export const Contact = () => {
                       placeholder="e.g. Alan Turing"
                       value={formData.name}
                       onChange={handleInputChange}
-                      className="w-full bg-[#050B14]/80 border border-white/5 focus:border-brand-primary/40 focus:ring-1 focus:ring-brand-primary/30 rounded-xl px-4 py-3.5 text-slate-100 placeholder:text-slate-700 transition-all outline-none"
+                      className="w-full bg-[#050B14]/80 border border-white/5 focus:border-brand-primary/40 focus:ring-1 focus:ring-brand-primary/30 rounded-xl px-3.5 py-3 sm:px-4 sm:py-3.5 text-slate-100 placeholder:text-slate-700 transition-all outline-none"
                     />
                   </div>
 
@@ -294,7 +294,7 @@ export const Contact = () => {
                       placeholder="e.g. operator@discovery.com"
                       value={formData.email}
                       onChange={handleInputChange}
-                      className="w-full bg-[#050B14]/80 border border-white/5 focus:border-brand-primary/40 focus:ring-1 focus:ring-brand-primary/30 rounded-xl px-4 py-3.5 text-slate-100 placeholder:text-slate-700 transition-all outline-none"
+                      className="w-full bg-[#050B14]/80 border border-white/5 focus:border-brand-primary/40 focus:ring-1 focus:ring-brand-primary/30 rounded-xl px-3.5 py-3 sm:px-4 sm:py-3.5 text-slate-100 placeholder:text-slate-700 transition-all outline-none"
                     />
                   </div>
                 </div>
@@ -310,7 +310,7 @@ export const Contact = () => {
                     placeholder="e.g. Full-Stack / C++ Software Development Opportunity"
                     value={formData.subject}
                     onChange={handleInputChange}
-                    className="w-full bg-[#050B14]/80 border border-white/5 focus:border-brand-primary/40 focus:ring-1 focus:ring-brand-primary/30 rounded-xl px-4 py-3.5 text-slate-100 placeholder:text-slate-700 transition-all outline-none"
+                    className="w-full bg-[#050B14]/80 border border-white/5 focus:border-brand-primary/40 focus:ring-1 focus:ring-brand-primary/30 rounded-xl px-3.5 py-3 sm:px-4 sm:py-3.5 text-slate-100 placeholder:text-slate-700 transition-all outline-none"
                   />
                 </div>
 
@@ -326,7 +326,7 @@ export const Contact = () => {
                     placeholder="Provide secure connection parameters..."
                     value={formData.message}
                     onChange={handleInputChange}
-                    className="w-full bg-[#050B14]/80 border border-white/5 focus:border-brand-primary/40 focus:ring-1 focus:ring-brand-primary/30 rounded-xl px-4 py-3.5 text-slate-100 placeholder:text-slate-700 transition-all outline-none resize-none"
+                    className="w-full bg-[#050B14]/80 border border-white/5 focus:border-brand-primary/40 focus:ring-1 focus:ring-brand-primary/30 rounded-xl px-3.5 py-3 sm:px-4 sm:py-3.5 text-slate-100 placeholder:text-slate-700 transition-all outline-none resize-none"
                   />
                 </div>
 
