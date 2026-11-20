@@ -11,12 +11,13 @@ export const Navbar = () => {
   const location = useLocation();
 
   // Watch key scroll viewports to drive link styling
-  const activeSection = useScrollSpy(['dashboard', 'about', 'projects', 'skills', 'contact'], 180);
+  const activeSection = useScrollSpy(['dashboard', 'about', 'projects', 'achievements', 'skills', 'contact'], 180);
 
   const navItems = [
     { name: 'Dashboard', path: '/' },
     { name: 'About', path: '/#about' },
     { name: 'Projects', path: '/#projects' },
+    { name: 'Achievements', path: '/#achievements' },
     { name: 'Skills', path: '/#skills' },
     { name: 'Contact', path: '/#contact' },
   ];

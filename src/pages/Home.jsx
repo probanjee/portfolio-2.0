@@ -3,6 +3,7 @@ import Hero from '../components/sections/Hero';
 import About from '../components/sections/About';
 import Experience from '../components/sections/Experience';
 import Projects from '../components/sections/Projects';
+import Achievements from '../components/sections/Achievements';
 import Skills from '../components/sections/Skills';
 import EducationCertifications from '../components/sections/EducationCertifications';
 import Contact from '../components/sections/Contact';
@@ -21,6 +22,9 @@ export const Home = () => {
 
       {/* 4. Distributed Core Repositories Grid */}
       <Projects />
+
+      {/* 4.5 Developer Achievements & Activity Log */}
+      <Achievements />
 
       {/* 5. low-level and high-level Skills Matrix */}
       <Skills />
