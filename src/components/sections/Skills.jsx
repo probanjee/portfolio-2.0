@@ -1,49 +1,57 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Terminal, Layout, Cpu, Shield, Globe, BookOpen } from 'lucide-react';
 import Card from '../ui/Card';
+import { 
+  getSkillIcon, 
+  CppLogo, 
+  ReactLogo, 
+  FastAPILogo, 
+  CyberSecurityBadge, 
+  DockerLogo, 
+  DSABadge 
+} from '../ui/TechLogos';
 
 export const Skills = () => {
   // 6 Premium High-Fidelity skill groups matching PRD and Phase 8
   const skillCategories = [
     {
       title: "Programming Languages",
-      icon: <Terminal className="w-4 h-4 text-brand-primary animate-pulse" />,
+      icon: <CppLogo className="w-5 h-5" />,
       skills: ["C", "C++17", "Python", "Java", "JavaScript (ES6+)", "HTML5", "CSS3", "SQL"],
       accent: "rgba(59, 130, 246, 0.25)",
       badgeColor: "group-hover:text-brand-primary group-hover:border-brand-primary/25"
     },
     {
       title: "Frontend",
-      icon: <Layout className="w-4 h-4 text-brand-secondary animate-pulse" />,
+      icon: <ReactLogo className="w-5 h-5" />,
       skills: ["React", "Tailwind CSS", "Framer Motion", "Responsive UI", "Glassmorphism", "Component Architecture", "React.js", "Angular", "Vue.js"],
       accent: "rgba(139, 92, 246, 0.25)",
       badgeColor: "group-hover:text-brand-secondary group-hover:border-brand-secondary/25"
     },
     {
       title: "Backend",
-      icon: <Cpu className="w-4 h-4 text-brand-accent animate-pulse" />,
+      icon: <FastAPILogo className="w-5 h-5" />,
       skills: ["FastAPI", "API Design", "Backend Frameworks", "Automation", "Data Processing", "REST API"],
       accent: "rgba(6, 182, 212, 0.25)",
       badgeColor: "group-hover:text-brand-accent group-hover:border-brand-accent/25"
     },
     {
       title: "Cybersecurity",
-      icon: <Shield className="w-4 h-4 text-red-400 animate-pulse" />,
+      icon: <CyberSecurityBadge className="w-5 h-5" />,
       skills: ["Cybersecurity Fundamentals", "Penetration Testing", "Security Monitoring", "Honeypot Systems", "Encryption", "Unit Testing", "Jest", "JUnit"],
       accent: "rgba(239, 68, 68, 0.25)",
       badgeColor: "group-hover:text-red-400 group-hover:border-red-400/25"
     },
     {
       title: "Tools & Platforms",
-      icon: <Globe className="w-4 h-4 text-indigo-400 animate-pulse" />,
+      icon: <DockerLogo className="w-5 h-5" />,
       skills: ["GitHub", "OpenAI API", "Power BI", "AWS", "Linux", "Kali Linux", "Microsoft Azure", "Docker", "Jira", "CI/CD"],
       accent: "rgba(129, 140, 248, 0.25)",
       badgeColor: "group-hover:text-indigo-400 group-hover:border-indigo-400/25"
     },
     {
       title: "System Concepts",
-      icon: <BookOpen className="w-4 h-4 text-emerald-400 animate-pulse" />,
+      icon: <DSABadge className="w-5 h-5" />,
       skills: ["DSA", "OOP", "STL", "Automation Systems", "IoT Integration", "Sensor Data Processing", "PostgreSQL", "MySQL", "MongoDB (NoSQL)", "Agile", "Scrum", "Kanban", "Scrumban"],
       accent: "rgba(52, 211, 153, 0.25)",
       badgeColor: "group-hover:text-emerald-400 group-hover:border-emerald-400/25"
@@ -130,7 +138,7 @@ export const Skills = () => {
                     </h4>
                   </div>
 
-                  {/* Magnetic Glowing skill chips container */}
+                  {/* Magnetic Glowing skill chips container with authentic Brand Logos */}
                   <div className="flex flex-wrap gap-2.5">
                     {cat.skills.map(skill => (
                       <motion.span
@@ -139,7 +147,7 @@ export const Skills = () => {
                           scale: 1.05,
                           y: -2,
                           color: '#fff',
-                          borderColor: cat.accent.replace('0.25', '0.5'),
+                          borderColor: cat.accent.replace('0.25', '0.6'),
                           boxShadow: `0 0 15px ${cat.accent.replace('0.25', '0.4')}`
                         }}
                         transition={{
@@ -147,9 +155,12 @@ export const Skills = () => {
                           stiffness: 420,
                           damping: 14
                         }}
-                        className="px-3 py-1.5 rounded-xl text-[10px] sm:text-xs font-mono font-bold border border-white/[0.03] bg-slate-950/50 text-slate-400 hover:bg-slate-950 hover:text-white cursor-pointer transition-colors"
+                        className="inline-flex items-center space-x-2 px-3 py-1.5 rounded-xl text-[10px] sm:text-xs font-mono font-bold border border-white/[0.06] bg-slate-950/70 text-slate-300 hover:bg-slate-900 hover:text-white cursor-pointer transition-all shadow-sm"
                       >
-                        {skill}
+                        <span className="w-4 h-4 shrink-0 flex items-center justify-center">
+                          {getSkillIcon(skill, "w-3.5 h-3.5")}
+                        </span>
+                        <span>{skill}</span>
                       </motion.span>
                     ))}
                   </div>

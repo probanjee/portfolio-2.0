@@ -1,20 +1,9 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ShieldAlert, FileKey, Activity, CodeXml, ChevronRight, Terminal, ShieldAlert as ShieldIcon, Database } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 import Button from '../ui/Button';
-
-// Icon Router mapping strings to matching SVG wrappers
-const IconMap = ({ name, className }) => {
-  const icons = {
-    ShieldAlert: <ShieldAlert className={className} />,
-    FileKey: <FileKey className={className} />,
-    Activity: <Activity className={className} />,
-    CodeXml: <CodeXml className={className} />,
-    Database: <Database className={className} />
-  };
-  return icons[name] || <Terminal className={className} />;
-};
+import { getProjectBadge } from '../ui/TechLogos';
 
 export const ProjectCard = ({ project, isFeatured }) => {
   const cardRef = useRef(null);
@@ -100,8 +89,8 @@ export const ProjectCard = ({ project, isFeatured }) => {
           
           {/* Card Header row */}
           <div className="flex items-center justify-between">
-            <div className="w-12 h-12 rounded-xl bg-slate-950 border border-white/[0.04] flex items-center justify-center shadow-inner group-hover:border-brand-primary/25 group-hover:shadow-[0_0_15px_rgba(59,130,246,0.1)] transition-all duration-500">
-              <IconMap name={project.icon} className="w-5 h-5 text-brand-primary group-hover:scale-105 transition-transform" />
+            <div className="w-12 h-12 rounded-xl bg-slate-950 border border-white/[0.06] flex items-center justify-center shadow-inner group-hover:border-brand-primary/40 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.2)] transition-all duration-500">
+              {getProjectBadge(project.id, "w-8 h-8 group-hover:scale-110 transition-transform")}
             </div>
             
             <div className="flex items-center space-x-2">

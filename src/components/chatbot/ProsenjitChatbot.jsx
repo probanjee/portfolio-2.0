@@ -367,7 +367,7 @@ const generatePAIResponse = (query, unansweredCount) => {
   // 4. Who are you / About P.A.I. itself
   if (q.includes('who are you') || q.includes('who are u') || q.includes('what are you') || q.includes('what is pai') || q.includes('who is pai') || q.includes('what is p.a.i') || q.includes('who is p.a.i') || q.includes('tell me about yourself') || q.includes('your name') || q.includes('about yourself')) {
     return {
-      text: `**Prosun Assistant (P.A.I.)**\n\nI am Prosun Banerjee's portfolio assistant, designed to help visitors explore his projects, technical expertise, and credentials.\n\n**Capabilities:**\n- Detail Prosun's **C/C++ systems engineering**, **cybersecurity platforms**, and **web applications**\n- Explain projects such as **VIGILANCE Honeypot**, **SQLSense**, and the **C++ File Cipher Engine**\n- Provide access to Prosun's **education**, **academics**, **skills**, **resume/CV**, and **direct contact channels**`,
+      text: `**P.A.I. (Prosenjit AI)**\n\nI am P.A.I., Prosun Banerjee's personal AI assistant and digital companion built directly into this portfolio.\n\n**Capabilities:**\n- Detail Prosun's **C/C++ systems engineering**, **cybersecurity platforms**, and **web applications**\n- Explain projects such as **VIGILANCE Honeypot**, **SQLSense**, and the **C++ File Cipher Engine**\n- Provide access to Prosun's **education**, **academics**, **skills**, **resume/CV**, and **direct contact channels**`,
       type: 'who_are_you',
       actions: [
         { label: 'Honeypot Platform', query: 'Tell me about Honeypot', icon: 'shield' },
@@ -524,7 +524,7 @@ const generatePAIResponse = (query, unansweredCount) => {
   // 16. Greetings / Hi / Hello
   if (q.includes('hi') || q.includes('hello') || q.includes('hey') || q.includes('hola') || q.includes('greetings')) {
     return {
-      text: `Hello. I am Prosun Banerjee's portfolio assistant. How can I assist you with Prosun's engineering projects, technical skills, or background today?`,
+      text: `Hello! I am P.A.I., Prosun Banerjee's portfolio assistant. How can I assist you with Prosun's engineering projects, technical skills, or background today?`,
       type: 'greeting',
       actions: [
         { label: 'Honeypot Platform', query: 'Tell me about Honeypot', icon: 'shield' },
@@ -558,7 +558,7 @@ const INITIAL_MESSAGES = [
   {
     id: 1,
     sender: 'bot',
-    text: `Hello. I am Prosun Banerjee's portfolio assistant. Ask me anything about Prosun's engineering projects, technical skills, education, or experience.`,
+    text: `Hello! I am P.A.I., Prosun Banerjee's portfolio assistant. Ask me anything about Prosun's engineering projects, technical skills, education, or experience.`,
     timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     actions: [
       { label: 'Honeypot Platform', query: 'Tell me about Honeypot', icon: 'shield' },
@@ -860,8 +860,8 @@ export const ProsenjitChatbot = () => {
                 <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-white/10 via-transparent to-white/5 opacity-60 pointer-events-none" />
                 <MessageSquare className="w-3.5 h-3.5 text-brand-primary shrink-0" />
                 <div className="text-left font-mono text-[10px] leading-tight">
-                  <span className="font-extrabold text-slate-200 tracking-wider uppercase">
-                    Have questions? Chat here
+                  <span className="font-extrabold text-cyan-300 tracking-wider uppercase">
+                    Have questions? Chat with P.A.I.
                   </span>
                 </div>
                 <button
@@ -916,16 +916,13 @@ export const ProsenjitChatbot = () => {
 
               {/* Header */}
               <div className="px-4 py-3 sm:px-3.5 sm:py-2.5 bg-white/[0.03] backdrop-blur-md border-b border-white/10 flex items-center justify-between relative z-10 shrink-0">
-                <div className="flex items-center space-x-2">
-                  <div className="relative w-7 h-7 sm:w-6.5 sm:h-6.5 flex items-center justify-center">
-                    <div className="w-7 h-7 sm:w-6.5 sm:h-6.5 rounded-full overflow-hidden border border-brand-primary/40 bg-slate-900 shadow-inner flex items-center justify-center">
+                <div className="flex items-center space-x-2.5">
+                  <div className="relative w-8 h-8 sm:w-7.5 sm:h-7.5 flex items-center justify-center">
+                    <div className="w-8 h-8 sm:w-7.5 sm:h-7.5 rounded-full overflow-hidden border border-cyan-400/50 bg-[#08152c] shadow-[0_0_12px_rgba(6,182,212,0.35)] flex items-center justify-center p-0.5">
                       <img
-                        src="/assets/pic-2.png"
-                        alt="Prosun Banerjee"
-                        className="w-full h-full object-cover object-center"
-                        onError={(e) => {
-                          e.currentTarget.style.display = 'none';
-                        }}
+                        src="/assets/pai.png"
+                        alt="P.A.I."
+                        className="w-full h-full object-contain drop-shadow-[0_2px_4px_rgba(6,182,212,0.4)]"
                       />
                     </div>
                     <span className="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-emerald-400 border border-[#070D1D]" />
@@ -933,9 +930,9 @@ export const ProsenjitChatbot = () => {
                   <div>
                     <div className="flex items-center space-x-1.5">
                       <h3 className="font-mono text-xs font-bold tracking-wider text-slate-100 flex items-center space-x-1">
-                        <span>Prosun Assistant</span>
+                        <span>P.A.I.</span>
                       </h3>
-                      <span className="text-[9px] font-mono px-1 py-0.5 rounded bg-brand-primary/10 text-brand-primary border border-brand-primary/30">
+                      <span className="text-[9px] font-mono px-1 py-0.5 rounded bg-cyan-500/15 text-cyan-300 border border-cyan-500/30">
                         v2.0
                       </span>
                     </div>
@@ -984,14 +981,11 @@ export const ProsenjitChatbot = () => {
                   >
                     <div className="flex items-end space-x-1.5 max-w-[90%]">
                       {msg.sender === 'bot' && (
-                        <div className="w-6 h-6 rounded-full overflow-hidden border border-brand-primary/40 bg-slate-900 shrink-0 mb-0.5 shadow-sm flex items-center justify-center">
+                        <div className="w-7 h-7 rounded-full overflow-hidden border border-cyan-400/40 bg-[#08152c] shrink-0 mb-0.5 shadow-sm flex items-center justify-center p-0.5">
                           <img
-                            src="/assets/pic-2.png"
-                            alt="Prosun"
-                            className="w-full h-full object-cover object-center"
-                            onError={(e) => {
-                              e.currentTarget.style.display = 'none';
-                            }}
+                            src="/assets/pai.png"
+                            alt="P.A.I."
+                            className="w-full h-full object-contain drop-shadow-[0_1px_3px_rgba(6,182,212,0.4)]"
                           />
                         </div>
                       )}
@@ -1069,19 +1063,16 @@ export const ProsenjitChatbot = () => {
                 {/* Typing indicator */}
                 {isTyping && (
                   <div className="flex items-center space-x-1.5">
-                    <div className="w-6 h-6 rounded-full overflow-hidden border border-brand-primary/40 bg-slate-900 shrink-0 shadow-sm flex items-center justify-center">
+                    <div className="w-7 h-7 rounded-full overflow-hidden border border-cyan-400/40 bg-[#08152c] shrink-0 shadow-sm flex items-center justify-center p-0.5">
                       <img
-                        src="/assets/pic-2.png"
-                        alt="Prosun"
-                        className="w-full h-full object-cover object-center"
-                        onError={(e) => {
-                          e.currentTarget.style.display = 'none';
-                        }}
+                        src="/assets/pai.png"
+                        alt="P.A.I."
+                        className="w-full h-full object-contain"
                       />
                     </div>
                     <div className="p-2 rounded-xl bg-[#060D1E]/40 border border-white/10 backdrop-blur-md rounded-bl-none flex items-center space-x-1">
-                      <span className="w-1.5 h-1.5 rounded-full bg-brand-primary animate-pulse" />
-                      <span className="w-1.5 h-1.5 rounded-full bg-brand-secondary animate-pulse delay-150" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse delay-150" />
                       <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse delay-300" />
                     </div>
                   </div>
@@ -1149,38 +1140,38 @@ export const ProsenjitChatbot = () => {
             onClick={() => setIsOpen(!isOpen)}
             whileHover={prefersReducedMotion ? {} : { scale: 1.05, y: -2 }}
             whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
-            aria-label={isOpen ? "Close Assistant" : "Open Assistant"}
-            className="relative group flex items-center justify-center p-2 sm:px-3 sm:py-1.5 rounded-full bg-[#080E1E]/90 sm:bg-[#080E1E]/85 backdrop-blur-2xl border border-brand-primary/40 shadow-[0_6px_20px_rgba(59,130,246,0.25)] text-slate-100 hover:border-brand-primary hover:shadow-[0_8px_25px_rgba(59,130,246,0.35)] transition-all cursor-pointer overflow-visible w-12 h-12 sm:w-auto sm:h-auto min-w-[48px] min-h-[48px] sm:min-w-0 sm:min-h-0 sm:space-x-2.5 touch-manipulation"
+            aria-label={isOpen ? "Close P.A.I." : "Open P.A.I."}
+            className="relative group flex items-center justify-center p-2 sm:px-3 sm:py-1.5 rounded-full bg-[#080E1E]/90 sm:bg-[#080E1E]/85 backdrop-blur-2xl border border-cyan-400/50 shadow-[0_6px_20px_rgba(6,182,212,0.25)] text-slate-100 hover:border-cyan-300 hover:shadow-[0_8px_25px_rgba(6,182,212,0.35)] transition-all cursor-pointer overflow-visible w-12 h-12 sm:w-auto sm:h-auto min-w-[48px] min-h-[48px] sm:min-w-0 sm:min-h-0 sm:space-x-2.5 touch-manipulation"
           >
             {/* Ambient Highlight Reflection */}
-            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-white/15 via-brand-primary/10 to-transparent opacity-80 group-hover:opacity-100 transition-opacity pointer-events-none" />
+            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-white/15 via-cyan-400/10 to-transparent opacity-80 group-hover:opacity-100 transition-opacity pointer-events-none" />
 
-            {/* Real Avatar Container with Online Indicator */}
-            <div className="relative shrink-0 z-10 w-7 h-7 sm:w-7 sm:h-7 flex items-center justify-center">
-              <div className="w-7 h-7 rounded-full overflow-hidden border border-brand-primary/50 bg-slate-900 shadow-[0_0_8px_rgba(59,130,246,0.3)] flex items-center justify-center">
+            {/* P.A.I. Robot Avatar with Online Indicator */}
+            <div className="relative shrink-0 z-10 w-8 h-8 sm:w-8 sm:h-8 flex items-center justify-center">
+              <div className="w-8 h-8 rounded-full overflow-hidden border border-cyan-400/50 bg-[#08152c] shadow-[0_0_10px_rgba(6,182,212,0.35)] flex items-center justify-center p-0.5">
                 <img
-                  src="/assets/pic-2.png"
-                  alt="Prosun Banerjee"
-                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform"
-                  onError={(e) => {
-                    e.currentTarget.style.display = 'none';
-                  }}
+                  src="/assets/pai.png"
+                  alt="P.A.I."
+                  className="w-full h-full object-contain group-hover:scale-110 transition-transform drop-shadow-[0_2px_4px_rgba(6,182,212,0.5)]"
                 />
               </div>
 
               {/* Green Online Dot */}
-              <span className="absolute -bottom-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-400 border border-[#080E1E] z-20 shadow-[0_0_4px_#34d399]" />
+              <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-400 border-2 border-[#080E1E] z-20 shadow-[0_0_4px_#34d399]" />
             </div>
 
             {/* Desktop-only Widget Label */}
             <div className="hidden sm:block text-left z-10 pr-0.5 font-mono">
-              <div className="flex items-center space-x-1">
+              <div className="flex items-center space-x-1.5">
                 <span className="text-[11px] font-bold tracking-wider text-slate-100 font-sans">
-                  Prosun Assistant
+                  P.A.I.
+                </span>
+                <span className="text-[8px] font-mono px-1 py-0.2 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
+                  AI
                 </span>
               </div>
-              <p className="text-[9px] text-brand-primary/90 group-hover:text-cyan-200 transition-colors leading-none mt-0.5">
-                {isOpen ? 'Close Assistant' : 'How can I assist you today?'}
+              <p className="text-[9px] text-cyan-300/90 group-hover:text-cyan-200 transition-colors leading-none mt-0.5">
+                {isOpen ? 'Close P.A.I.' : 'How can I assist you today?'}
               </p>
             </div>
           </motion.button>

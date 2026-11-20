@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Sun, Moon, Shield, ExternalLink } from 'lucide-react';
 import { useTheme } from '../../hooks/useTheme';
 import { useScrollSpy } from '../../hooks/useScrollSpy';
+import { ProsunBrandEmblem } from '../ui/TechLogos';
 
 export const Navbar = () => {
   const { isDark, toggleTheme } = useTheme();
@@ -64,8 +65,8 @@ export const Navbar = () => {
           
           {/* Logo Brand Frame */}
           <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="flex items-center space-x-2.5 group">
-            <div className="w-9 h-9 rounded-xl bg-brand-primary/10 flex items-center justify-center border border-brand-primary/15 group-hover:border-brand-primary/30 transition-all duration-300 shadow-[inset_0_0_12px_rgba(59,130,246,0.1)]">
-              <Shield className="w-4 h-4 text-brand-primary animate-pulse" />
+            <div className="w-9 h-9 rounded-xl bg-slate-950 border border-brand-primary/30 flex items-center justify-center group-hover:border-brand-primary/60 transition-all duration-300 shadow-[0_0_15px_rgba(59,130,246,0.15)] group-hover:shadow-[0_0_20px_rgba(59,130,246,0.35)]">
+              <ProsunBrandEmblem className="w-5 h-5" />
             </div>
             <div>
               <span className="font-mono text-xs sm:text-sm font-bold tracking-widest text-slate-200 dark:text-slate-100 uppercase">
