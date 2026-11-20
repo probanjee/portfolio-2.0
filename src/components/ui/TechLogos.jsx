@@ -339,60 +339,56 @@ export const GenericTechBadge = ({ label, className = "w-4 h-4", color = "#3B82F
 );
 
 /**
- * Universal Skill Badge Resolver
- * Returns an authentic, colorful brand SVG for any skill name.
+ * Authentic Technology Logo Resolver
+ * Returns an authentic official brand SVG ONLY for real technologies that have logos on the internet.
+ * If not found or if the item is a concept/methodology, returns null (rendered in clean text format).
  */
-export const getSkillIcon = (skillName, className = "w-4 h-4 shrink-0") => {
+export const getSkillIcon = (skillName, className = "w-3.5 h-3.5 shrink-0") => {
+  if (!skillName) return null;
   const s = skillName.toLowerCase().trim();
 
-  // Languages
+  // 1. Programming Languages with official internet logos
   if (s === 'c++' || s === 'c++17' || s === 'cpp') return <CppLogo className={className} />;
   if (s === 'c') return <CLogo className={className} />;
-  if (s.includes('python')) return <PythonLogo className={className} />;
-  if (s.includes('java') && !s.includes('script')) return <JavaLogo className={className} />;
-  if (s.includes('javascript') || s.includes('js (es6+)')) return <JavaScriptLogo className={className} />;
+  if (s === 'python') return <PythonLogo className={className} />;
+  if (s === 'java') return <JavaLogo className={className} />;
+  if (s.includes('javascript') || s === 'js' || s.includes('js (es6+)')) return <JavaScriptLogo className={className} />;
   if (s.includes('html')) return <HTML5Logo className={className} />;
-  if (s.includes('css') && !s.includes('tailwind')) return <CSS3Logo className={className} />;
-  if (s.includes('sql') && !s.includes('postgresql') && !s.includes('mysql') && !s.includes('sqlsense') && !s.includes('nosql')) return <SQLLogo className={className} />;
+  if (s === 'css' || s === 'css3') return <CSS3Logo className={className} />;
+  if (s === 'sql') return <SQLLogo className={className} />;
 
-  // Frontend
+  // 2. Frontend Frameworks & Libraries with official internet logos
   if (s === 'react' || s === 'react.js') return <ReactLogo className={className} />;
   if (s.includes('tailwind')) return <TailwindLogo className={className} />;
   if (s.includes('framer')) return <FramerMotionLogo className={className} />;
-  if (s.includes('angular')) return <AngularLogo className={className} />;
-  if (s.includes('vue')) return <VueLogo className={className} />;
-  if (s.includes('responsive')) return <ReactLogo className={className} />;
-  if (s.includes('glassmorphism')) return <FramerMotionLogo className={className} />;
-  if (s.includes('component')) return <ReactLogo className={className} />;
+  if (s === 'angular') return <AngularLogo className={className} />;
+  if (s === 'vue.js' || s === 'vue') return <VueLogo className={className} />;
 
-  // Backend
-  if (s.includes('fastapi')) return <FastAPILogo className={className} />;
-  if (s.includes('rest api') || s.includes('api design')) return <FastAPILogo className={className} />;
-  if (s.includes('docker')) return <DockerLogo className={className} />;
-  if (s.includes('aws')) return <AWSLogo className={className} />;
+  // 3. Backend Technologies & Testing Frameworks with official internet logos
+  if (s === 'fastapi') return <FastAPILogo className={className} />;
+  if (s === 'jest') return <JestLogo className={className} />;
+  if (s === 'junit') return <JUnitLogo className={className} />;
+
+  // 4. Tools, Cloud & OS Platforms with official internet logos
+  if (s === 'docker') return <DockerLogo className={className} />;
+  if (s === 'aws') return <AWSLogo className={className} />;
   if (s.includes('azure')) return <AzureLogo className={className} />;
   if (s === 'linux') return <LinuxLogo className={className} />;
   if (s.includes('kali')) return <KaliLinuxLogo className={className} />;
   if (s.includes('github')) return <GitHubLogo className={className} />;
   if (s.includes('openai')) return <OpenAILogo className={className} />;
   if (s.includes('power bi')) return <PowerBILogo className={className} />;
-  if (s.includes('jira')) return <JiraLogo className={className} />;
-  if (s.includes('ci/cd')) return <CICDLogo className={className} />;
+  if (s === 'jira') return <JiraLogo className={className} />;
 
-  // Databases & Concepts
+  // 5. Databases with official internet logos
   if (s.includes('postgres')) return <PostgreSQLLogo className={className} />;
-  if (s.includes('mysql')) return <MySQLLogo className={className} />;
+  if (s === 'mysql') return <MySQLLogo className={className} />;
   if (s.includes('mongo')) return <MongoDBLogo className={className} />;
-  if (s.includes('dsa') || s.includes('algorithm')) return <DSABadge className={className} />;
-  if (s.includes('oop') || s.includes('stl')) return <CppLogo className={className} />;
-  if (s.includes('cybersecurity') || s.includes('honeypot') || s.includes('penetration') || s.includes('encryption') || s.includes('security')) {
-    return <CyberSecurityBadge className={className} />;
-  }
-  if (s.includes('jest')) return <JestLogo className={className} />;
-  if (s.includes('junit')) return <JUnitLogo className={className} />;
-  if (s.includes('agile') || s.includes('scrum') || s.includes('kanban')) return <JiraLogo className={className} />;
 
-  return <GenericTechBadge label={skillName} className={className} />;
+  // All concepts, methodologies, architectures (Responsive UI, Glassmorphism, Component Architecture,
+  // API Design, Automation, Data Processing, REST API, Penetration Testing, Encryption, DSA, OOP, Agile, etc.)
+  // are NOT found as official logos on the internet -> return null to render in pure text format.
+  return null;
 };
 
 /**

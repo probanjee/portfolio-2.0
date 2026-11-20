@@ -4,7 +4,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Sun, Moon, Shield, ExternalLink } from 'lucide-react';
 import { useTheme } from '../../hooks/useTheme';
 import { useScrollSpy } from '../../hooks/useScrollSpy';
-import { ProsunBrandEmblem } from '../ui/TechLogos';
 
 export const Navbar = () => {
   const { isDark, toggleTheme } = useTheme();
@@ -63,16 +62,11 @@ export const Navbar = () => {
       <div className="max-w-7xl mx-auto pointer-events-auto">
         <div className="glass-panel rounded-2xl border border-white/[0.03] dark:bg-[#02050D]/30 bg-white/60 backdrop-blur-premium px-4 sm:px-6 py-3 flex items-center justify-between transition-all duration-300 shadow-[0_8px_32px_0_rgba(2,5,13,0.3)]">
           
-          {/* Logo Brand Frame */}
-          <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="flex items-center space-x-2.5 group">
-            <div className="w-9 h-9 rounded-xl bg-slate-950 border border-brand-primary/30 flex items-center justify-center group-hover:border-brand-primary/60 transition-all duration-300 shadow-[0_0_15px_rgba(59,130,246,0.15)] group-hover:shadow-[0_0_20px_rgba(59,130,246,0.35)]">
-              <ProsunBrandEmblem className="w-5 h-5" />
-            </div>
-            <div>
-              <span className="font-mono text-xs sm:text-sm font-bold tracking-widest text-slate-200 dark:text-slate-100 uppercase">
-                PROSUN<span className="text-brand-primary">.SEC</span>
-              </span>
-            </div>
+          {/* Brand Frame - Clean Typography, No Logo in Header */}
+          <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="flex items-center group py-0.5">
+            <span className="font-mono text-sm sm:text-base font-black tracking-widest text-slate-100 uppercase group-hover:text-white transition-colors">
+              PROSUN<span className="text-brand-primary">.SEC</span>
+            </span>
           </Link>
 
           {/* Desktop Navigation Links */}

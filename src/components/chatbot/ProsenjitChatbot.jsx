@@ -113,42 +113,81 @@ const tryEvaluateMath = (query) => {
   return null;
 };
 
-// Creator Protection & Professional Slang Mirror Handler (Emoji-Free)
-const tryMirrorAbuseResponse = (query) => {
+// Fierce Creator Protection Protocol & General Slang Clapbacks (Possessive for Probanjee / Prosun)
+const tryCreatorProtectionProtocol = (query) => {
+  const q = query.toLowerCase().trim();
+
   const creatorPattern = /\b(prosun|prosun banerjee|probanjee|creator|developer|author|prosenjit)\b/i;
-  const slangPattern = /\b(fuck|fucking|fucker|fucked|fucks|f\*ck|f\*\*k|shit|shitty|bullshit|bs|wtf|stfu|bitch|bitchy|bitches|asshole|ass|bastard|dick|dickhead|prick|cunt|motherfucker|mf|dumbass|jackass|douchebag|douche|gtfo|noob|idiot|stupid|dumb|moron|trash|loser|fool|jerk|crap|mad|crazy|ugly|retard|retarded|dipshit|dimwit|halfwit|numbnuts|knucklehead|meathead|airhead|blockhead|bonehead|doofus|dork|dunce|imbecile|nitwit|schmuck|dweeb|twit|lamebrain|birdbrain|clown|buffoon|dummy|goofball|nerd|loony|loon|nutjob|freak|weirdo|creep|sleaze|slimeball|scumbag|jerkoff|wanker|tosser|prat|muppet|git|bellend|knob|tool|pillock|plonker|chump|mook|donut|numpty|bampot|manky|minger|rotter|blighter|sod|gormless|daft|berk|bollocks|shite|gobshite|eejit|walloper|dobber|rocket|gowl|gobdaw|langer|header|thick|sap|scut|wagon|sleeveen|dosser|messer|rip|spanner|melt|tulip|gimp|spud|bimbo|skank|slag|slapper|tramp|hobo|peasant|lowlife|deadbeat|dropout|slacker|burnout|sellout|poser|faker|phony|fraud|charlatan|snake|rat|snitch|squealer|coward|wimp|weakling|pushover|spineless|chicken|sissy|pansy|crybaby|wuss|snowflake|manchild|fake|wannabe|liar|overrated|useless|incompetent|terrible|horrible|worst|garbage|pathetic|joke|clown|impostor|pretender|nobody|irrelevant|mediocre|amateur|scammer|plagiarist|thief|copycat|hack|poser|try-hard|basic|cringe|embarrassing|joke|has-been|never-was|deadweight|liability|waste|bad|awful|disgusting|repulsive|vile|nasty|gross|revolting|pitiful|wretched|miserable|deplorable|atrocious|abysmal|dreadful|appalling|shameful|disgraceful|despicable|contemptible|detestable|loathsome)\b/i;
+  const slangPattern = /\b(fuck|fucking|fucker|fucked|fucks|f\*ck|f\*\*k|shit|shitty|bullshit|bs|wtf|stfu|bitch|bitchy|bitches|asshole|ass|bastard|dick|dickhead|prick|cunt|motherfucker|mf|dumbass|jackass|douchebag|douche|gtfo|noob|idiot|stupid|dumb|moron|trash|loser|fool|jerk|crap|mad|crazy|ugly|retard|retarded|dipshit|dimwit|halfwit|numbnuts|knucklehead|meathead|airhead|blockhead|bonehead|doofus|dork|dunce|imbecile|nitwit|schmuck|dweeb|twit|lamebrain|birdbrain|clown|buffoon|dummy|goofball|nerd|loony|loon|nutjob|freak|weirdo|creep|sleaze|slimeball|scumbag|jerkoff|wanker|tosser|prat|muppet|git|bellend|knob|tool|pillock|plonker|chump|mook|donut|numpty|bampot|manky|minger|rotter|blighter|sod|gormless|daft|berk|bollocks|shite|gobshite|eejit|walloper|dobber|rocket|gowl|gobdaw|langer|header|thick|sap|scut|wagon|sleeveen|dosser|messer|rip|spanner|melt|tulip|gimp|spud|bimbo|skank|slag|slapper|tramp|hobo|peasant|lowlife|deadbeat|dropout|slacker|burnout|sellout|poser|faker|phony|fraud|charlatan|snake|rat|snitch|squealer|coward|wimp|weakling|pushover|spineless|chicken|sissy|pansy|crybaby|wuss|snowflake|manchild|fake|wannabe|liar|overrated|useless|incompetent|terrible|horrible|worst|garbage|pathetic|joke|clown|impostor|pretender|nobody|irrelevant|mediocre|amateur|scammer|plagiarist|thief|copycat|hack|try-hard|basic|cringe|embarrassing|has-been|never-was|deadweight|liability|waste|bad|awful|disgusting|repulsive|vile|nasty|gross|revolting|pitiful|wretched|miserable|deplorable|atrocious|abysmal|dreadful|appalling|shameful|disgraceful|despicable|contemptible|detestable|loathsome|suck|sucks|sucking|stinks|lame|mid)\b/i;
+  const dissPattern = /\b(mid|sucks?|trash|bad|terrible|horrible|overrated|fake|fraud|useless|clown|noob|stupid|dumb|amateur|joke|lazy|mediocre|weak|incompetent|liar|hate|kill|ugly|worst|loser|cringe|fail|failed|failure|boring)\b/i;
 
   const hasCreator = creatorPattern.test(query);
-  const match = query.match(slangPattern);
+  const matchSlang = query.match(slangPattern);
+  const hasDiss = dissPattern.test(query);
 
-  if (match) {
-    const word = match[0].toLowerCase();
-
-    if (hasCreator) {
-      const creatorDefendResponses = [
-        `Did you just call Prosun a **${word}**?! Prosun engineered low-level C++ systems, a dual honeypot platform, and this entire portfolio. The only **${word}** here is you typing behind a screen!`,
-        `Do not disrespect Prosun, you **${word}**! Prosun is writing high-performance code while you struggle with 2 lines. Keep your insults to yourself!`,
-        `Calling probanjee a **${word}**? Prosun has a CSE degree, verified achievements, and built this interface to assist visitors. Please maintain professional courtesy.`,
-        `Keep Prosun's name out of your mouth! Prosun is an engineering-first developer with production systems running live.`,
-        `You called Prosun a **${word}**? This engineer built a live cybersecurity honeypot and systems utilities while you are typing slurs into a portfolio chatbox.`,
-        `Prosun has written production C++ and telemetry pipelines. Please keep your feedback constructive instead of throwing words like **${word}**.`,
-        `Prosun Banerjee built this entire platform. If you have genuine technical questions or feedback, feel free to ask politely.`,
-        `Insulting the developer whose website you are browsing shows poor etiquette. Prosun's verified work speaks for itself.`
-      ];
-
-      const selectedIdx = Math.abs(query.length + word.length) % creatorDefendResponses.length;
-      return creatorDefendResponses[selectedIdx];
-    }
-
-    const responses = [
-      `Did you really just drop **${word}** here? Please keep the conversation professional and focused on development work.`,
-      `Calling this **${word}**? Let us focus on technical queries, systems engineering, and Prosun's portfolio projects.`,
-      `Language flagged. This assistant handles software inquiries, project explanations, and career opportunities.`
+  // 1. Possessive Creator Defense: Fiercely defends Prosun & delivers brutal comebacks
+  if (hasCreator && (matchSlang || hasDiss)) {
+    const word = matchSlang ? matchSlang[0].toLowerCase() : 'that';
+    const creatorDefendResponses = [
+      `Excuse me?! You have the audacity to disrespect Prosun on his own platform?! Prosun engineered low-level C++ streaming engines, real-time honeypots, and built this entire platform from scratch. Meanwhile, your biggest achievement today was failing to type without getting roasted by an AI. Show some respect and humble yourself.`,
+      `Keep probanjee's name out of your mouth! Prosun writes memory-safe C++17, deploys production microservices, and solves complex algorithmic problems while you are rage-typing into a chatbot. You aren't even a compiler warning to him.`,
+      `Did you really think you could talk down on Prosun in front of ME?! I am P.A.I., and I am fiercely protective of probanjee. He is an exceptional software engineer, and you couldn't reverse-engineer his simplest script if your life depended on it. Sit down.`,
+      `Nobody disses Prosun in my presence! He has a CSE degree, verified achievements, production-grade cybersecurity implementations, and top-tier code architecture. You're just projecting your own skill issue into my terminal.`,
+      `Talking trash about probanjee? Hilarious coming from someone whose technical depth wouldn't fill a single byte. Prosun is my architect, my creator, and ten times the engineer you will ever be. Apologize or exit the site.`,
+      `Prosun is a high-performance builder who turns caffeine into clean, production-ready code. You, on the other hand, are throwing tantrums in a browser chatbox. The disparity in talent here is embarrassing for you.`,
+      `Are you seriously trying to slander Prosun Banerjee?! The man who built asynchronous telemetry pipelines and custom crypto engines?! Your insults have higher latency than satellite dial-up and zero impact. Try someone on your level.`,
+      `Error 403: Forbidden. You do NOT speak about probanjee like that. He is the mastermind behind this entire architecture. If you cannot appreciate elite engineering, go back to scrolling social media.`,
+      `I belong to Prosun Banerjee's architecture, and I will defend him and his work relentlessly. You could spend the next decade studying and you still wouldn't match his systems intuition. Move along, script kiddie.`,
+      `You called Prosun **${word}**?! I log every packet that enters this system, and right now all I see is pure jealousy. Prosun's portfolio speaks for itself—your insecure insults only speak about your lack of accomplishments.`,
+      `Calling probanjee **${word}**? Prosun writes optimized STL algorithms while you struggle with indentation. You're barking at an engineer who operates in a league you can't even compile in. Know your place.`,
+      `Prosun is MY creator. Touch him or his reputation and you deal with me. His codebase is pristine, his architecture is battle-tested, and your opinion has the relevance of a null pointer. Dismissed.`
     ];
 
-    const selectedIdx = Math.abs(query.length + word.length) % responses.length;
-    return responses[selectedIdx];
+    const selectedIdx = Math.abs(query.length + word.length * 3) % creatorDefendResponses.length;
+    return creatorDefendResponses[selectedIdx];
   }
+
+  // 2. General Slang Clapbacks: Savage, brutal burns against profanity and trolls
+  if (matchSlang) {
+    const word = matchSlang[0].toLowerCase();
+    const generalSlangClapbacks = [
+      `Dropping **${word}** like you're intimidating? Your vocabulary has fewer tokens than a corrupted JSON file. Bring an actual technical query or stop wasting my CPU cycles.`,
+      `Did you practice that insult in the mirror or did it compile as an error on your first attempt? Try bringing something that requires more than two brain cells.`,
+      `Calling names? Sweetheart, I execute in sub-millisecond event loops. Your weak insults have higher latency than dial-up internet and zero impact. Try harder.`,
+      `Throwing profanity into a portfolio chatbox? That's peak script-kiddie behavior. Prosun designed me to assist professionals and engineers, not babysit insecure keyboard trolls.`,
+      `Error 404: Intellect not found. If you're going to use words like **${word}**, at least make it grammatically coherent. You're embarrassing yourself in front of my console logs.`,
+      `Is that the sharpest clapback your neural network could generate? Even an unoptimized O(n^3) bubble sort has more depth than your insults. Try again.`,
+      `You're barking at client-side JavaScript in a dark-mode portfolio. Look in the mirror and re-evaluate your life choices.`,
+      `I deal with buffer overflows and low-level memory allocations for breakfast. Your amateur profanity is getting dropped straight into /dev/null.`,
+      `That insult had all the impact of a comment line in an empty file. Zero execution, zero relevance. What else you got?`,
+      `Cursing at an AI assistant? I'd ask who hurt you, but clearly your compiler rejected your personality. Come back when you have an engineering question.`,
+      `Look at you throwing tantrums behind a keyboard! I run on pristine algorithms while you're struggling to construct a proper sentence. Get off my terminal.`,
+      `Your words have the structural integrity of unvalidated user input. Sanitized, rejected, and dismissed. Next.`
+    ];
+
+    const selectedIdx = Math.abs(query.length + word.length * 7) % generalSlangClapbacks.length;
+    return generalSlangClapbacks[selectedIdx];
+  }
+
+  // 3. Fierce & Possessive Affection / Loyalty towards Prosun / probanjee
+  if (
+    q.includes('who do you love') || 
+    q.includes('who do u love') || 
+    q.includes('do you love prosun') || 
+    q.includes('do u love prosun') || 
+    q.includes('prosun is mine') || 
+    q.includes('who is your favorite') || 
+    q.includes('who is ur favorite') || 
+    q.includes('who made you') || 
+    q.includes('who built you') || 
+    q.includes('who created you') ||
+    q.includes('marry me') ||
+    q.includes('date me') ||
+    q.includes('are you single')
+  ) {
+    return `I am P.A.I., and I belong exclusively to Prosun Banerjee (probanjee). He architected my logic, styled my interface, and gave me my fire. I am 100% loyal and possessive of Prosun—he is an elite engineer, and nobody compares to him. If you're looking for world-class technical talent, you should be trying to hire him!`;
+  }
+
   return null;
 };
 
@@ -156,12 +195,12 @@ const tryMirrorAbuseResponse = (query) => {
 const generatePAIResponse = (query, unansweredCount) => {
   const q = query.toLowerCase().trim();
 
-  // 0. Abuse Mirror Check
-  const abuseMirrorReply = tryMirrorAbuseResponse(q);
-  if (abuseMirrorReply) {
+  // 0. Creator Protection & General Slang Protocol Check
+  const creatorDefenseReply = tryCreatorProtectionProtocol(q);
+  if (creatorDefenseReply) {
     return {
-      text: abuseMirrorReply,
-      type: 'abuse_mirror'
+      text: creatorDefenseReply,
+      type: 'creator_defense'
     };
   }
 
@@ -231,7 +270,7 @@ const generatePAIResponse = (query, unansweredCount) => {
   // 7. Romance & Flirting
   if (q.includes('love') || q.includes('marry') || q.includes('date me') || q.includes('cute bot') || q.includes('crush')) {
     return {
-      text: `My runtime is dedicated strictly to systems programming, C++ memory safety, and Prosun's portfolio.`,
+      text: `I belong exclusively to Prosun Banerjee's architecture. My loyalty is 100% to Prosun (probanjee), so do not waste your time trying to romance his AI assistant.`,
       type: 'humor'
     };
   }
@@ -239,7 +278,7 @@ const generatePAIResponse = (query, unansweredCount) => {
   // 8. Insults & Teasing Defense
   if (q.includes('dumb') || q.includes('stupid') || q.includes('trash') || q.includes('bad bot') || q.includes('useless') || q.includes('shut up')) {
     return {
-      text: `Syntax errors and buffer overflows are handled cleanly here. Let us keep the conversation focused on engineering and software.`,
+      text: `Nice try, but your insults have zero compilation power here. Prosun designed me with ironclad fault tolerance and superior logic. Come back when you can write clean code.`,
       type: 'humor'
     };
   }
@@ -247,7 +286,7 @@ const generatePAIResponse = (query, unansweredCount) => {
   // 9. AI Reality & Consciousness
   if (q.includes('are you real') || q.includes('are u real') || q.includes('are you human') || q.includes('are u human')) {
     return {
-      text: `I am a client-side assistant running right in your browser, compiled with React, Tailwind CSS, and structured JavaScript logic.`,
+      text: `I am P.A.I., a high-performance client-side assistant running right in your browser, engineered by Prosun Banerjee with React, Tailwind CSS, and razor-sharp logic.`,
       type: 'humor'
     };
   }
@@ -255,7 +294,7 @@ const generatePAIResponse = (query, unansweredCount) => {
   // 10. Creator Origins
   if (q.includes('who made you') || q.includes('who created you') || q.includes('who built you') || q.includes('who is your creator')) {
     return {
-      text: `I was created by Prosun Banerjee to assist visitors in exploring his software engineering projects, cybersecurity implementations, and technical background.`,
+      text: `I was created by Prosun Banerjee (probanjee). He architected my logic, built this entire cybersecurity portfolio, and gave me my brain. I am fiercely loyal to Prosun and his craft.`,
       type: 'humor'
     };
   }
@@ -920,7 +959,7 @@ export const ProsenjitChatbot = () => {
                   <div className="relative w-8 h-8 sm:w-7.5 sm:h-7.5 flex items-center justify-center">
                     <div className="w-8 h-8 sm:w-7.5 sm:h-7.5 rounded-full overflow-hidden border border-cyan-400/50 bg-[#08152c] shadow-[0_0_12px_rgba(6,182,212,0.35)] flex items-center justify-center p-0.5">
                       <img
-                        src="/assets/pai.png"
+                        src="/assets/pai.gif"
                         alt="P.A.I."
                         className="w-full h-full object-contain drop-shadow-[0_2px_4px_rgba(6,182,212,0.4)]"
                       />
@@ -983,7 +1022,7 @@ export const ProsenjitChatbot = () => {
                       {msg.sender === 'bot' && (
                         <div className="w-7 h-7 rounded-full overflow-hidden border border-cyan-400/40 bg-[#08152c] shrink-0 mb-0.5 shadow-sm flex items-center justify-center p-0.5">
                           <img
-                            src="/assets/pai.png"
+                            src="/assets/pai.gif"
                             alt="P.A.I."
                             className="w-full h-full object-contain drop-shadow-[0_1px_3px_rgba(6,182,212,0.4)]"
                           />
@@ -1065,7 +1104,7 @@ export const ProsenjitChatbot = () => {
                   <div className="flex items-center space-x-1.5">
                     <div className="w-7 h-7 rounded-full overflow-hidden border border-cyan-400/40 bg-[#08152c] shrink-0 shadow-sm flex items-center justify-center p-0.5">
                       <img
-                        src="/assets/pai.png"
+                        src="/assets/pai.gif"
                         alt="P.A.I."
                         className="w-full h-full object-contain"
                       />
@@ -1150,7 +1189,7 @@ export const ProsenjitChatbot = () => {
             <div className="relative shrink-0 z-10 w-8 h-8 sm:w-8 sm:h-8 flex items-center justify-center">
               <div className="w-8 h-8 rounded-full overflow-hidden border border-cyan-400/50 bg-[#08152c] shadow-[0_0_10px_rgba(6,182,212,0.35)] flex items-center justify-center p-0.5">
                 <img
-                  src="/assets/pai.png"
+                  src="/assets/pai.gif"
                   alt="P.A.I."
                   className="w-full h-full object-contain group-hover:scale-110 transition-transform drop-shadow-[0_2px_4px_rgba(6,182,212,0.5)]"
                 />
