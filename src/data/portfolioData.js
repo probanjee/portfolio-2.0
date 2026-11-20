@@ -87,10 +87,43 @@ export const portfolioData = {
       metrics: {
         telemetry: "Real-time, <50ms delay",
         interceptors: "SSH & HTTP (Port 22/80)",
-        alerts: "Slack & Discord Webhooks"
+        alerts: "Slack & Discord Webhooks",
+        nodes: "3 Live Active Nodes"
       },
       codeLink: "https://github.com/probanjee/Honeypot-System",
-      demoLink: "#"
+      demoLink: "https://vigilance-soc-radar.vercel.app/",
+      liveDeployments: [
+        {
+          id: "nowhere",
+          title: "Nowhere Esports Portal",
+          subtitle: "Public Honeypot Decoy Hub",
+          role: "Decoy Node 01",
+          url: "https://owhere-esports-portal.vercel.app/",
+          description: "Simulated public competitive esports organization intranet acting as exposed bait to attract early reconnaissance probes.",
+          badge: "PUBLIC DECOY",
+          status: "LIVE"
+        },
+        {
+          id: "admin-nowhere",
+          title: "Admin Nowhere Console",
+          subtitle: "Privileged Target Interceptor",
+          role: "Decoy Node 02",
+          url: "https://honeypot-system-rho.vercel.app/",
+          description: "High-interaction administrative command deck capturing credential stuffing, authentication abuse, and session exploits.",
+          badge: "ADMIN TRAP",
+          status: "LIVE"
+        },
+        {
+          id: "radar",
+          title: "Vigilance SOC Radar",
+          subtitle: "Central Threat Monitoring Center",
+          role: "SOC Monitor 03",
+          url: "https://vigilance-soc-radar.vercel.app/",
+          description: "Real-time Security Operations Center dashboard visualizing attack vectors, geographical origins, Kafka logs, and threat scoring.",
+          badge: "SOC RADAR",
+          status: "LIVE"
+        }
+      ]
     },
     {
       id: "file-encryption-tool",

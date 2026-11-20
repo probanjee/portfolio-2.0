@@ -446,10 +446,13 @@ const generatePAIResponse = (query, unansweredCount) => {
   if (q.includes('honeypot') || q.includes('vigilance') || q.includes('threat') || q.includes('cybersecurity') || q.includes('security')) {
     const hp = portfolioData.projects.find(p => p.id === 'honeypot-system');
     return {
-      text: `🛡️ **VIGILANCE Enterprise Honeypot Platform**\n\n${hp?.longDescription}\n\n**Technical Architecture:**\n- **Backend Telemetry:** Python (FastAPI, Pandas) with real-time logs (<50ms delay)\n- **Message Queue:** Apache Kafka for high-throughput threat streaming\n- **Port Interceptors:** Simulated SSH & HTTP listeners (Port 22/80)\n- **Alert Dispatcher:** Dynamic Slack & Discord Webhook triggers`,
+      text: `🛡️ **VIGILANCE Enterprise Honeypot Platform**\n\n${hp?.longDescription}\n\n**Technical Architecture & Live Deployments:**\n- 🌐 **1. Nowhere Esports Portal:** Public honeypot decoy hub (Reconnaissance bait)\n- 🔒 **2. Admin Nowhere Console:** Privileged interceptor trapping credential stuffing & brute-force attacks\n- 📡 **3. Vigilance SOC Radar:** Central real-time telemetry & threat radar\n- **Backend Telemetry:** Python (FastAPI, Pandas) with real-time logs (<50ms delay)\n- **Message Queue:** Apache Kafka for high-throughput threat streaming\n- **Alert Dispatcher:** Dynamic Slack & Discord Webhook triggers`,
       type: 'project',
       actions: [
-        { label: 'View Honeypot Details', link: '/projects/honeypot-system' },
+        { label: 'View Case Study', link: '/projects/honeypot-system' },
+        { label: '📡 SOC Radar Live', link: 'https://vigilance-soc-radar.vercel.app/', external: true },
+        { label: '🎮 Nowhere Decoy', link: 'https://owhere-esports-portal.vercel.app/', external: true },
+        { label: '🔒 Admin Nowhere', link: 'https://honeypot-system-rho.vercel.app/', external: true },
         { label: 'GitHub Repository ↗', link: hp?.codeLink, external: true }
       ]
     };

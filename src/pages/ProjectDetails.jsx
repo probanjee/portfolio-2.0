@@ -5,7 +5,8 @@ import {
   ArrowLeft, Shield, Terminal, Cpu, Activity, Server,
   Database, GitBranch, Play, ExternalLink, AlertTriangle,
   CheckCircle, Globe, ShieldAlert, Zap, Layers,
-  Pause, RotateCcw, ChevronLeft, ChevronRight, Check, X
+  Pause, RotateCcw, ChevronLeft, ChevronRight, Check, X,
+  Radar
 } from 'lucide-react';
 import { portfolioData } from '../data/portfolioData';
 import { SIMULATION_DATA } from '../data/simulationEngine';
@@ -147,8 +148,8 @@ LIMIT 10;`);
     },
     'honeypot-system': {
       problem: "Traditional corporate defense architectures suffer from high opacity. Standard firewall configurations dropping network packets offer zero feedback on adversary motivations, lateral escalation strategies, or raw payload signatures. Security centers are forced into completely reactive, blind states.",
-      architecture: "A distributed micro-daemon honeypot matrix. Low-interaction virtual listeners masquerading as standard SSH and HTTP ports capture active session logs. Raw TCP/IP streams are ingested directly by concurrent Apache Kafka queues to guarantee partition buffering, which then feed a multi-threaded FastAPI engine to execute heuristic classification rules before logging signals.",
-      decisions: "Selecting Apache Kafka was a critical operational decision to buffer extreme burst loads occurring during synchronized brute-force sweeps. Choosing FastAPI's asynchronous IO loops eliminated threading latency, allowing standard servers to coordinate multi-source packet captures efficiently. A single-page React analytics interface renders the live logs visually.",
+      architecture: "A distributed enterprise deception and telemetry architecture spanning three dedicated live platforms: (1) Nowhere Esports Portal — an exposed public-facing decoy application acting as reconnaissance bait; (2) Admin Nowhere Console — an authentic simulated administrative control deck instrumented to intercept credential stuffing, SQL injections, and brute-force attempts; and (3) Vigilance SOC Radar — a centralized Security Operations Center dashboard ingesting high-throughput Kafka queues and FastAPI streams to visualize attack origins and classify threat actors in real time.",
+      decisions: "Selecting Apache Kafka was a critical operational decision to buffer extreme burst loads occurring during synchronized distributed brute-force sweeps. Choosing FastAPI's asynchronous IO loops eliminated threading latency, allowing standard servers to coordinate multi-source packet captures efficiently. The user-facing interfaces were cleanly separated into three independent live deployments: the public decoy portal (Nowhere), the simulated admin console (Admin Nowhere), and the central SOC telemetry dashboard (Vigilance SOC Radar).",
       challenges: "Massive volumetric scan traffic triggered connection thread exhaustions at the aggregation interface. This challenge was resolved by introducing an in-memory sliding window Token Bucket rate-limiter combined with persistent multi-stage logging caches to isolate telemetry processing loops from main ingestion threads."
     },
     'file-encryption-tool': {
@@ -442,6 +443,24 @@ LIMIT 10;`);
             </div>
           </div>
         )}
+
+        <div className="p-2.5 bg-slate-900 border border-white/5 rounded-xl flex flex-wrap gap-2 items-center justify-between font-mono text-[9px]">
+          <span className="text-slate-500 uppercase font-black text-[8px]">Live Deployments:</span>
+          <div className="flex flex-wrap gap-1.5">
+            <a href="https://owhere-esports-portal.vercel.app/" target="_blank" rel="noopener noreferrer" className="px-2 py-0.5 rounded bg-white/5 hover:bg-brand-primary/20 text-slate-300 hover:text-white transition-colors flex items-center gap-1">
+              <span>Nowhere Decoy</span>
+              <ExternalLink className="w-2.5 h-2.5" />
+            </a>
+            <a href="https://honeypot-system-rho.vercel.app/" target="_blank" rel="noopener noreferrer" className="px-2 py-0.5 rounded bg-white/5 hover:bg-brand-primary/20 text-slate-300 hover:text-white transition-colors flex items-center gap-1">
+              <span>Admin Nowhere</span>
+              <ExternalLink className="w-2.5 h-2.5" />
+            </a>
+            <a href="https://vigilance-soc-radar.vercel.app/" target="_blank" rel="noopener noreferrer" className="px-2 py-0.5 rounded bg-brand-primary/10 border border-brand-primary/30 text-brand-primary hover:bg-brand-primary/20 transition-colors flex items-center gap-1 font-bold">
+              <span>SOC Radar</span>
+              <ExternalLink className="w-2.5 h-2.5" />
+            </a>
+          </div>
+        </div>
       </div>
     );
   };
@@ -775,6 +794,83 @@ LIMIT 10;`);
         <p className="text-base sm:text-xl text-slate-400 leading-relaxed font-sans max-w-4xl font-medium">{project.shortDescription}</p>
       </div>
 
+      {/* 2.5 Live Deployed Platforms / Nodes */}
+      {project.liveDeployments && project.liveDeployments.length > 0 && (
+        <div className="space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-white/5">
+            <div className="flex items-center space-x-2.5">
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
+              <h2 className="text-xs font-mono font-bold uppercase tracking-widest text-brand-primary">
+                &gt;_ LIVE ENTERPRISE PLATFORM DEPLOYMENTS ({project.liveDeployments.length} ACTIVE NODES)
+              </h2>
+            </div>
+            <span className="text-[10px] font-mono text-slate-500 uppercase">
+              Operational Live Infrastructure
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {project.liveDeployments.map((node, index) => {
+              const badgeTheme = {
+                'PUBLIC DECOY': 'bg-cyan-500/10 text-cyan-400 border-cyan-500/30',
+                'ADMIN TRAP': 'bg-amber-500/10 text-amber-400 border-amber-500/30',
+                'SOC RADAR': 'bg-brand-primary/10 text-brand-primary border-brand-primary/30'
+              };
+              const nodeIcons = {
+                'nowhere': <Globe className="w-4 h-4 text-cyan-400" />,
+                'admin-nowhere': <ShieldAlert className="w-4 h-4 text-amber-400" />,
+                'radar': <Radar className="w-4 h-4 text-brand-primary" />
+              };
+              return (
+                <a
+                  key={node.id || index}
+                  href={node.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative p-5 rounded-2xl bg-[#02050D]/60 border border-white/10 hover:border-brand-primary/50 backdrop-blur-md transition-all duration-300 flex flex-col justify-between space-y-4 shadow-[0_8px_30px_rgba(0,0,0,0.5)] hover:shadow-[0_0_25px_rgba(59,130,246,0.2)] hover:-translate-y-1 cursor-pointer"
+                >
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <div className="w-10 h-10 rounded-xl bg-slate-955 border border-white/10 flex items-center justify-center group-hover:scale-110 group-hover:border-brand-primary/40 transition-all">
+                        {nodeIcons[node.id] || <Terminal className="w-4 h-4 text-brand-primary" />}
+                      </div>
+                      <span className={`text-[8px] font-mono font-black uppercase tracking-wider px-2.5 py-1 rounded-md border ${badgeTheme[node.badge] || 'bg-white/5 text-slate-300 border-white/10'}`}>
+                        {node.badge}
+                      </span>
+                    </div>
+
+                    <div>
+                      <div className="flex items-center space-x-2">
+                        <span className="text-[10px] font-mono text-brand-primary font-bold">{node.role}</span>
+                        <span className="text-slate-600 text-[10px]">•</span>
+                        <span className="text-[9px] font-mono text-emerald-400 font-bold flex items-center gap-1">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                          ONLINE
+                        </span>
+                      </div>
+                      <h3 className="text-lg font-black text-slate-100 group-hover:text-brand-primary transition-colors mt-0.5">
+                        {node.title}
+                      </h3>
+                      <p className="text-xs text-slate-400 font-sans mt-1.5 leading-relaxed">
+                        {node.description}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="pt-3 border-t border-white/5 flex items-center justify-between text-xs font-mono">
+                    <span className="text-[9px] text-slate-500 truncate max-w-[180px]">{node.url.replace('https://', '')}</span>
+                    <span className="text-[10px] font-black text-brand-primary flex items-center space-x-1.5 group-hover:translate-x-1 transition-transform uppercase tracking-wider">
+                      <span>VISIT LIVE</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </span>
+                  </div>
+                </a>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
       {/* 3. Main Split Case Study Columns */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
 
@@ -988,8 +1084,37 @@ LIMIT 10;`);
               {resolvedId !== 'file-encryption-tool' && project.demoLink && project.demoLink !== '#' && (
                 <Button variant="secondary" href={project.demoLink} className="w-full flex justify-center items-center font-bold font-mono tracking-wider text-[10px] py-3.5 border-white/5 bg-white/5 hover:border-brand-primary/20">
                   <Play className="w-4 h-4 mr-2 text-slate-400" />
-                  LAUNCH SIMULATION
+                  {resolvedId === 'honeypot-system' ? 'LAUNCH SOC RADAR DASHBOARD' : 'LAUNCH SIMULATION'}
                 </Button>
+              )}
+
+              {/* Multi-Node Live Deployments List */}
+              {project.liveDeployments && project.liveDeployments.length > 0 && (
+                <div className="space-y-2.5 pt-3 border-t border-white/5">
+                  <span className="text-[9px] font-mono text-slate-500 uppercase tracking-widest font-black block">
+                    Active Deployments ({project.liveDeployments.length})
+                  </span>
+                  <div className="space-y-2">
+                    {project.liveDeployments.map((dep, idx) => (
+                      <a
+                        key={dep.id || idx}
+                        href={dep.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full flex items-center justify-between p-2.5 rounded-xl border border-white/10 bg-slate-900/80 hover:border-brand-primary/40 hover:bg-brand-primary/5 transition-all group font-mono text-[10px]"
+                      >
+                        <div className="flex items-center space-x-2.5 min-w-0">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse flex-shrink-0" />
+                          <div className="truncate">
+                            <span className="font-bold text-slate-200 group-hover:text-brand-primary block truncate">{dep.title}</span>
+                            <span className="text-[8px] text-slate-500 block uppercase tracking-wider">{dep.role}</span>
+                          </div>
+                        </div>
+                        <ExternalLink className="w-3.5 h-3.5 text-slate-400 group-hover:text-brand-primary group-hover:translate-x-0.5 transition-transform flex-shrink-0 ml-2" />
+                      </a>
+                    ))}
+                  </div>
+                </div>
               )}
             </div>
           </Card>
