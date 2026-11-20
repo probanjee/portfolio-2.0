@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Download, Github, ShieldAlert, Cpu, Terminal, Shield, Sparkles } from 'lucide-react';
+import { Download, Github, ShieldAlert, Cpu, Terminal, Shield } from 'lucide-react';
 import { portfolioData } from '../../data/portfolioData';
 import Button from '../ui/Button';
 

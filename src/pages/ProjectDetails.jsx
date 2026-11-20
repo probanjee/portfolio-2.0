@@ -262,7 +262,7 @@ LIMIT 10;`);
             const isCompleted = nodes.findIndex(n => n.id === stepId) > index;
             return (
               <React.Fragment key={node.id}>
-                {index > 0 && <span className="text-slate-700 text-[8px]">➔</span>}
+                {index > 0 && <span className="text-slate-700 text-[8px]">&rarr;</span>}
                 <div className={`px-2 py-1 border text-[9px] font-bold transition-all ${isActive
                     ? 'bg-brand-primary border-brand-primary text-white scale-105 animate-pulse'
                     : isCompleted

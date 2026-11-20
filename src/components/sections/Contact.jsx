@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, Terminal, ShieldAlert, ShieldCheck, Cpu, RefreshCw, Mail, Github, Linkedin, MapPin, Sparkles } from 'lucide-react';
+import { Send, Terminal, ShieldAlert, ShieldCheck, Cpu, RefreshCw, Mail, Github, Linkedin, MapPin } from 'lucide-react';
 import Card from '../ui/Card';
 import Button from '../ui/Button';
 
@@ -142,7 +142,7 @@ export const Contact = () => {
               
               <div className="space-y-4">
                 <span className="text-[10px] font-mono font-bold uppercase tracking-widest bg-brand-primary/10 border border-brand-primary/15 text-brand-primary px-3 py-1.5 rounded-full inline-flex items-center">
-                  <Sparkles className="w-3 h-3 mr-1 text-brand-primary" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-2 animate-pulse" />
                   AVAILABLE_FOR_ROLES
                 </span>
                 
