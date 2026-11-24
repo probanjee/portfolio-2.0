@@ -13,8 +13,8 @@ export const Contact = () => {
   });
   const [isSending, setIsSending] = useState(false);
   const [consoleLogs, setConsoleLogs] = useState([
-    'SYSTEM DAEMON: Standing by...',
-    'PORT 443: Listener active'
+    'CONTACT FORM: Ready',
+    `TRANSPORT: ${window.location.protocol === 'https:' ? 'HTTPS active' : 'Local HTTP'}`
   ]);
   const [packetStatus, setPacketStatus] = useState('PENDING_USER_INPUT');
 
@@ -28,9 +28,9 @@ export const Contact = () => {
       let logs = [...consoleLogs];
       
       if (name === 'name' && value.length > 0) {
-        logs.push(`[RESOLVED] Client identity signature: "${value}"`);
+        logs.push(`[RESOLVED] Name field received (${value.length} characters).`);
       } else if (name === 'email' && value.includes('@')) {
-        logs.push(`[VALIDATED] Recipient channel resolved to: ${value}`);
+        logs.push('[VALIDATED] Email field format detected.');
       } else if (name === 'message' && value.length > 5) {
         logs.push(`[BUFFER] Payload integrity validated. Size: ${value.length} bytes`);
       }
@@ -43,7 +43,7 @@ export const Contact = () => {
       if (updated.name && updated.email.includes('@') && updated.message.length > 5) {
         status = 'TRANSMISSION_READY';
         if (packetStatus !== 'TRANSMISSION_READY') {
-          setConsoleLogs(prevLogs => [...prevLogs.slice(-4), '[OK] Packet validation success. AES-256 handshake ready.']);
+          setConsoleLogs(prevLogs => [...prevLogs.slice(-4), '[OK] Form validation passed. Ready to send.']);
         }
       } else {
         status = 'INTEGRITY_COMPROMISED';
@@ -59,15 +59,17 @@ export const Contact = () => {
     if (packetStatus !== 'TRANSMISSION_READY') return;
 
     setIsSending(true);
-    setPacketStatus('ENCRYPTING_PAYLOAD');
-    setConsoleLogs((prev) => [...prev.slice(-3), '▶ Initiating cryptographic tunnel...', '▶ AES-256 block-cipher encryption applied.', '▶ Launching payload packets to probanjee.sec...']);
+    setPacketStatus('TRANSMITTING');
+    setConsoleLogs((prev) => [...prev.slice(-3), '▶ Preparing contact message...', '▶ Sending through the current website connection...', '▶ Waiting for the contact service...']);
 
     try {
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {
+          'Accept': 'application/json',
           'Content-Type': 'application/json',
         },
+        credentials: 'omit',
         body: JSON.stringify(formData),
       });
 
@@ -80,8 +82,7 @@ export const Contact = () => {
           console.error('Failed to parse JSON response:', e);
         }
       } else {
-        const text = await response.text();
-        data = { error: text || 'Transmission Failed. Please try again.' };
+        data = { message: 'Contact service is unavailable. Please try again later.' };
       }
 
       if (response.ok) {
@@ -192,32 +193,34 @@ export const Contact = () => {
 
             </Card>
 
-            {/* Simulated Comms Logger Terminal */}
+            {/* Contact form status */}
             <Card hoverEffect={false} className="bg-slate-950/80 border border-brand-primary/20 p-5 font-mono text-[11px] text-emerald-400 space-y-4 shadow-[0_0_30px_rgba(59,130,246,0.05)]">
               
               <div className="flex justify-between items-center pb-2.5 border-b border-white/5 text-slate-500 text-[9px]">
                 <span className="flex items-center">
                   <Terminal className="w-3.5 h-3.5 mr-1.5 text-brand-primary" /> 
-                  SECURE_COMMS_GATEWAY.SH
+                  CONTACT_FORM_STATUS
                 </span>
-                <span className="flex items-center space-x-1 font-bold text-[8px] tracking-widest text-emerald-500">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse mr-1" />
-                  TUNNEL ACTIVE
+                <span className={`flex items-center space-x-1 font-bold text-[8px] tracking-widest ${window.location.protocol === 'https:' ? 'text-emerald-500' : 'text-amber-500'}`}>
+                  <span className={`w-1.5 h-1.5 rounded-full mr-1 ${window.location.protocol === 'https:' ? 'bg-emerald-500' : 'bg-amber-500'}`} />
+                  {window.location.protocol === 'https:' ? 'HTTPS ACTIVE' : 'LOCAL HTTP'}
                 </span>
               </div>
 
               {/* Active Dials */}
               <div className="grid grid-cols-2 gap-3 text-center">
                 <div className="p-2.5 bg-[#02050D]/50 border border-white/5 rounded-xl space-y-0.5">
-                  <span className="text-[8px] text-slate-500 block uppercase">GATEWAY STATE</span>
+                  <span className="text-[8px] text-slate-500 block uppercase">FORM STATE</span>
                   <span className={`font-black uppercase text-[10px] ${
                     packetStatus === 'DELIVERED' ? 'text-emerald-400' :
                     packetStatus === 'TRANSMISSION_READY' ? 'text-brand-primary' : 'text-amber-500'
                   }`}>{packetStatus.replace(/_/g, ' ')}</span>
                 </div>
                 <div className="p-2.5 bg-[#02050D]/50 border border-white/5 rounded-xl space-y-0.5">
-                  <span className="text-[8px] text-slate-500 block uppercase">CIPHER LAYER</span>
-                  <span className="text-brand-secondary font-black text-[10px]">AES-256 OVER SSL</span>
+                  <span className="text-[8px] text-slate-500 block uppercase">TRANSPORT</span>
+                  <span className="text-brand-secondary font-black text-[10px]">
+                    {window.location.protocol === 'https:' ? 'HTTPS / TLS ACTIVE' : 'HTTP / NO TLS'}
+                  </span>
                 </div>
               </div>
 
@@ -253,9 +256,9 @@ export const Contact = () => {
               <div className="pt-2.5 border-t border-white/5 flex justify-between items-center text-[9px] text-slate-500">
                 <span className="flex items-center uppercase tracking-wider font-bold">
                   <Cpu className="w-3.5 h-3.5 mr-1 text-brand-primary" /> 
-                  GATEWAY HASH
+                  REQUEST VALIDATION
                 </span>
-                <span className="text-slate-400 font-bold">SHA256::C4F7...B1A8</span>
+                <span className="text-slate-400 font-bold">CLIENT + SERVER</span>
               </div>
             </Card>
           </div>
@@ -275,6 +278,7 @@ export const Contact = () => {
                       required
                       type="text"
                       name="name"
+                      maxLength={120}
                       placeholder="e.g. Alan Turing"
                       value={formData.name}
                       onChange={handleInputChange}
@@ -291,6 +295,7 @@ export const Contact = () => {
                       required
                       type="email"
                       name="email"
+                      maxLength={254}
                       placeholder="e.g. operator@discovery.com"
                       value={formData.email}
                       onChange={handleInputChange}
@@ -307,6 +312,7 @@ export const Contact = () => {
                   <input
                     type="text"
                     name="subject"
+                    maxLength={160}
                     placeholder="e.g. Full-Stack / C++ Software Development Opportunity"
                     value={formData.subject}
                     onChange={handleInputChange}
@@ -323,6 +329,7 @@ export const Contact = () => {
                     required
                     rows="6"
                     name="message"
+                    maxLength={5000}
                     placeholder="Provide secure connection parameters..."
                     value={formData.message}
                     onChange={handleInputChange}
@@ -343,7 +350,7 @@ export const Contact = () => {
                     ) : packetStatus === 'TRANSMISSION_READY' ? (
                       <span className="text-brand-primary flex items-center">
                         <ShieldCheck className="w-4 h-4 mr-1.5 text-brand-primary" /> 
-                        PACKET COMPILED & SECURE
+                        FORM VALIDATED & READY
                       </span>
                     ) : (
                       <span className="text-slate-500 flex items-center uppercase tracking-widest">

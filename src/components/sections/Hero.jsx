@@ -108,7 +108,7 @@ export const Hero = () => {
             {personalInfo.tagline}
           </motion.p>
 
-          {/* SIMULATED SYSTEM STATS BOARD (For authentic Cybersecurity SaaS feel) */}
+          {/* Factual portfolio summary */}
           <motion.div
             initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -116,19 +116,18 @@ export const Hero = () => {
             className="grid grid-cols-3 gap-3 p-4 bg-slate-950/40 border border-white/[0.03] backdrop-blur-md rounded-2xl max-w-md mx-auto lg:mx-0 font-mono text-[10px] text-slate-400"
           >
             <div className="space-y-1">
-              <span className="text-slate-600 block uppercase">Threat Level</span>
+              <span className="text-slate-600 block uppercase">Projects</span>
               <span className="text-emerald-400 font-bold flex items-center">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse mr-1.5" />
-                SECURE
+                05
               </span>
             </div>
             <div className="space-y-1 border-l border-white/5 pl-3">
-              <span className="text-slate-600 block uppercase">Core Engine</span>
-              <span className="text-brand-primary font-bold">ASYNCHRONOUS</span>
+              <span className="text-slate-600 block uppercase">Primary Focus</span>
+              <span className="text-brand-primary font-bold">SECURITY</span>
             </div>
             <div className="space-y-1 border-l border-white/5 pl-3">
-              <span className="text-slate-600 block uppercase">Encryption</span>
-              <span className="text-brand-secondary font-bold">AES-256</span>
+              <span className="text-slate-600 block uppercase">Core Language</span>
+              <span className="text-brand-secondary font-bold">C++17</span>
             </div>
           </motion.div>
 

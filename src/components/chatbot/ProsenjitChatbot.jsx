@@ -90,27 +90,125 @@ const renderCodeSyntax = (text) => {
   });
 };
 
-// Safe Math Evaluator
-const tryEvaluateMath = (query) => {
-  const cleanQ = query.replace(/what is|calculate|eval|evaluate|math|problem|result of|\?/gi, '').trim();
-  const safeMathRegex = /^[\d\s\+\-\*\/\%\^\(\)\.\,sqrt|sin|cos|tan|log]+$/i;
-  
-  if (safeMathRegex.test(cleanQ) && /[\d]/.test(cleanQ) && /[\+\-\*\/\%\^\(]/.test(cleanQ)) {
-    try {
-      let expr = cleanQ.replace(/\^/g, '**');
-      expr = expr.replace(/sqrt\(([^)]+)\)/gi, 'Math.sqrt($1)');
-      expr = expr.replace(/sin\(([^)]+)\)/gi, 'Math.sin($1)');
-      expr = expr.replace(/cos\(([^)]+)\)/gi, 'Math.cos($1)');
-      
-      const result = new Function(`return (${expr})`)();
-      if (typeof result === 'number' && !isNaN(result) && isFinite(result)) {
-        return `**Mathematical Calculation Result:**\n\n\`${cleanQ}\` = **${result}**`;
-      }
-    } catch (e) {
-      // Ignore if parsing fails
+// Parse a deliberately small arithmetic language instead of evaluating JavaScript.
+const evaluateMathExpression = (source) => {
+  let cursor = 0;
+  let nesting = 0;
+  const maxNesting = 32;
+
+  const skipWhitespace = () => {
+    while (/\s/.test(source[cursor] || '')) cursor += 1;
+  };
+
+  const parseExpression = () => {
+    let value = parseTerm();
+    while (true) {
+      skipWhitespace();
+      const operator = source[cursor];
+      if (operator !== '+' && operator !== '-') return value;
+      cursor += 1;
+      const right = parseTerm();
+      value = operator === '+' ? value + right : value - right;
     }
+  };
+
+  const parseTerm = () => {
+    let value = parseUnary();
+    while (true) {
+      skipWhitespace();
+      const operator = source[cursor];
+      if (operator !== '*' && operator !== '/' && operator !== '%') return value;
+      cursor += 1;
+      const right = parseUnary();
+      if ((operator === '/' || operator === '%') && right === 0) throw new Error('Division by zero');
+      if (operator === '*') value *= right;
+      if (operator === '/') value /= right;
+      if (operator === '%') value %= right;
+    }
+  };
+
+  const parseUnary = () => {
+    skipWhitespace();
+    if (source[cursor] === '+') {
+      cursor += 1;
+      return parseUnary();
+    }
+    if (source[cursor] === '-') {
+      cursor += 1;
+      return -parseUnary();
+    }
+    return parsePower();
+  };
+
+  const parsePower = () => {
+    const base = parsePrimary();
+    skipWhitespace();
+    if (source[cursor] !== '^') return base;
+    cursor += 1;
+    return base ** parseUnary();
+  };
+
+  const parsePrimary = () => {
+    skipWhitespace();
+    if (source[cursor] === '(') {
+      cursor += 1;
+      nesting += 1;
+      if (nesting > maxNesting) throw new Error('Expression is too deeply nested');
+      const value = parseExpression();
+      skipWhitespace();
+      if (source[cursor] !== ')') throw new Error('Missing closing parenthesis');
+      cursor += 1;
+      nesting -= 1;
+      return value;
+    }
+
+    const functionName = source.slice(cursor).match(/^[a-z]+/i)?.[0]?.toLowerCase();
+    if (functionName) {
+      const functions = {
+        sqrt: Math.sqrt,
+        sin: Math.sin,
+        cos: Math.cos,
+        tan: Math.tan,
+        log: Math.log,
+      };
+      if (!Object.prototype.hasOwnProperty.call(functions, functionName)) throw new Error('Unsupported function');
+      cursor += functionName.length;
+      skipWhitespace();
+      if (source[cursor] !== '(') throw new Error('Function requires parentheses');
+      cursor += 1;
+      nesting += 1;
+      if (nesting > maxNesting) throw new Error('Expression is too deeply nested');
+      const argument = parseExpression();
+      skipWhitespace();
+      if (source[cursor] !== ')') throw new Error('Missing closing parenthesis');
+      cursor += 1;
+      nesting -= 1;
+      return functions[functionName](argument);
+    }
+
+    const number = source.slice(cursor).match(/^(?:\d+(?:\.\d*)?|\.\d+)/)?.[0];
+    if (!number) throw new Error('Expected a number');
+    cursor += number.length;
+    return Number(number);
+  };
+
+  const result = parseExpression();
+  skipWhitespace();
+  if (cursor !== source.length || !Number.isFinite(result)) throw new Error('Invalid expression');
+  return result;
+};
+
+const tryEvaluateMath = (query) => {
+  if (query.length > 256) return null;
+  const cleanQ = query.replace(/\b(?:what\s+is|calculate|evaluate|eval|math|problem|result\s+of)\b|\?/gi, '').trim();
+  if (!cleanQ || cleanQ.length > 128 || !/\d/.test(cleanQ)) return null;
+
+  try {
+    const result = evaluateMathExpression(cleanQ);
+    return `**Mathematical Calculation Result:**\n\n\`${cleanQ}\` = **${result}**`;
+  } catch {
+    return null;
   }
-  return null;
 };
 
 // Fierce Creator Protection Protocol & General Slang Clapbacks (Possessive for Probanjee / Prosun)

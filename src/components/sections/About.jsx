@@ -1,9 +1,8 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Award } from 'lucide-react';
+import { Code2, Cpu, Network, ShieldCheck } from 'lucide-react';
 import { portfolioData } from '../../data/portfolioData';
 import Card from '../ui/Card';
-import { ReactLogo, CyberSecurityBadge, CppLogo, FastAPILogo } from '../ui/TechLogos';
 
 const RotatingFocusLabel = () => {
   const [index, setIndex] = React.useState(0);
@@ -40,25 +39,25 @@ export const About = () => {
   const highlights = [
     {
       title: "Full-Stack Engineering",
-      icon: <ReactLogo className="w-6 h-6" />,
+      icon: <Code2 className="w-6 h-6" />,
       description: "Building responsive web interfaces, API-driven applications, and modern software systems with a focus on clean structure and usability.",
       status: "SECURE"
     },
     {
       title: "Cybersecurity Systems",
-      icon: <CyberSecurityBadge className="w-6 h-6" />,
+      icon: <ShieldCheck className="w-6 h-6" />,
       description: "Exploring cybersecurity fundamentals through projects like honeypot systems, threat logging, encryption tools, and security-focused architecture.",
       status: "ONLINE"
     },
     {
       title: "C/C++ Problem Solving",
-      icon: <CppLogo className="w-6 h-6" />,
+      icon: <Cpu className="w-6 h-6" />,
       description: "Practicing algorithmic thinking, object-oriented programming, STL concepts, and memory-conscious development using C and C++.",
       status: "ACTIVE"
     },
     {
       title: "API & Backend Architecture",
-      icon: <FastAPILogo className="w-6 h-6" />,
+      icon: <Network className="w-6 h-6" />,
       description: "Learning backend design through API systems, automation workflows, data handling, and scalable service-oriented project structures.",
       status: "READY"
     }

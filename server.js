@@ -5,157 +5,135 @@ import dotenv from 'dotenv';
 import rateLimit from 'express-rate-limit';
 
 dotenv.config();
-console.log('✓ Environment Variables Loaded');
-console.log(`process.cwd(): ${process.cwd()}`);
-
-if (process.env.EMAIL_USER) {
-  console.log('✓ EMAIL_USER loaded');
-}
-if (process.env.EMAIL_PASS) {
-  console.log('✓ EMAIL_PASS loaded');
-  console.log(`EMAIL_PASS length: ${process.env.EMAIL_PASS.trim().length}`);
-}
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors({
-  origin: 'http://localhost:5173'
-}));
-app.use(express.json());
+app.disable('x-powered-by');
 
-// Rate limiting: 5 requests per 15 minutes
+app.use((req, res, next) => {
+  res.set({
+    'X-Content-Type-Options': 'nosniff',
+    'X-Frame-Options': 'DENY',
+    'Referrer-Policy': 'strict-origin-when-cross-origin',
+    'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
+  });
+  next();
+});
+
+const defaultOrigins = ['http://localhost:5173', 'https://probanjee.vercel.app'];
+const allowedOrigins = new Set(
+  (process.env.CORS_ORIGINS || defaultOrigins.join(','))
+    .split(',')
+    .map((origin) => origin.trim())
+    .filter(Boolean),
+);
+
+app.use(cors({
+  origin: (origin, callback) => callback(null, !origin || allowedOrigins.has(origin)),
+  methods: ['POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type'],
+  maxAge: 600,
+}));
+
 const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 5,
-  handler: (req, res) => {
-    const errorMsg = 'Too many requests from this IP, please try again after 15 minutes';
-    console.log(`✗ Exact SMTP error:\n${errorMsg}`);
-    res.status(429).json({ success: false, message: errorMsg });
-  },
   standardHeaders: true,
   legacyHeaders: false,
+  handler: (_req, res) => {
+    res.status(429).json({
+      success: false,
+      message: 'Too many requests. Please try again after 15 minutes.',
+    });
+  },
 });
 
 app.use('/api/', apiLimiter);
-
-// Basic HTML sanitization to prevent HTML injection in emails
-const sanitizeInput = (str) => {
-  if (typeof str !== 'string') return '';
-  return str.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-};
+app.use(express.json({ limit: '32kb', strict: true }));
 
 app.post('/api/contact', async (req, res) => {
-  console.log('✓ Request Received');
+  const payload = req.body;
+  if (!payload || typeof payload !== 'object' || Array.isArray(payload)) {
+    return res.status(400).json({ success: false, message: 'Invalid request.' });
+  }
+
+  const name = typeof payload.name === 'string' ? payload.name.trim() : '';
+  const email = typeof payload.email === 'string' ? payload.email.trim() : '';
+  const subject = typeof payload.subject === 'string' ? payload.subject.trim() : '';
+  const message = typeof payload.message === 'string' ? payload.message.trim() : '';
+
+  if (!name || name.length > 120) {
+    return res.status(400).json({ success: false, message: 'Name is required and must be 120 characters or fewer.' });
+  }
+  if (email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return res.status(400).json({ success: false, message: 'Enter a valid email address.' });
+  }
+  if (subject.length > 160 || /[\r\n]/.test(subject)) {
+    return res.status(400).json({ success: false, message: 'Subject must be 160 characters or fewer.' });
+  }
+  if (message.length < 5 || message.length > 5000) {
+    return res.status(400).json({ success: false, message: 'Message must be between 5 and 5000 characters.' });
+  }
+
+  if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+    console.error('Contact delivery is unavailable: email credentials are not configured.');
+    return res.status(503).json({ success: false, message: 'Contact delivery is temporarily unavailable.' });
+  }
+
+  const escapeHtml = (value) => value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+
+  const safeName = escapeHtml(name);
+  const safeEmail = escapeHtml(email);
+  const safeSubject = escapeHtml(subject);
+  const safeMessage = escapeHtml(message).replace(/\n/g, '<br/>');
+  const timestamp = new Date().toLocaleString();
+
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.EMAIL_USER.trim(),
+      pass: process.env.EMAIL_PASS.trim(),
+    },
+  });
+
   try {
-    const { name, email, subject, message } = req.body;
-
-    // Validation
-    if (!name) {
-      const errorMsg = 'Name is required';
-      console.log(`✗ Exact SMTP error:\n${errorMsg}`);
-      return res.status(400).json({ success: false, message: errorMsg });
-    }
-    if (!email) {
-      const errorMsg = 'Email is required';
-      console.log(`✗ Exact SMTP error:\n${errorMsg}`);
-      return res.status(400).json({ success: false, message: errorMsg });
-    }
-    if (!email.includes('@')) {
-      const errorMsg = 'Invalid email address';
-      console.log(`✗ Exact SMTP error:\n${errorMsg}`);
-      return res.status(400).json({ success: false, message: errorMsg });
-    }
-    if (!message) {
-      const errorMsg = 'Message is required';
-      console.log(`✗ Exact SMTP error:\n${errorMsg}`);
-      return res.status(400).json({ success: false, message: errorMsg });
-    }
-    if (message.length < 5) {
-      const errorMsg = 'Message must be at least 5 characters long';
-      console.log(`✗ Exact SMTP error:\n${errorMsg}`);
-      return res.status(400).json({ success: false, message: errorMsg });
-    }
-
-    console.log('✓ Validation Passed');
-
-    // Step 3 - Verify Env Variables
-    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-      const errorMsg = 'Missing EMAIL_USER or EMAIL_PASS in .env';
-      console.log(`✗ Exact SMTP error:\n${errorMsg}`);
-      return res.status(400).json({ success: false, message: errorMsg });
-    }
-
-    // Nodemailer setup
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.EMAIL_USER.trim(),
-        pass: process.env.EMAIL_PASS.trim()
-      }
-    });
-
-    // Verify SMTP connection
-    try {
-      await transporter.verify();
-      console.log('✓ SMTP authentication successful');
-    } catch (verifyError) {
-      console.log(`✗ Exact SMTP error:\n${verifyError.message}`);
-      return res.status(500).json({ success: false, message: verifyError.message });
-    }
-
-    console.log('✓ Nodemailer Initialized');
-
-    // Sanitization
-    const safeName = sanitizeInput(name);
-    const safeEmail = sanitizeInput(email);
-    const safeSubject = sanitizeInput(subject || '');
-    const safeMessage = sanitizeInput(message);
-
-    // Date & Time
-    const timestamp = new Date().toLocaleString();
-
-    const mailOptions = {
-      from: process.env.EMAIL_USER,
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER.trim(),
       to: 'prosunbanerjee8@gmail.com',
-      replyTo: safeEmail,
-      subject: `Portfolio Contact - ${safeSubject || 'New Contact'}`,
-      text: `New Portfolio Contact Submission
-
-Date & Time:
-${timestamp}
-
-Sender Name:
-${safeName}
-
-Sender Email:
-${safeEmail}
-
-Subject:
-${safeSubject || 'N/A'}
-
-Message:
-${safeMessage}`,
+      replyTo: email,
+      subject: `Portfolio Contact - ${subject || 'New Contact'}`,
+      text: `New Portfolio Contact Submission\n\nDate & Time:\n${timestamp}\n\nSender Name:\n${name}\n\nSender Email:\n${email}\n\nSubject:\n${subject || 'N/A'}\n\nMessage:\n${message}`,
       html: `<h3>New Portfolio Contact Submission</h3>
-<p><strong>Date & Time:</strong><br/>${timestamp}</p>
+<p><strong>Date &amp; Time:</strong><br/>${escapeHtml(timestamp)}</p>
 <p><strong>Sender Name:</strong><br/>${safeName}</p>
 <p><strong>Sender Email:</strong><br/>${safeEmail}</p>
 <p><strong>Subject:</strong><br/>${safeSubject || 'N/A'}</p>
-<p><strong>Message:</strong><br/>${safeMessage.replace(/\n/g, '<br/>')}</p>`,
-    };
+<p><strong>Message:</strong><br/>${safeMessage}</p>`,
+    });
 
-    console.log('✓ Sending Email...');
-    await transporter.sendMail(mailOptions);
-    console.log('✓ Email Sent Successfully');
-
-    res.status(200).json({ success: true, message: 'Successfully Transmitted' });
+    return res.status(200).json({ success: true, message: 'Successfully transmitted.' });
   } catch (error) {
-    console.log(`✗ Exact Error:\n${error.message}`);
-    res.status(500).json({ success: false, message: error.message });
+    console.error('Contact delivery failed.', { code: error?.code || 'UNKNOWN' });
+    return res.status(500).json({ success: false, message: 'Message could not be sent. Please try again later.' });
   }
 });
 
-app.listen(PORT, () => {
-  console.log('✓ Server Started');
-  console.log(`Listening on port ${PORT}`);
+app.use((error, _req, res, _next) => {
+  if (res.headersSent) return;
+
+  const status = error?.type === 'entity.too.large' ? 413 : 400;
+  const message = status === 413 ? 'Request body is too large.' : 'Invalid request.';
+  return res.status(status).json({ success: false, message });
+});
+
+const HOST = process.env.HOST || (process.env.NODE_ENV === 'production' ? '0.0.0.0' : '127.0.0.1');
+
+app.listen(PORT, HOST, () => {
+  console.log(`Contact API listening on port ${PORT}`);
 });
