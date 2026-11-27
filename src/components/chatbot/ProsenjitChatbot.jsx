@@ -1181,7 +1181,7 @@ export const ProsenjitChatbot = () => {
                         v2.0
                       </span>
                     </div>
-                    <p className="text-[9px] font-mono text-emerald-900 dark:text-emerald-300 flex items-center space-x-1 font-semibold">
+                    <p className="text-[9px] font-mono text-zinc-950 dark:text-white flex items-center space-x-1.5 font-bold">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 dark:bg-emerald-400 animate-ping inline-block" />
                       <span>ONLINE</span>
                     </p>

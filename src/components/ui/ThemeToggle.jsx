@@ -60,9 +60,9 @@ export const ThemeToggle = ({ isDark, onToggle, compact = false }) => {
         }}
       >
         {isDark ? (
-          <Moon className="w-4 h-4 text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.85)]" />
+          <Moon className="w-4 h-4 text-white drop-shadow-[0_1px_6px_rgba(255,255,255,0.85)]" />
         ) : (
-          <Sun className="w-4 h-4 text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.95)]" />
+          <Sun className="w-4 h-4 text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.42)]" />
         )}
       </motion.span>
     </button>
