@@ -226,11 +226,10 @@ export const Contact = () => {
               <div className="grid grid-cols-2 gap-3 text-center">
                 <div className="p-2.5 liquid-glass-well rounded-2xl space-y-0.5">
                   <span className="text-[8px] text-slate-500 dark:text-slate-400 block uppercase">FORM STATE</span>
-                  <span className={`font-black uppercase text-[10px] ${
-                    packetStatus === 'DELIVERED' ? 'text-emerald-600 dark:text-emerald-400' :
-                    packetStatus === 'TRANSMISSION_READY' || packetStatus === 'TRANSMITTING' ? 'text-blue-600 dark:text-sky-400' :
-                    packetStatus === 'SEND_FAILED' ? 'text-red-600 dark:text-red-400' : 'text-amber-600 dark:text-amber-400'
-                  }`}>{packetStatus.replace(/_/g, ' ')}</span>
+                  <span className={`font-black uppercase text-[10px] ${packetStatus === 'DELIVERED' ? 'text-emerald-600 dark:text-emerald-400' :
+                      packetStatus === 'TRANSMISSION_READY' || packetStatus === 'TRANSMITTING' ? 'text-blue-600 dark:text-sky-400' :
+                        packetStatus === 'SEND_FAILED' ? 'text-red-600 dark:text-red-400' : 'text-amber-600 dark:text-amber-400'
+                    }`}>{packetStatus.replace(/_/g, ' ')}</span>
                 </div>
                 <div className="p-2.5 liquid-glass-well rounded-2xl space-y-0.5">
                   <span className="text-[8px] text-slate-500 dark:text-slate-400 block uppercase">TRANSPORT</span>
@@ -250,12 +249,11 @@ export const Contact = () => {
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0 }}
                       transition={{ duration: 0.15 }}
-                      className={`text-[10px] sm:text-[11px] ${
-                        log.startsWith('[SUCCESS]') || log.startsWith('[DELIVERED]') ? 'text-emerald-600 dark:text-emerald-400 font-bold' :
-                        log.startsWith('[ERROR]') ? 'text-red-600 dark:text-red-400 font-bold' :
-                        log.startsWith('[RESOLVED]') || log.startsWith('[VALIDATED]') ? 'text-sky-600 dark:text-sky-400' :
-                        log.startsWith('[OK]') ? 'text-blue-600 dark:text-blue-400' : 'text-slate-500 dark:text-slate-400'
-                      }`}
+                      className={`text-[10px] sm:text-[11px] ${log.startsWith('[SUCCESS]') || log.startsWith('[DELIVERED]') ? 'text-emerald-600 dark:text-emerald-400 font-bold' :
+                          log.startsWith('[ERROR]') ? 'text-red-600 dark:text-red-400 font-bold' :
+                            log.startsWith('[RESOLVED]') || log.startsWith('[VALIDATED]') ? 'text-sky-600 dark:text-sky-400' :
+                              log.startsWith('[OK]') ? 'text-blue-600 dark:text-blue-400' : 'text-slate-500 dark:text-slate-400'
+                        }`}
                     >
                       {log}
                     </motion.p>

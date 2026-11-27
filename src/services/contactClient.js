@@ -31,16 +31,16 @@ export const submitContactForm = async (payload, options = {}) => {
     body: JSON.stringify(payload),
   });
 
-  const data = (await readJsonSafely(response)) || {};
+    const data = (await readJsonSafely(response)) || {};
 
-  if (response.ok && data.success !== false) {
-    return {
-      provider: 'api',
-      message: data.message || 'Message delivered successfully.',
-    };
-  }
+    if (response.ok && data.success !== false) {
+      return {
+        provider: 'api',
+        message: data.message || 'Message delivered successfully.',
+      };
+    }
 
   throw new Error(
-    data.message || data.error || `Contact service unavailable (HTTP ${response.status}).`,
-  );
-};
+          data.message || data.error || `Contact service unavailable (HTTP ${response.status}).`,
+        );
+  };
