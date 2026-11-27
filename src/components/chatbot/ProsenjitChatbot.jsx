@@ -826,8 +826,10 @@ export const ProsenjitChatbot = () => {
   useEffect(() => {
     if (typeof window === 'undefined' || !window.visualViewport) return;
     const updateViewport = () => {
-      if (window.innerWidth < 640 && isOpen) {
-        setVisualViewportHeight(window.visualViewport.height);
+      const vpHeight = window.visualViewport.height;
+      const isKeyboardVisible = window.innerWidth < 640 && isOpen && vpHeight < window.innerHeight - 100;
+      if (isKeyboardVisible) {
+        setVisualViewportHeight(Math.max(260, Math.round(vpHeight - 12)));
       } else {
         setVisualViewportHeight(null);
       }
@@ -845,17 +847,21 @@ export const ProsenjitChatbot = () => {
   useEffect(() => {
     const handleFocusIn = (e) => {
       const tag = e.target?.tagName?.toLowerCase();
-      if (tag === 'input' || tag === 'textarea') {
-        if (!e.target.closest('#pai-chatbot-container')) {
-          setIsFieldFocused(true);
-        }
+      if ((tag === 'input' || tag === 'textarea') && !e.target.closest('#pai-chatbot-container')) {
+        setIsFieldFocused(true);
       }
     };
-    const handleFocusOut = (e) => {
-      const tag = e.target?.tagName?.toLowerCase();
-      if (tag === 'input' || tag === 'textarea') {
-        setIsFieldFocused(false);
-      }
+    const handleFocusOut = () => {
+      setTimeout(() => {
+        const active = document.activeElement;
+        const activeTag = active?.tagName?.toLowerCase();
+        if (
+          (activeTag !== 'input' && activeTag !== 'textarea') ||
+          active?.closest('#pai-chatbot-container')
+        ) {
+          setIsFieldFocused(false);
+        }
+      }, 0);
     };
     window.addEventListener('focusin', handleFocusIn);
     window.addEventListener('focusout', handleFocusOut);
@@ -906,8 +912,11 @@ export const ProsenjitChatbot = () => {
   useEffect(() => {
     if (isOpen) {
       setShowMangaBubble(false);
+      setIsFieldFocused(false);
       scrollToBottom();
-      setTimeout(() => inputRef.current?.focus(), 150);
+      if (window.innerWidth >= 640) {
+        setTimeout(() => inputRef.current?.focus(), 150);
+      }
     }
   }, [isOpen]);
 
@@ -1078,19 +1087,18 @@ export const ProsenjitChatbot = () => {
             exit={{ opacity: 0 }}
             transition={{ duration: prefersReducedMotion ? 0 : 0.2 }}
             onClick={() => setIsOpen(false)}
-            className="fixed inset-0 bg-black/75 backdrop-blur-sm z-40 sm:hidden"
+            className="fixed inset-0 bg-black/75 backdrop-blur-sm z-[55] sm:hidden"
             aria-hidden="true"
           />
         )}
       </AnimatePresence>
 
-      {/* Floating Container for Launcher & Desktop Floating Window */}
+      {/* Floating Container (keep transform-free so mobile fixed bottom-sheet anchors to viewport) */}
       <div
         id="pai-chatbot-container"
-        className={`fixed z-50 transition-all duration-300 ease-out pointer-events-auto flex flex-col items-end
+        className={`fixed z-[60] pointer-events-none flex flex-col items-end
           right-[calc(1rem+env(safe-area-inset-right,0px))] sm:right-5
           ${isFooterVisible ? 'bottom-[calc(5rem+env(safe-area-inset-bottom,0px))] sm:bottom-5' : 'bottom-[calc(1.25rem+env(safe-area-inset-bottom,0px))] sm:bottom-5'}
-          ${isFieldFocused && !isOpen ? 'opacity-0 pointer-events-none translate-y-4 sm:opacity-100 sm:pointer-events-auto sm:translate-y-0' : 'opacity-100 translate-y-0'}
         `}
       >
         {/* Compact Speech Bubble (Desktop Only) */}
@@ -1102,7 +1110,7 @@ export const ProsenjitChatbot = () => {
               exit={{ opacity: 0, y: 8, scale: 0.92 }}
               transition={{ duration: prefersReducedMotion ? 0 : 0.25, ease: [0.22, 1, 0.36, 1] }}
               onClick={() => setIsOpen(true)}
-              className="mb-2.5 mr-1 cursor-pointer group relative z-20 hidden sm:block"
+              className="mb-2.5 mr-1 cursor-pointer group relative z-20 hidden sm:block pointer-events-auto"
             >
               <div className="relative px-3.5 py-2 rounded-full liquid-glass-strong liquid-rim text-slate-800 dark:text-slate-100 flex items-center space-x-2 transition-transform group-hover:-translate-y-0.5">
                 <MessageSquare className="w-3.5 h-3.5 text-blue-600 dark:text-sky-400 shrink-0" />
@@ -1151,8 +1159,8 @@ export const ProsenjitChatbot = () => {
                 height: isMobileScreen && visualViewportHeight ? `${visualViewportHeight}px` : undefined,
                 maxHeight: isMobileScreen && visualViewportHeight ? `${visualViewportHeight}px` : undefined
               }}
-              className="fixed inset-x-0 bottom-0 z-50 h-[86vh] max-h-[86dvh] rounded-t-[28px] bg-white/25 dark:bg-[#040914]/25 backdrop-blur-xl backdrop-saturate-150 liquid-rim border border-white/60 dark:border-white/15 shadow-[0_-16px_48px_rgba(15,23,42,0.18),inset_0_1.5px_1px_rgba(255,255,255,0.85)] dark:shadow-[0_-16px_48px_rgba(0,0,0,0.85),inset_0_1.5px_1px_rgba(255,255,255,0.28)] flex flex-col overflow-hidden text-slate-900 dark:text-slate-100 selection:bg-blue-500/25
-                sm:static sm:inset-auto sm:mb-3 sm:w-[376px] sm:max-h-[520px] sm:h-[58vh] sm:rounded-[26px] sm:shadow-[0_20px_50px_rgba(15,23,42,0.16),inset_0_1.5px_1px_rgba(255,255,255,0.85)] dark:sm:shadow-[0_20px_52px_rgba(0,0,0,0.75),inset_0_1.5px_1px_rgba(255,255,255,0.28)]"
+              className="pointer-events-auto fixed inset-x-0 bottom-0 left-0 right-0 w-full z-[60] h-[84dvh] max-h-[84dvh] rounded-t-[28px] bg-white/25 dark:bg-[#040914]/25 backdrop-blur-xl backdrop-saturate-150 liquid-rim border border-white/60 dark:border-white/15 shadow-[0_-16px_48px_rgba(15,23,42,0.18),inset_0_1.5px_1px_rgba(255,255,255,0.85)] dark:shadow-[0_-16px_48px_rgba(0,0,0,0.85),inset_0_1.5px_1px_rgba(255,255,255,0.28)] flex flex-col overflow-hidden text-slate-900 dark:text-slate-100 selection:bg-blue-500/25
+                sm:static sm:inset-auto sm:left-auto sm:right-auto sm:mb-3 sm:w-[376px] sm:max-h-[520px] sm:h-[58vh] sm:rounded-[26px] sm:shadow-[0_20px_50px_rgba(15,23,42,0.16),inset_0_1.5px_1px_rgba(255,255,255,0.85)] dark:sm:shadow-[0_20px_52px_rgba(0,0,0,0.75),inset_0_1.5px_1px_rgba(255,255,255,0.28)]"
             >
               {/* Mobile Drag Handle */}
               <div className="w-10 h-1 rounded-full bg-slate-900/20 dark:bg-white/25 mx-auto mt-2.5 sm:hidden shrink-0" aria-hidden="true" />
@@ -1363,31 +1371,40 @@ export const ProsenjitChatbot = () => {
 
         {/* Liquid Glass Widget Launcher with 2 Concentric Orbiting Rings & Rotating Liquid Droplets */}
         {(!isOpen || !isMobileScreen) && (
-          <motion.button
-            onClick={() => setIsOpen(!isOpen)}
-            whileHover={prefersReducedMotion ? {} : { scale: 1.03, y: -2 }}
-            whileTap={prefersReducedMotion ? {} : { scale: 0.96 }}
-            aria-label={isOpen ? "Close P.A.I." : "Open P.A.I."}
-            className="relative group flex items-center justify-center p-1 sm:p-1.5 sm:pr-4 rounded-full liquid-glass-strong liquid-rim text-slate-900 dark:text-slate-100 transition-transform cursor-pointer w-[60px] h-[60px] sm:w-auto sm:h-auto sm:space-x-2.5 touch-manipulation"
+          <div
+            className={`transition-all duration-300 ease-out ${
+              isFieldFocused && !isOpen
+                ? 'opacity-0 pointer-events-none translate-y-4 sm:opacity-100 sm:pointer-events-auto sm:translate-y-0'
+                : 'opacity-100 pointer-events-auto translate-y-0'
+            }`}
           >
-            {/* 2 Concentric Liquid Glass Orbiting Rings + Droplets */}
-            <LiquidAIOrb variant="launcher" showStatus={true} animateCore={!prefersReducedMotion} />
+            <motion.button
+              type="button"
+              onClick={() => setIsOpen(!isOpen)}
+              whileHover={prefersReducedMotion ? {} : { scale: 1.03, y: -2 }}
+              whileTap={prefersReducedMotion ? {} : { scale: 0.96 }}
+              aria-label={isOpen ? "Close P.A.I." : "Open P.A.I."}
+              className="relative group flex items-center justify-center p-1 sm:p-1.5 sm:pr-4 rounded-full liquid-glass-strong liquid-rim text-slate-900 dark:text-slate-100 transition-transform cursor-pointer w-[60px] h-[60px] sm:w-auto sm:h-auto sm:space-x-2.5 touch-manipulation"
+            >
+              {/* 2 Concentric Liquid Glass Orbiting Rings + Droplets */}
+              <LiquidAIOrb variant="launcher" showStatus={true} animateCore={!prefersReducedMotion} />
 
-            {/* Desktop-only Widget Label */}
-            <div className="hidden sm:block text-left z-10 font-mono">
-              <div className="flex items-center space-x-1.5">
-                <span className="text-xs font-bold tracking-wider text-slate-900 dark:text-slate-100 font-sans">
-                  P.A.I.
-                </span>
-                <span className="text-[8px] font-mono px-1.5 py-0.5 rounded-full bg-blue-500/12 dark:bg-cyan-500/20 text-blue-700 dark:text-cyan-300 border border-blue-500/20 dark:border-cyan-500/30 font-bold">
-                  AI
-                </span>
+              {/* Desktop-only Widget Label */}
+              <div className="hidden sm:block text-left z-10 font-mono">
+                <div className="flex items-center space-x-1.5">
+                  <span className="text-xs font-bold tracking-wider text-slate-900 dark:text-slate-100 font-sans">
+                    P.A.I.
+                  </span>
+                  <span className="text-[8px] font-mono px-1.5 py-0.5 rounded-full bg-blue-500/12 dark:bg-cyan-500/20 text-blue-700 dark:text-cyan-300 border border-blue-500/20 dark:border-cyan-500/30 font-bold">
+                    AI
+                  </span>
+                </div>
+                <p className="text-[9.5px] text-blue-600 dark:text-sky-300 font-medium leading-none mt-0.5">
+                  {isOpen ? 'Close P.A.I.' : 'How can I assist you today?'}
+                </p>
               </div>
-              <p className="text-[9.5px] text-blue-600 dark:text-sky-300 font-medium leading-none mt-0.5">
-                {isOpen ? 'Close P.A.I.' : 'How can I assist you today?'}
-              </p>
-            </div>
-          </motion.button>
+            </motion.button>
+          </div>
         )}
 
       </div>
