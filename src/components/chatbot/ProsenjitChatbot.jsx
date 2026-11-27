@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { portfolioData } from '../../data/portfolioData';
 import { LeetCodeIcon } from '../ui/Icons';
+import { getCurrentWeatherReport } from '../../services/weatherService';
 
 // Action Chip Icon Router
 const ActionChipIcon = ({ type, className = "w-3 h-3 shrink-0" }) => {
@@ -290,7 +291,7 @@ const tryCreatorProtectionProtocol = (query) => {
 };
 
 // Knowledge Base Answers about Prosun Banerjee, Math, Time, & Projects (Emoji-Free)
-const generatePAIResponse = (query, unansweredCount) => {
+const generatePAIResponse = (query, unansweredCount, userName = '') => {
   const q = query.toLowerCase().trim();
 
   // 0. Creator Protection & General Slang Protocol Check
@@ -496,7 +497,7 @@ const generatePAIResponse = (query, unansweredCount) => {
   // 3. Weather Report Check
   if (q.includes('weather') || q.includes('temperature') || q.includes('rain') || q.includes('climate') || q.includes('forecast')) {
     return {
-      text: `**Regional Weather Report (West Bengal / Kolkata):**\n\n- **Temperature:** **28°C (82.4°F)**\n- **Condition:** **Partly Cloudy**\n- **Humidity:** **76%**\n- **Wind Speed:** **12 km/h SSE**\n- **UV Index:** **Moderate (4/10)**`,
+      text: 'Checking current weather. If you did not name a city, your browser may ask for location permission; coordinates will be sent to Open-Meteo. If you decline, I will use Kolkata.',
       type: 'weather'
     };
   }
@@ -504,7 +505,7 @@ const generatePAIResponse = (query, unansweredCount) => {
   // 4. Who are you / About P.A.I. itself
   if (q.includes('who are you') || q.includes('who are u') || q.includes('what are you') || q.includes('what is pai') || q.includes('who is pai') || q.includes('what is p.a.i') || q.includes('who is p.a.i') || q.includes('tell me about yourself') || q.includes('your name') || q.includes('about yourself')) {
     return {
-      text: `**P.A.I. (Prosenjit AI)**\n\nI am P.A.I., Prosun Banerjee's personal AI assistant and digital companion built directly into this portfolio.\n\n**Capabilities:**\n- Detail Prosun's **C/C++ systems engineering**, **cybersecurity platforms**, and **web applications**\n- Explain projects such as **VIGILANCE Honeypot**, **SQLSense**, and the **C++ File Cipher Engine**\n- Provide access to Prosun's **education**, **academics**, **skills**, **resume/CV**, and **direct contact channels**`,
+      text: `**P.A.I. (Partial Automated Intelligence)**\n\nI am P.A.I., Prosun Banerjee's personal portfolio assistant and digital companion.\n\n**Capabilities:**\n- Detail Prosun's **C/C++ systems engineering**, **cybersecurity platforms**, and **web applications**\n- Explain projects such as **VIGILANCE Honeypot**, **SQLSense**, and the **C++ File Cipher Engine**\n- Provide access to Prosun's **education**, **academics**, **skills**, **resume/CV**, and **direct contact channels**`,
       type: 'who_are_you',
       actions: [
         { label: 'Honeypot Platform', query: 'Tell me about Honeypot', icon: 'shield' },
@@ -661,7 +662,7 @@ const generatePAIResponse = (query, unansweredCount) => {
   // 16. Greetings / Hi / Hello
   if (q.includes('hi') || q.includes('hello') || q.includes('hey') || q.includes('hola') || q.includes('greetings')) {
     return {
-      text: `Hello! I am P.A.I., Prosun Banerjee's portfolio assistant. How can I assist you with Prosun's engineering projects, technical skills, or background today?`,
+      text: `${userName ? `Hello again, **${userName}**!` : 'Hello!'} I am P.A.I., Prosun Banerjee's portfolio assistant. How can I assist you with Prosun's engineering projects, technical skills, or background today?`,
       type: 'greeting',
       actions: [
         { label: 'Honeypot Platform', query: 'Tell me about Honeypot', icon: 'shield' },
@@ -695,7 +696,7 @@ const INITIAL_MESSAGES = [
   {
     id: 1,
     sender: 'bot',
-    text: `Hello! I am P.A.I., Prosun Banerjee's portfolio assistant. Ask me anything about Prosun's engineering projects, technical skills, education, or experience.`,
+    text: `Hello! I am P.A.I. (Partial Automated Intelligence), Prosun Banerjee's portfolio assistant. Ask about Prosun's projects, skills, education, or experience. I can also calculate expressions, share the current date and time, or check live weather. For weather, name a city or allow browser location; coordinates are sent to Open-Meteo for that lookup.`,
     timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     actions: [
       { label: 'Honeypot Platform', query: 'Tell me about Honeypot', icon: 'shield' },
@@ -905,8 +906,42 @@ export const ProsenjitChatbot = () => {
       return;
     }
 
-    setTimeout(() => {
-      const response = generatePAIResponse(textToSend, unansweredCount);
+    setTimeout(async () => {
+      const response = generatePAIResponse(textToSend, unansweredCount, userName);
+
+      if (response.type === 'weather') {
+        const weatherMessageId = Date.now() + 1;
+        const weatherMessage = {
+          id: weatherMessageId,
+          sender: 'bot',
+          text: response.text,
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        };
+        setMessages(prev => [...prev, weatherMessage]);
+        setUnhandledCount(0);
+
+        try {
+          const report = await getCurrentWeatherReport(textToSend);
+          setMessages(prev => prev.map(message => message.id === weatherMessageId
+            ? {
+                ...message,
+                text: report.text,
+                actions: report.actions,
+                timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+              }
+            : message));
+        } catch (error) {
+          setMessages(prev => prev.map(message => message.id === weatherMessageId
+            ? {
+                ...message,
+                text: error?.message || 'I could not load current weather. Please try again shortly.',
+              }
+            : message));
+        } finally {
+          setIsTyping(false);
+        }
+        return;
+      }
 
       if (response.type === 'unhandled_1') {
         setUnhandledCount(1);
@@ -929,7 +964,7 @@ export const ProsenjitChatbot = () => {
       setMessages(prev => [...prev, botMsg]);
       setIsTyping(false);
 
-      if (response.type === 'who_are_you') {
+      if (response.type === 'who_are_you' && !userName) {
         setTimeout(() => {
           setIsTyping(true);
           setTimeout(() => {
@@ -1042,8 +1077,8 @@ export const ProsenjitChatbot = () => {
                 height: isMobileScreen && visualViewportHeight ? `${visualViewportHeight}px` : undefined,
                 maxHeight: isMobileScreen && visualViewportHeight ? `${visualViewportHeight}px` : undefined
               }}
-              className="fixed inset-x-0 bottom-0 z-50 h-[86vh] max-h-[86dvh] rounded-t-3xl bg-[#040914]/95 backdrop-blur-2xl border-t border-x border-brand-primary/40 shadow-[0_-16px_48px_rgba(0,0,0,0.85)] flex flex-col overflow-hidden text-slate-100 selection:bg-brand-primary/30
-                sm:static sm:inset-auto sm:mb-3 sm:w-[360px] sm:max-h-[500px] sm:h-[55vh] sm:rounded-2xl sm:bg-[#040914]/70 sm:border sm:border-brand-primary/40 sm:shadow-[0_16px_48px_rgba(0,0,0,0.6)]"
+              className="fixed inset-x-0 bottom-0 z-50 h-[86vh] max-h-[86dvh] rounded-t-3xl bg-[#040914]/95 backdrop-blur-xl border-t border-x border-brand-primary/40 shadow-[0_-16px_48px_rgba(0,0,0,0.85)] flex flex-col overflow-hidden text-slate-100 selection:bg-brand-primary/30
+                sm:static sm:inset-auto sm:mb-3 sm:w-[360px] sm:max-h-[500px] sm:h-[55vh] sm:rounded-2xl sm:bg-[#040914]/25 sm:backdrop-blur-xl sm:border sm:border-brand-primary/40 sm:shadow-[0_16px_48px_rgba(0,0,0,0.6)]"
             >
               {/* Mobile Drag Handle */}
               <div className="w-10 h-1 rounded-full bg-white/20 mx-auto mt-2 sm:hidden shrink-0" aria-hidden="true" />
@@ -1303,8 +1338,8 @@ export const ProsenjitChatbot = () => {
                 <span className="text-[11px] font-bold tracking-wider text-slate-100 font-sans">
                   P.A.I.
                 </span>
-                <span className="text-[8px] font-mono px-1 py-0.2 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
-                  AI
+                      <span className="text-[8px] font-mono px-1 py-0.2 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
+                  P.A.I.
                 </span>
               </div>
               <p className="text-[9px] text-cyan-300/90 group-hover:text-cyan-200 transition-colors leading-none mt-0.5">
