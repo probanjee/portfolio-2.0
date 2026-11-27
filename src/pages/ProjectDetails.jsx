@@ -262,12 +262,12 @@ LIMIT 10;`);
             const isCompleted = nodes.findIndex(n => n.id === stepId) > index;
             return (
               <React.Fragment key={node.id}>
-                {index > 0 && <span className="text-slate-400 dark:text-slate-600 text-[8px]">&rarr;</span>}
+                {index > 0 && <span className="text-zinc-800 dark:text-zinc-400 text-[8px]">&rarr;</span>}
                 <div className={`px-2 py-1 rounded-full border text-[9px] font-bold transition-colors ${isActive
-                    ? 'bg-blue-600 border-blue-500 text-white'
+                    ? 'liquid-btn-primary liquid-rim border-white/60'
                     : isCompleted
-                      ? 'border-emerald-500/30 text-emerald-600 dark:text-emerald-400 bg-emerald-500/10'
-                      : 'border-slate-900/10 dark:border-white/10 text-slate-500 dark:text-slate-400'
+                      ? 'border-emerald-600/45 text-emerald-950 dark:text-emerald-300 bg-emerald-500/15'
+                      : 'liquid-glass-well text-zinc-900 dark:text-zinc-300'
                   }`}>
                   {node.label}
                 </div>

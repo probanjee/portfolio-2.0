@@ -13,7 +13,7 @@ export const SocialLinks = ({ className = '', iconClassName = 'w-4 h-4' }) => {
       href: linkedin,
       external: true,
       Icon: Linkedin,
-      hoverClass: 'hover:text-[#0A66C2] dark:hover:text-sky-400',
+      hoverClass: 'hover:text-black dark:hover:text-white',
     },
     github && {
       id: 'github',
@@ -21,7 +21,7 @@ export const SocialLinks = ({ className = '', iconClassName = 'w-4 h-4' }) => {
       href: github,
       external: true,
       Icon: Github,
-      hoverClass: 'hover:text-slate-950 dark:hover:text-white',
+      hoverClass: 'hover:text-black dark:hover:text-white',
     },
     leetcode && {
       id: 'leetcode',
@@ -29,7 +29,7 @@ export const SocialLinks = ({ className = '', iconClassName = 'w-4 h-4' }) => {
       href: leetcode,
       external: true,
       Icon: LeetCodeIcon,
-      hoverClass: 'hover:text-amber-600 dark:hover:text-amber-400',
+      hoverClass: 'hover:text-black dark:hover:text-white',
     },
     email && {
       id: 'mail',
@@ -37,7 +37,7 @@ export const SocialLinks = ({ className = '', iconClassName = 'w-4 h-4' }) => {
       href: `mailto:${email}`,
       external: false,
       Icon: Mail,
-      hoverClass: 'hover:text-blue-600 dark:hover:text-sky-400',
+      hoverClass: 'hover:text-black dark:hover:text-white',
     },
     instagram && {
       id: 'instagram',
@@ -45,7 +45,7 @@ export const SocialLinks = ({ className = '', iconClassName = 'w-4 h-4' }) => {
       href: instagram,
       external: true,
       Icon: Instagram,
-      hoverClass: 'hover:text-pink-600 dark:hover:text-pink-400',
+      hoverClass: 'hover:text-black dark:hover:text-white',
     },
   ].filter(Boolean);
 
@@ -59,7 +59,7 @@ export const SocialLinks = ({ className = '', iconClassName = 'w-4 h-4' }) => {
           rel={external ? 'noopener noreferrer' : undefined}
           title={label}
           aria-label={label}
-          className={`p-2.5 sm:p-3 rounded-full liquid-glass-well liquid-rim text-slate-600 dark:text-slate-300 ${hoverClass} hover:-translate-y-0.5 transition-[transform,color] duration-200 inline-flex items-center justify-center`}
+          className={`p-2.5 sm:p-3 rounded-full liquid-glass-well liquid-rim card-hover-effect text-zinc-950 dark:text-white ${hoverClass} hover:-translate-y-0.5 transition-[transform,color] duration-200 inline-flex items-center justify-center`}
         >
           <Icon className={iconClassName} />
         </a>

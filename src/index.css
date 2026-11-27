@@ -5,103 +5,124 @@
 @layer base {
   :root,
   :root.light {
-    --lg-page-bg: #dcebff;
-    --lg-text-primary: #0f172a;
-    --lg-text-secondary: #334155;
-    --lg-text-muted: #475569;
+    --lg-page-bg: #868a93;
+    --lg-text-primary: #090a0e;
+    --lg-text-secondary: #14161c;
+    --lg-text-muted: #1e2129;
 
-    --lg-glass-bg: linear-gradient(
-      145deg,
-      rgba(255, 255, 255, 0.68) 0%,
-      rgba(255, 255, 255, 0.34) 48%,
-      rgba(255, 255, 255, 0.54) 100%
-    );
-    --lg-glass-bg-strong: linear-gradient(
-      145deg,
-      rgba(255, 255, 255, 0.80) 0%,
-      rgba(255, 255, 255, 0.46) 50%,
-      rgba(255, 255, 255, 0.68) 100%
-    );
-    --lg-glass-bg-subtle: linear-gradient(
-      145deg,
-      rgba(255, 255, 255, 0.56) 0%,
-      rgba(255, 255, 255, 0.28) 100%
-    );
-    --lg-glass-hover: linear-gradient(
-      145deg,
-      rgba(255, 255, 255, 0.82) 0%,
-      rgba(255, 255, 255, 0.48) 50%,
-      rgba(255, 255, 255, 0.70) 100%
-    );
+    --lg-glass-bg:
+      radial-gradient(ellipse 80% 34% at 50% 0%, rgba(255, 255, 255, 0.56) 0%, rgba(255, 255, 255, 0.14) 52%, transparent 76%),
+      radial-gradient(ellipse 84% 40% at 50% 102%, rgba(255, 255, 255, 0.50) 0%, rgba(255, 255, 255, 0.14) 48%, transparent 74%),
+      linear-gradient(160deg, rgba(255, 255, 255, 0.30) 0%, rgba(255, 255, 255, 0.14) 50%, rgba(255, 255, 255, 0.24) 100%);
+    --lg-glass-bg-strong:
+      radial-gradient(ellipse 78% 34% at 50% 0%, rgba(255, 255, 255, 0.64) 0%, rgba(255, 255, 255, 0.16) 52%, transparent 76%),
+      radial-gradient(ellipse 84% 42% at 50% 102%, rgba(255, 255, 255, 0.56) 0%, rgba(255, 255, 255, 0.18) 48%, transparent 74%),
+      linear-gradient(160deg, rgba(255, 255, 255, 0.36) 0%, rgba(255, 255, 255, 0.18) 50%, rgba(255, 255, 255, 0.28) 100%);
+    --lg-glass-bg-subtle:
+      radial-gradient(ellipse 76% 36% at 50% 0%, rgba(255, 255, 255, 0.48) 0%, transparent 72%),
+      radial-gradient(ellipse 80% 42% at 50% 102%, rgba(255, 255, 255, 0.42) 0%, transparent 74%),
+      linear-gradient(160deg, rgba(255, 255, 255, 0.28) 0%, rgba(255, 255, 255, 0.16) 100%);
+    --lg-glass-hover:
+      radial-gradient(ellipse 80% 36% at 50% 0%, rgba(255, 255, 255, 0.70) 0%, rgba(255, 255, 255, 0.20) 52%, transparent 76%),
+      radial-gradient(ellipse 84% 42% at 50% 102%, rgba(255, 255, 255, 0.62) 0%, rgba(255, 255, 255, 0.20) 48%, transparent 74%),
+      linear-gradient(160deg, rgba(255, 255, 255, 0.42) 0%, rgba(255, 255, 255, 0.22) 50%, rgba(255, 255, 255, 0.34) 100%);
 
-    --lg-glass-border: rgba(255, 255, 255, 0.68);
-    --lg-rim-1: rgba(255, 255, 255, 0.98);
-    --lg-rim-2: rgba(255, 255, 255, 0.40);
-    --lg-rim-3: rgba(148, 163, 184, 0.28);
+    --lg-glass-border: rgba(255, 255, 255, 0.48);
+    --lg-rim-1: rgba(255, 255, 255, 0.96);
+    --lg-rim-2: rgba(255, 255, 255, 0.34);
+    --lg-rim-3: rgba(255, 255, 255, 0.22);
+    --lg-rim-4: rgba(255, 255, 255, 0.36);
+    --lg-rim-5: rgba(255, 255, 255, 0.94);
 
-    --lg-specular-top: rgba(255, 255, 255, 0.96);
-    --lg-specular-bottom: rgba(255, 255, 255, 0.45);
-    --lg-backdrop-filter: blur(26px) saturate(200%) brightness(1.04);
-    --lg-backdrop-filter-strong: blur(34px) saturate(215%) brightness(1.06);
+    --lg-specular-top: rgba(255, 255, 255, 0.92);
+    --lg-specular-bottom: rgba(255, 255, 255, 0.58);
+    --lg-specular-edge: rgba(255, 255, 255, 0.30);
+    --lg-backdrop-filter: blur(22px) saturate(140%) brightness(1.06);
+    --lg-backdrop-filter-strong: blur(28px) saturate(150%) brightness(1.08);
 
-    --lg-shadow: 0 16px 40px -12px rgba(30, 58, 138, 0.14), 0 4px 14px rgba(15, 23, 42, 0.05);
-    --lg-shadow-hover: 0 22px 48px -12px rgba(37, 99, 235, 0.20), 0 6px 16px rgba(15, 23, 42, 0.07);
+    --lg-shadow: 0 16px 36px -10px rgba(15, 18, 25, 0.28), 0 4px 12px rgba(15, 18, 25, 0.14);
+    --lg-shadow-hover: 0 22px 44px -10px rgba(15, 18, 25, 0.34), 0 6px 16px rgba(15, 18, 25, 0.18);
 
-    --bg-color: 220 235 255;
-    --text-primary: 15 23 42;
-    --text-secondary: 51 65 85;
-    --accent-primary: 37 99 235;
-    --accent-secondary: 79 70 229;
+    --lg-btn-primary-bg:
+      radial-gradient(ellipse 75% 35% at 50% 0%, rgba(255, 255, 255, 0.32), transparent 72%),
+      radial-gradient(ellipse 80% 42% at 50% 102%, rgba(255, 255, 255, 0.18), transparent 74%),
+      linear-gradient(160deg, rgba(24, 26, 34, 0.88) 0%, rgba(10, 12, 16, 0.94) 100%);
+    --lg-btn-primary-hover:
+      radial-gradient(ellipse 75% 35% at 50% 0%, rgba(255, 255, 255, 0.42), transparent 72%),
+      radial-gradient(ellipse 80% 42% at 50% 102%, rgba(255, 255, 255, 0.24), transparent 74%),
+      linear-gradient(160deg, rgba(32, 35, 44, 0.92) 0%, rgba(12, 14, 18, 0.96) 100%);
+    --lg-btn-primary-color: #ffffff;
+    --lg-btn-primary-border: rgba(255, 255, 255, 0.56);
+    --lg-btn-primary-shadow:
+      inset 0 1.5px 2px rgba(255, 255, 255, 0.65),
+      inset 0 -1.5px 2px rgba(255, 255, 255, 0.25),
+      0 12px 28px -6px rgba(10, 12, 18, 0.45);
+
+    --bg-color: 134 138 147;
+    --text-primary: 9 10 14;
+    --text-secondary: 20 22 28;
+    --accent-primary: 24 24 27;
+    --accent-secondary: 63 63 70;
   }
 
   :root.dark {
-    --lg-page-bg: #03050c;
-    --lg-text-primary: #f8fafc;
-    --lg-text-secondary: #cbd5e1;
-    --lg-text-muted: #94a3b8;
+    --lg-page-bg: #040406;
+    --lg-text-primary: #ffffff;
+    --lg-text-secondary: #e4e4e7;
+    --lg-text-muted: #d4d4d8;
 
-    --lg-glass-bg: linear-gradient(
-      145deg,
-      rgba(255, 255, 255, 0.08) 0%,
-      rgba(8, 12, 24, 0.52) 45%,
-      rgba(15, 23, 42, 0.42) 100%
-    );
-    --lg-glass-bg-strong: linear-gradient(
-      145deg,
-      rgba(255, 255, 255, 0.10) 0%,
-      rgba(6, 10, 20, 0.74) 48%,
-      rgba(10, 15, 30, 0.68) 100%
-    );
-    --lg-glass-bg-subtle: linear-gradient(
-      145deg,
-      rgba(255, 255, 255, 0.06) 0%,
-      rgba(5, 8, 18, 0.50) 100%
-    );
-    --lg-glass-hover: linear-gradient(
-      145deg,
-      rgba(255, 255, 255, 0.12) 0%,
-      rgba(12, 18, 36, 0.62) 48%,
-      rgba(18, 28, 52, 0.56) 100%
-    );
+    --lg-glass-bg:
+      radial-gradient(ellipse 78% 30% at 50% 0%, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.03) 50%, transparent 74%),
+      radial-gradient(ellipse 84% 38% at 50% 103%, rgba(255, 255, 255, 0.20) 0%, rgba(255, 255, 255, 0.05) 48%, transparent 74%),
+      linear-gradient(160deg, rgba(255, 255, 255, 0.06) 0%, rgba(10, 10, 14, 0.34) 50%, rgba(255, 255, 255, 0.04) 100%);
+    --lg-glass-bg-strong:
+      radial-gradient(ellipse 78% 30% at 50% 0%, rgba(255, 255, 255, 0.20) 0%, rgba(255, 255, 255, 0.04) 50%, transparent 74%),
+      radial-gradient(ellipse 84% 40% at 50% 103%, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.06) 48%, transparent 74%),
+      linear-gradient(160deg, rgba(255, 255, 255, 0.08) 0%, rgba(12, 12, 16, 0.46) 50%, rgba(255, 255, 255, 0.06) 100%);
+    --lg-glass-bg-subtle:
+      radial-gradient(ellipse 74% 32% at 50% 0%, rgba(255, 255, 255, 0.14) 0%, transparent 70%),
+      radial-gradient(ellipse 80% 40% at 50% 103%, rgba(255, 255, 255, 0.16) 0%, transparent 74%),
+      linear-gradient(160deg, rgba(255, 255, 255, 0.05) 0%, rgba(12, 12, 16, 0.30) 100%);
+    --lg-glass-hover:
+      radial-gradient(ellipse 78% 32% at 50% 0%, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.05) 50%, transparent 74%),
+      radial-gradient(ellipse 84% 40% at 50% 103%, rgba(255, 255, 255, 0.28) 0%, rgba(255, 255, 255, 0.08) 48%, transparent 74%),
+      linear-gradient(160deg, rgba(255, 255, 255, 0.10) 0%, rgba(16, 16, 22, 0.42) 50%, rgba(255, 255, 255, 0.07) 100%);
 
-    --lg-glass-border: rgba(255, 255, 255, 0.14);
-    --lg-rim-1: rgba(255, 255, 255, 0.34);
-    --lg-rim-2: rgba(255, 255, 255, 0.07);
-    --lg-rim-3: rgba(148, 163, 184, 0.16);
+    --lg-glass-border: rgba(255, 255, 255, 0.26);
+    --lg-rim-1: rgba(255, 255, 255, 0.84);
+    --lg-rim-2: rgba(255, 255, 255, 0.24);
+    --lg-rim-3: rgba(255, 255, 255, 0.14);
+    --lg-rim-4: rgba(255, 255, 255, 0.28);
+    --lg-rim-5: rgba(255, 255, 255, 0.88);
 
-    --lg-specular-top: rgba(255, 255, 255, 0.26);
-    --lg-specular-bottom: rgba(255, 255, 255, 0.05);
-    --lg-backdrop-filter: blur(26px) saturate(165%) brightness(0.95);
-    --lg-backdrop-filter-strong: blur(34px) saturate(175%) brightness(0.92);
+    --lg-specular-top: rgba(255, 255, 255, 0.46);
+    --lg-specular-bottom: rgba(255, 255, 255, 0.32);
+    --lg-specular-edge: rgba(255, 255, 255, 0.16);
+    --lg-backdrop-filter: blur(22px) saturate(125%) brightness(1.06);
+    --lg-backdrop-filter-strong: blur(28px) saturate(135%) brightness(1.08);
 
-    --lg-shadow: 0 22px 52px -14px rgba(0, 0, 0, 0.78), 0 4px 14px rgba(0, 0, 0, 0.45);
-    --lg-shadow-hover: 0 26px 60px -12px rgba(0, 0, 0, 0.88), 0 0 24px rgba(59, 130, 246, 0.14);
+    --lg-shadow: 0 20px 48px -12px rgba(0, 0, 0, 0.90), 0 6px 16px rgba(0, 0, 0, 0.65);
+    --lg-shadow-hover: 0 24px 56px -10px rgba(0, 0, 0, 0.95), 0 0 24px rgba(255, 255, 255, 0.12);
 
-    --bg-color: 3 5 12;
-    --text-primary: 248 250 252;
-    --text-secondary: 203 213 225;
-    --accent-primary: 59 130 246;
-    --accent-secondary: 99 102 241;
+    --lg-btn-primary-bg:
+      radial-gradient(ellipse 75% 35% at 50% 0%, rgba(255, 255, 255, 1), transparent 72%),
+      radial-gradient(ellipse 80% 42% at 50% 102%, rgba(255, 255, 255, 0.72), transparent 74%),
+      linear-gradient(160deg, rgba(255, 255, 255, 0.95) 0%, rgba(230, 232, 236, 0.90) 100%);
+    --lg-btn-primary-hover:
+      radial-gradient(ellipse 75% 35% at 50% 0%, rgba(255, 255, 255, 1), transparent 72%),
+      linear-gradient(160deg, #ffffff 0%, rgba(244, 244, 246, 0.96) 100%);
+    --lg-btn-primary-color: #06070a;
+    --lg-btn-primary-border: rgba(255, 255, 255, 0.90);
+    --lg-btn-primary-shadow:
+      inset 0 2px 3px rgba(255, 255, 255, 1),
+      inset 0 -2px 3px rgba(255, 255, 255, 0.6),
+      0 12px 30px -6px rgba(255, 255, 255, 0.24);
+
+    --bg-color: 4 4 6;
+    --text-primary: 255 255 255;
+    --text-secondary: 228 228 231;
+    --accent-primary: 255 255 255;
+    --accent-secondary: 212 212 216;
   }
 
   html,
@@ -173,7 +194,7 @@
 }
 
 @layer components {
-  /* Glossy Apple iOS 26/27 Liquid Glass Surface */
+  /* Optical iOS-style Liquid Glass Surface */
   .glass-panel {
     background: var(--lg-glass-bg);
     backdrop-filter: var(--lg-backdrop-filter);
@@ -181,8 +202,9 @@
     border: 1px solid var(--lg-glass-border);
     box-shadow:
       var(--lg-shadow),
-      inset 0 1.5px 1px var(--lg-specular-top),
-      inset 0 -1px 1px var(--lg-specular-bottom);
+      inset 0 1.5px 2px var(--lg-specular-top),
+      inset 0 -1.5px 2px var(--lg-specular-bottom),
+      inset 1px 0 1px var(--lg-specular-edge);
     transition:
       transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
       background 0.25s ease,
@@ -197,21 +219,23 @@
     border: 1px solid var(--lg-glass-border);
     box-shadow:
       var(--lg-shadow),
-      inset 0 1.5px 1px var(--lg-specular-top),
-      inset 0 -1px 1px var(--lg-specular-bottom);
+      inset 0 2px 2.5px var(--lg-specular-top),
+      inset 0 -1.5px 2.5px var(--lg-specular-bottom),
+      inset 1.5px 0 2px var(--lg-specular-edge);
   }
 
   .liquid-glass-well {
     background: var(--lg-glass-bg-subtle);
-    backdrop-filter: blur(18px) saturate(185%) brightness(1.04);
-    -webkit-backdrop-filter: blur(18px) saturate(185%) brightness(1.04);
+    backdrop-filter: blur(20px) saturate(195%) brightness(1.06);
+    -webkit-backdrop-filter: blur(20px) saturate(195%) brightness(1.06);
     border: 1px solid var(--lg-glass-border);
     box-shadow:
-      inset 0 1px 0.5px var(--lg-specular-top),
-      inset 0 -1px 0.5px var(--lg-specular-bottom);
+      inset 0 1.5px 1.5px var(--lg-specular-top),
+      inset 0 -1px 1.5px var(--lg-specular-bottom),
+      0 4px 12px -4px rgba(15, 23, 42, 0.16);
   }
 
-  /* Directional Specular Fresnel Rim */
+  /* Directional Optical Specular & Prismatic Rim */
   .glow-border,
   .liquid-rim {
     position: relative;
@@ -223,12 +247,14 @@
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    padding: 1px;
+    padding: 1.25px;
     background: linear-gradient(
       135deg,
       var(--lg-rim-1) 0%,
-      var(--lg-rim-2) 45%,
-      var(--lg-rim-3) 100%
+      var(--lg-rim-2) 26%,
+      var(--lg-rim-3) 50%,
+      var(--lg-rim-4) 74%,
+      var(--lg-rim-5) 100%
     );
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
@@ -246,65 +272,52 @@
     background: var(--lg-glass-hover);
     box-shadow:
       var(--lg-shadow-hover),
-      inset 0 1.5px 1px var(--lg-specular-top),
-      inset 0 -1px 1px var(--lg-specular-bottom);
+      inset 0 2px 2.5px var(--lg-specular-top),
+      inset 0 -1.5px 2px var(--lg-specular-bottom),
+      inset 1.5px 0 2px var(--lg-specular-edge);
   }
 
-  /* Tinted Liquid Glass Primary Pill Button */
+  /* Frosted High-Contrast Monochrome Liquid Glass Primary Pill Button */
   .liquid-btn-primary {
-    background: linear-gradient(
-      155deg,
-      rgba(96, 165, 250, 0.72) 0%,
-      rgba(59, 130, 246, 0.78) 52%,
-      rgba(37, 99, 235, 0.88) 100%
-    );
-    color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.42);
-    box-shadow:
-      inset 0 1.5px 1px rgba(255, 255, 255, 0.65),
-      inset 0 -1.5px 2px rgba(147, 197, 253, 0.30),
-      0 12px 28px -8px rgba(37, 99, 235, 0.45);
-    backdrop-filter: blur(22px) saturate(200%);
-    -webkit-backdrop-filter: blur(22px) saturate(200%);
+    background: var(--lg-btn-primary-bg);
+    color: var(--lg-btn-primary-color);
+    border: 1px solid var(--lg-btn-primary-border);
+    box-shadow: var(--lg-btn-primary-shadow);
+    backdrop-filter: blur(22px) saturate(140%);
+    -webkit-backdrop-filter: blur(22px) saturate(140%);
   }
 
   .liquid-btn-primary:hover {
-    background: linear-gradient(
-      155deg,
-      rgba(125, 211, 252, 0.80) 0%,
-      rgba(59, 130, 246, 0.86) 52%,
-      rgba(37, 99, 235, 0.94) 100%
-    );
-    box-shadow:
-      inset 0 1.5px 1px rgba(255, 255, 255, 0.75),
-      inset 0 -1.5px 2px rgba(147, 197, 253, 0.40),
-      0 14px 32px -8px rgba(37, 99, 235, 0.55);
+    background: var(--lg-btn-primary-hover);
+    transform: translateY(-1px);
   }
 
-  /* Clear Frosted Liquid Glass Secondary Pill Button */
+  /* Clear Crystal Liquid Glass Secondary Pill Button */
   .liquid-btn-secondary {
     background: var(--lg-glass-bg-strong);
     color: var(--lg-text-primary);
     border: 1px solid var(--lg-glass-border);
     box-shadow:
-      inset 0 1.5px 1px var(--lg-specular-top),
-      inset 0 -1px 1px var(--lg-specular-bottom),
-      0 8px 22px -6px rgba(15, 23, 42, 0.16);
-    backdrop-filter: var(--lg-backdrop-filter);
-    -webkit-backdrop-filter: var(--lg-backdrop-filter);
+      inset 0 2px 2.5px var(--lg-specular-top),
+      inset 0 -1.5px 2px var(--lg-specular-bottom),
+      inset 1.5px 0 2px var(--lg-specular-edge),
+      var(--lg-shadow);
+    backdrop-filter: var(--lg-backdrop-filter-strong);
+    -webkit-backdrop-filter: var(--lg-backdrop-filter-strong);
   }
 
   .liquid-btn-secondary:hover {
     background: var(--lg-glass-hover);
     box-shadow:
-      inset 0 1.5px 1px var(--lg-specular-top),
-      inset 0 -1px 1px var(--lg-specular-bottom),
-      0 12px 28px -6px rgba(37, 99, 235, 0.18);
+      inset 0 2px 3px var(--lg-specular-top),
+      inset 0 -1.5px 2.5px var(--lg-specular-bottom),
+      inset 1.5px 0 2px var(--lg-specular-edge),
+      var(--lg-shadow-hover);
   }
 
-  /* Theme-aware Text Gradients */
+  /* Monochrome High-Contrast Text Gradients */
   .text-gradient {
-    background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 52%, #0284c7 100%);
+    background: linear-gradient(135deg, #050507 0%, #18181b 55%, #09090b 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -312,7 +325,7 @@
   }
 
   .dark .text-gradient {
-    background: linear-gradient(135deg, #93c5fd 0%, #60a5fa 48%, #38bdf8 100%);
+    background: linear-gradient(135deg, #ffffff 0%, #f4f4f5 52%, #a1a1aa 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -320,7 +333,7 @@
   }
 
   .text-gradient-secondary {
-    background: linear-gradient(135deg, #4f46e5 0%, #0284c7 100%);
+    background: linear-gradient(135deg, #09090b 0%, #27272a 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -328,35 +341,35 @@
   }
 
   .dark .text-gradient-secondary {
-    background: linear-gradient(135deg, #a5b4fc 0%, #38bdf8 100%);
+    background: linear-gradient(135deg, #ffffff 0%, #d4d4d8 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     text-shadow: none;
   }
 
-  /* Self-contained Apple Liquid Glass AI Orb */
+  /* Self-contained Apple Crystal Liquid Glass AI Orb */
   .liquid-ai-orb {
     position: relative;
     overflow: hidden;
     border-radius: 9999px;
     background:
-      radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.94) 0%, rgba(186, 230, 253, 0.62) 26%, rgba(59, 130, 246, 0.72) 64%, rgba(37, 99, 235, 0.90) 100%);
+      radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.96) 0%, rgba(228, 228, 231, 0.70) 35%, rgba(161, 161, 170, 0.65) 70%, rgba(113, 113, 122, 0.80) 100%);
     box-shadow:
-      inset 0 2px 4px rgba(255, 255, 255, 0.9),
-      inset 0 -3px 6px rgba(15, 23, 42, 0.25),
-      0 8px 20px -4px rgba(37, 99, 235, 0.45);
-    border: 1px solid rgba(255, 255, 255, 0.8);
+      inset 0 2px 4px rgba(255, 255, 255, 0.95),
+      inset 0 -3px 6px rgba(10, 12, 16, 0.25),
+      0 8px 20px -4px rgba(15, 18, 25, 0.32);
+    border: 1px solid rgba(255, 255, 255, 0.85);
   }
 
   .dark .liquid-ai-orb {
     background:
-      radial-gradient(circle at 30% 24%, rgba(224, 242, 254, 0.9) 0%, rgba(56, 189, 248, 0.65) 28%, rgba(59, 130, 246, 0.78) 65%, rgba(29, 78, 216, 0.94) 100%);
+      radial-gradient(circle at 30% 24%, rgba(255, 255, 255, 0.85) 0%, rgba(212, 212, 216, 0.45) 30%, rgba(63, 63, 70, 0.72) 66%, rgba(15, 15, 18, 0.95) 100%);
     box-shadow:
-      inset 0 1.5px 3px rgba(255, 255, 255, 0.75),
-      inset 0 -3px 6px rgba(3, 7, 18, 0.55),
-      0 8px 22px -4px rgba(56, 189, 248, 0.55);
-    border: 1px solid rgba(186, 230, 253, 0.55);
+      inset 0 1.5px 3px rgba(255, 255, 255, 0.85),
+      inset 0 -3px 6px rgba(0, 0, 0, 0.75),
+      0 8px 22px -4px rgba(255, 255, 255, 0.22);
+    border: 1px solid rgba(255, 255, 255, 0.55);
   }
 }
 

@@ -12,21 +12,21 @@ export const Button = ({
   download
 }) => {
   const baseStyles =
-    'inline-flex items-center justify-center font-mono font-semibold tracking-wider transition-[transform,background-color,border-color,box-shadow,color] duration-200 rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary/50';
+    'inline-flex items-center justify-center font-mono font-semibold tracking-wider transition-[transform,background-color,border-color,box-shadow,color] duration-200 rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60';
 
   const variants = {
-    primary: 'px-5 py-3 text-xs liquid-btn-primary',
-    secondary: 'px-5 py-3 text-xs liquid-btn-secondary',
+    primary: 'px-5 py-3 text-xs liquid-btn-primary liquid-rim',
+    secondary: 'px-5 py-3 text-xs liquid-btn-secondary liquid-rim text-zinc-950 dark:text-white',
     outline:
-      'px-5 py-3 text-xs text-blue-600 dark:text-sky-400 bg-blue-500/[0.08] dark:bg-sky-400/[0.08] border border-blue-500/25 dark:border-sky-400/25 hover:bg-blue-500/15 dark:hover:bg-sky-400/15 backdrop-blur-md',
-    text: 'px-3 py-2 text-xs text-slate-600 hover:text-slate-950 dark:text-slate-400 dark:hover:text-slate-100 bg-transparent'
+      'px-5 py-3 text-xs text-zinc-950 dark:text-white liquid-glass-well liquid-rim hover:opacity-90',
+    text: 'px-3 py-2 text-xs text-zinc-900 hover:text-zinc-950 dark:text-zinc-200 dark:hover:text-white bg-transparent'
   };
 
   const buttonContent = (
     <motion.span
       whileHover={{ scale: 1.015 }}
       whileTap={{ scale: 0.97 }}
-      className="flex items-center justify-center space-x-2"
+      className="relative z-10 flex items-center justify-center space-x-2"
     >
       {children}
     </motion.span>

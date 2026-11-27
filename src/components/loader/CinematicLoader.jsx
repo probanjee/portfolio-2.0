@@ -73,15 +73,15 @@ export const CinematicLoader = ({ onComplete }) => {
       }}
       aria-live="polite"
       aria-label="Loading portfolio"
-      className="fixed inset-0 z-[10000] flex flex-col justify-between bg-gradient-to-br from-[#D5E6FF] via-[#EEF4FF] to-[#D4EEFF] dark:from-[#020308] dark:via-[#060B18] dark:to-[#03060E] text-slate-900 dark:text-slate-100 overflow-hidden select-none"
+      className="fixed inset-0 z-[10000] flex flex-col justify-between bg-gradient-to-br from-[#7E828B] via-[#8C9099] to-[#797D86] dark:from-[#020203] dark:via-[#060608] dark:to-[#030304] text-zinc-950 dark:text-white overflow-hidden select-none"
     >
-      {/* Subtle ambient glow matching site Liquid Glass Blue / Sky / Indigo palette */}
+      {/* Subtle monochrome ambient glow */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 pointer-events-none opacity-40 dark:opacity-30"
+        className="absolute inset-0 pointer-events-none opacity-40 dark:opacity-25"
         style={{
           background:
-            'radial-gradient(circle at 50% 52%, rgba(59, 130, 246, 0.22), rgba(56, 189, 248, 0.14) 38%, transparent 72%)',
+            'radial-gradient(circle at 50% 52%, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.08) 38%, transparent 72%)',
         }}
       />
 
@@ -100,22 +100,20 @@ export const CinematicLoader = ({ onComplete }) => {
           >
             <defs>
               <linearGradient id="water-surface-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#93C5FD" />
-                <stop offset="35%" stopColor="#38BDF8" />
-                <stop offset="70%" stopColor="#3B82F6" />
-                <stop offset="100%" stopColor="#6366F1" />
+                <stop offset="0%" stopColor="#FFFFFF" />
+                <stop offset="45%" stopColor="#E4E4E7" />
+                <stop offset="100%" stopColor="#A1A1AA" />
               </linearGradient>
 
               <linearGradient id="water-deep-grad" x1="100%" y1="0%" x2="0%" y2="0%">
-                <stop offset="0%" stopColor="#4F46E5" />
-                <stop offset="35%" stopColor="#2563EB" />
-                <stop offset="70%" stopColor="#0EA5E9" />
-                <stop offset="100%" stopColor="#60A5FA" />
+                <stop offset="0%" stopColor="#52525B" />
+                <stop offset="45%" stopColor="#A1A1AA" />
+                <stop offset="100%" stopColor="#F4F4F5" />
               </linearGradient>
 
               <linearGradient id="water-shimmer-grad" x1="0%" y1="0%" x2="100%" y2="0%">
                 <stop offset="0%" stopColor="transparent" />
-                <stop offset="50%" stopColor="rgba(255, 255, 255, 0.42)" />
+                <stop offset="50%" stopColor="rgba(255, 255, 255, 0.55)" />
                 <stop offset="100%" stopColor="transparent" />
               </linearGradient>
 
@@ -146,7 +144,7 @@ export const CinematicLoader = ({ onComplete }) => {
               y="115"
               textAnchor="middle"
               dominantBaseline="middle"
-              className="fill-slate-900/[0.04] stroke-blue-900/25 dark:fill-white/[0.03] dark:stroke-sky-200/25"
+              className="fill-white/[0.06] stroke-white/40 dark:fill-white/[0.03] dark:stroke-white/30"
               strokeWidth="1.8"
               style={TEXT_STYLE}
             >
@@ -170,7 +168,7 @@ export const CinematicLoader = ({ onComplete }) => {
                   <path
                     d={FRONT_WAVE_PATH}
                     fill="none"
-                    stroke="#38BDF8"
+                    stroke="#FFFFFF"
                     strokeWidth="5"
                     strokeOpacity="0.45"
                     filter="url(#water-meniscus-glow)"
@@ -180,17 +178,17 @@ export const CinematicLoader = ({ onComplete }) => {
                     fill="none"
                     stroke="#FFFFFF"
                     strokeWidth="2"
-                    strokeOpacity="0.85"
+                    strokeOpacity="0.9"
                   />
                 </g>
 
                 <g>
-                  <circle cx="150" cy="50" r="3.5" fill="rgba(255,255,255,0.75)" className="animate-bubble-1" />
-                  <circle cx="340" cy="70" r="4.5" fill="rgba(147,197,253,0.8)" className="animate-bubble-2" />
-                  <circle cx="520" cy="55" r="3.5" fill="rgba(255,255,255,0.65)" className="animate-bubble-3" />
-                  <circle cx="710" cy="78" r="5" fill="rgba(56,189,248,0.8)" className="animate-bubble-1" />
+                  <circle cx="150" cy="50" r="3.5" fill="rgba(255,255,255,0.85)" className="animate-bubble-1" />
+                  <circle cx="340" cy="70" r="4.5" fill="rgba(255,255,255,0.75)" className="animate-bubble-2" />
+                  <circle cx="520" cy="55" r="3.5" fill="rgba(255,255,255,0.70)" className="animate-bubble-3" />
+                  <circle cx="710" cy="78" r="5" fill="rgba(255,255,255,0.85)" className="animate-bubble-1" />
                   <circle cx="880" cy="60" r="3.5" fill="rgba(255,255,255,0.8)" className="animate-bubble-2" />
-                  <circle cx="1010" cy="72" r="4" fill="rgba(129,140,248,0.8)" className="animate-bubble-3" />
+                  <circle cx="1010" cy="72" r="4" fill="rgba(255,255,255,0.75)" className="animate-bubble-3" />
                 </g>
               </g>
 
@@ -207,12 +205,12 @@ export const CinematicLoader = ({ onComplete }) => {
         </div>
 
         {/* Sleek Gradient Progress Track */}
-        <div className="w-full mt-4 h-[2.5px] bg-slate-900/10 dark:bg-white/10 relative overflow-hidden rounded-full">
+        <div className="w-full mt-4 h-[2.5px] bg-white/25 dark:bg-white/15 relative overflow-hidden rounded-full">
           <div
             className="h-full transition-[width] duration-100 ease-out"
             style={{
               width: `${progress}%`,
-              background: 'linear-gradient(90deg, #93C5FD 0%, #38BDF8 35%, #3B82F6 70%, #6366F1 100%)',
+              background: 'linear-gradient(90deg, rgba(255,255,255,0.45) 0%, #FFFFFF 100%)',
             }}
           />
         </div>
@@ -220,20 +218,20 @@ export const CinematicLoader = ({ onComplete }) => {
         {/* Clean Percentage Counter */}
         <div className="w-full mt-3 flex items-center justify-end font-mono text-[11px] sm:text-xs">
           <div className="flex items-center gap-1.5 font-medium tracking-tight shrink-0">
-            <span className="text-slate-500 dark:text-slate-400 font-light">loading...</span>
-            <span className="text-base sm:text-lg font-bold text-slate-900 dark:text-white font-mono min-w-[3ch] text-right tabular-nums">
+            <span className="text-zinc-900 dark:text-zinc-300 font-light">loading...</span>
+            <span className="text-base sm:text-lg font-bold text-zinc-950 dark:text-white font-mono min-w-[3ch] text-right tabular-nums">
               {progress}
             </span>
-            <span className="text-blue-600 dark:text-sky-400 font-mono text-sm font-bold">%</span>
+            <span className="text-zinc-950 dark:text-white font-mono text-sm font-bold">%</span>
           </div>
         </div>
       </div>
 
       {/* Clean Footer Line */}
-      <div className="relative z-10 w-full px-6 sm:px-12 py-6 flex items-center justify-start font-mono text-[10px] sm:text-[11px] tracking-widest text-slate-500 dark:text-slate-500 border-t border-slate-900/10 dark:border-white/5">
+      <div className="relative z-10 w-full px-6 sm:px-12 py-6 flex items-center justify-start font-mono text-[10px] sm:text-[11px] tracking-widest text-zinc-900 dark:text-zinc-300 border-t border-white/25 dark:border-white/15">
         <div>
           <span>&copy; 2026 PROSUN BANERJEE</span>
-          <span className="hidden sm:inline text-slate-400 dark:text-slate-600"> — C++ &amp; SECURITY SYSTEMS</span>
+          <span className="hidden sm:inline text-zinc-900/80 dark:text-zinc-400"> — C++ &amp; SECURITY SYSTEMS</span>
         </div>
       </div>
     </motion.div>

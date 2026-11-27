@@ -21,8 +21,8 @@ export const App = () => {
           <CinematicLoader onComplete={() => setLoading(false)} />
         ) : (
           <Router>
-            <div className="relative min-h-screen text-slate-900 dark:text-slate-100 flex flex-col justify-between selection:bg-brand-primary/25">
-              {/* Core Theme-Aware Liquid Glass Background */}
+            <div className="relative min-h-screen text-zinc-950 dark:text-white flex flex-col justify-between selection:bg-white/30">
+              {/* Core Theme-Aware Crystal Liquid Glass Background */}
               <CyberBackground />
 
               {/* Header Navigation overlay */}
@@ -47,17 +47,17 @@ export const App = () => {
               </main>
 
               {/* Footer Section */}
-              <footer className="mt-20 border-t border-white/60 dark:border-white/15 bg-white/40 dark:bg-white/[0.06] backdrop-blur-2xl shadow-[inset_0_1px_0_rgba(255,255,255,0.85)] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.20)] pt-10 pb-24 sm:pb-10 transition-colors">
+              <footer className="mt-20 border-t border-white/45 dark:border-white/20 liquid-glass-strong pt-10 pb-24 sm:pb-10 transition-colors">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row justify-between items-center gap-6">
                   
                   {/* Left segment */}
                   <div className="text-center md:text-left space-y-1">
-                    <span className="font-mono text-xs font-bold tracking-widest text-slate-500 dark:text-slate-400 flex items-center justify-center md:justify-start space-x-1">
-                      <span className="text-blue-600 dark:text-brand-primary font-bold">&lt;</span>
-                      <span className="text-slate-900 dark:text-slate-100">probanjee.dev</span>
-                      <span className="text-blue-600 dark:text-brand-primary font-bold">/&gt;</span>
+                    <span className="font-mono text-xs font-bold tracking-widest text-zinc-900 dark:text-zinc-200 flex items-center justify-center md:justify-start space-x-1">
+                      <span className="text-zinc-950 dark:text-white font-bold">&lt;</span>
+                      <span className="text-zinc-950 dark:text-white">probanjee.dev</span>
+                      <span className="text-zinc-950 dark:text-white font-bold">/&gt;</span>
                     </span>
-                    <p className="text-[11px] text-slate-500 dark:text-slate-400 font-mono">
+                    <p className="text-[11px] text-zinc-900 dark:text-zinc-300 font-mono font-medium">
                       Designed, developed &amp; maintained by probanjee. &copy; 2026.
                     </p>
                   </div>

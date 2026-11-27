@@ -70,7 +70,7 @@ export const Hero = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-4xl sm:text-6xl font-extrabold tracking-tight leading-[1.1] text-slate-900 dark:text-slate-100"
+              className="text-4xl sm:text-6xl font-extrabold tracking-tight leading-[1.1] text-zinc-950 dark:text-white"
             >
               Hi, I&apos;m <span className="text-gradient font-black">{personalInfo.name}</span>
             </motion.h1>
@@ -80,11 +80,11 @@ export const Hero = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="h-8 font-mono text-sm sm:text-lg text-slate-700 dark:text-slate-300 flex justify-center lg:justify-start items-center space-x-2"
+              className="h-8 font-mono text-sm sm:text-lg text-zinc-900 dark:text-zinc-100 flex justify-center lg:justify-start items-center space-x-2"
             >
-              <span className="text-blue-600 dark:text-sky-400 font-bold">&gt;_</span>
+              <span className="text-zinc-950 dark:text-white font-bold">&gt;_</span>
               <span>{roleText}</span>
-              <span className="w-1.5 h-5 bg-blue-600 dark:bg-sky-400 animate-pulse rounded-full" />
+              <span className="w-1.5 h-5 bg-zinc-950 dark:bg-white animate-pulse rounded-full" />
             </motion.div>
           </div>
 
@@ -93,7 +93,7 @@ export const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-xl leading-relaxed mx-auto lg:mx-0 font-sans"
+            className="text-sm sm:text-base text-zinc-900 dark:text-zinc-200 max-w-xl leading-relaxed mx-auto lg:mx-0 font-sans font-medium"
           >
             {personalInfo.tagline}
           </motion.p>
@@ -103,21 +103,21 @@ export const Hero = () => {
             initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="grid grid-cols-3 gap-3 p-4 glass-panel liquid-rim rounded-[22px] max-w-md mx-auto lg:mx-0 font-mono text-[10px] text-slate-500 dark:text-slate-400"
+            className="grid grid-cols-3 gap-3 p-4 glass-panel liquid-rim rounded-[22px] max-w-md mx-auto lg:mx-0 font-mono text-[10px] text-zinc-900 dark:text-zinc-200"
           >
             <div className="space-y-1">
-              <span className="text-slate-500 dark:text-slate-400 block uppercase">Projects</span>
-              <span className="text-emerald-600 dark:text-emerald-400 font-bold tabular-nums flex items-center justify-center lg:justify-start">
+              <span className="text-zinc-900 dark:text-zinc-300 block uppercase font-semibold">Projects</span>
+              <span className="text-zinc-950 dark:text-white font-bold tabular-nums flex items-center justify-center lg:justify-start">
                 05
               </span>
             </div>
-            <div className="space-y-1 border-l border-slate-900/10 dark:border-white/10 pl-3">
-              <span className="text-slate-500 dark:text-slate-400 block uppercase">Primary Focus</span>
-              <span className="text-blue-600 dark:text-sky-400 font-bold">SECURITY</span>
+            <div className="space-y-1 border-l border-zinc-950/20 dark:border-white/20 pl-3">
+              <span className="text-zinc-900 dark:text-zinc-300 block uppercase font-semibold">Primary Focus</span>
+              <span className="text-zinc-950 dark:text-white font-bold">SECURITY</span>
             </div>
-            <div className="space-y-1 border-l border-slate-900/10 dark:border-white/10 pl-3">
-              <span className="text-slate-500 dark:text-slate-400 block uppercase">Core Language</span>
-              <span className="text-indigo-600 dark:text-indigo-400 font-bold">C++17</span>
+            <div className="space-y-1 border-l border-zinc-950/20 dark:border-white/20 pl-3">
+              <span className="text-zinc-900 dark:text-zinc-300 block uppercase font-semibold">Core Language</span>
+              <span className="text-zinc-950 dark:text-white font-bold">C++17</span>
             </div>
           </motion.div>
 
@@ -133,7 +133,7 @@ export const Hero = () => {
               DOWNLOAD CV (PDF)
             </Button>
             <Button variant="secondary" href={personalInfo.github} className="w-full sm:w-auto px-6 py-3.5 group">
-              <Github className="w-4 h-4 mr-2 text-slate-600 dark:text-slate-300 group-hover:text-blue-600 dark:group-hover:text-white transition-colors" />
+              <Github className="w-4 h-4 mr-2 text-zinc-950 dark:text-white group-hover:opacity-80 transition-opacity" />
               VIEW INFRASTRUCTURE
             </Button>
           </motion.div>
@@ -165,19 +165,19 @@ export const Hero = () => {
             }}
             className="relative w-72 h-72 sm:w-80 sm:h-80 flex items-center justify-center select-none"
           >
-            {/* Ambient Glowing Halo Behind Avatar */}
-            <div className="absolute inset-4 rounded-full bg-gradient-to-tr from-sky-400/25 via-blue-500/15 to-indigo-400/20 dark:from-brand-primary/30 dark:via-brand-secondary/20 dark:to-brand-accent/20 blur-3xl animate-pulse" />
+            {/* Ambient Monochrome Halo Behind Avatar */}
+            <div className="absolute inset-4 rounded-full bg-gradient-to-tr from-white/25 via-zinc-300/15 to-white/10 dark:from-white/15 dark:via-zinc-400/10 dark:to-white/5 blur-3xl animate-pulse" />
 
-            {/* Rotating Orbit Ring 1 (Dashed Cyber-Blue Outer Ring) */}
-            <div className="absolute inset-0 rounded-full border border-dashed border-blue-500/30 dark:border-brand-primary/25 animate-[spin_40s_linear_infinite]" />
+            {/* Rotating Orbit Ring 1 (Dashed Outer Ring) */}
+            <div className="absolute inset-0 rounded-full border border-dashed border-zinc-950/30 dark:border-white/30 animate-[spin_40s_linear_infinite]" />
 
             {/* Rotating Orbit Ring 2 (Double Border Inner Ring, rotating reverse) */}
-            <div className="absolute inset-4 rounded-full border-2 border-double border-indigo-500/20 dark:border-brand-secondary/20 animate-[spin_25s_linear_infinite_reverse]" />
+            <div className="absolute inset-4 rounded-full border-2 border-double border-zinc-950/20 dark:border-white/20 animate-[spin_25s_linear_infinite_reverse]" />
 
-            {/* Cyber Node Core Indicators */}
-            <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.7)]" />
-            <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-indigo-500 shadow-[0_0_10px_rgba(99,102,241,0.7)]" />
-            <div className="absolute left-[-1px] top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-sky-500 shadow-[0_0_10px_rgba(14,165,233,0.7)]" />
+            {/* Orbit Node Indicators */}
+            <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-white shadow-[0_0_10px_rgba(255,255,255,0.85)]" />
+            <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-zinc-200 dark:bg-zinc-300 shadow-[0_0_10px_rgba(255,255,255,0.65)]" />
+            <div className="absolute left-[-1px] top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-white shadow-[0_0_10px_rgba(255,255,255,0.85)]" />
 
             {/* Liquid Glass Avatar Frame with Swipeable Carousel */}
             <div className="relative w-[82%] h-[82%] rounded-full p-2.5 liquid-glass-strong liquid-rim flex items-center justify-center overflow-hidden cursor-grab active:cursor-grabbing">
@@ -220,7 +220,7 @@ export const Hero = () => {
               </AnimatePresence>
 
               {/* Mini Pagination Indicators inside Orb */}
-              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-1.5 z-20 px-2 py-1 rounded-full bg-white/65 dark:bg-slate-950/55 backdrop-blur-md border border-slate-900/10 dark:border-white/15">
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-1.5 z-20 px-2 py-1 rounded-full liquid-glass-well liquid-rim">
                 {orbSlides.map((_, idx) => (
                   <button
                     key={idx}
@@ -228,8 +228,8 @@ export const Hero = () => {
                     aria-label={`Show slide ${idx + 1}`}
                     className={`h-1.5 rounded-full transition-all duration-300 ${
                       currentSlide === idx 
-                        ? 'bg-blue-600 dark:bg-sky-400 w-4' 
-                        : 'bg-slate-500/40 dark:bg-slate-400/40 w-1.5 hover:bg-slate-600/60'
+                        ? 'bg-zinc-950 dark:bg-white w-4' 
+                        : 'bg-zinc-950/35 dark:bg-white/35 w-1.5 hover:bg-zinc-950/60 dark:hover:bg-white/60'
                     }`}
                   />
                 ))}

@@ -57,9 +57,9 @@ export const CertificateLightbox = ({ group, onClose }) => {
             className="w-full max-w-4xl max-h-[90vh] rounded-3xl liquid-glass-strong liquid-rim overflow-hidden flex flex-col"
           >
             {/* Modal Header */}
-            <div className="px-5 py-3.5 border-b border-slate-900/10 dark:border-white/10 flex items-center justify-between gap-4 shrink-0">
+            <div className="px-5 py-3.5 border-b border-zinc-950/20 dark:border-white/20 flex items-center justify-between gap-4 shrink-0">
               <div className="min-w-0">
-                <p className="text-[10px] font-mono font-bold text-blue-600 dark:text-sky-400 uppercase tracking-wider truncate">
+                <p className="text-[10px] font-mono font-bold text-zinc-900 dark:text-zinc-300 uppercase tracking-wider truncate">
                   {[
                     group.issuer,
                     currentItem.date,
@@ -68,14 +68,14 @@ export const CertificateLightbox = ({ group, onClose }) => {
                     .filter(Boolean)
                     .join(' · ')}
                 </p>
-                <h3 className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-slate-100 truncate">
+                <h3 className="text-sm sm:text-base font-extrabold text-zinc-950 dark:text-white truncate">
                   {hasMultiple ? `${group.title} — ${currentItem.label}` : group.title}
                 </h3>
               </div>
 
               <div className="flex items-center gap-2 shrink-0">
                 {hasMultiple && (
-                  <span className="text-[11px] font-mono font-bold px-2.5 py-1 rounded-full liquid-glass-well text-slate-700 dark:text-slate-200 tabular-nums">
+                  <span className="text-[11px] font-mono font-bold px-2.5 py-1 rounded-full liquid-glass-well liquid-rim text-zinc-950 dark:text-white tabular-nums">
                     {activeIndex + 1} / {group.items.length}
                   </span>
                 )}
@@ -83,7 +83,7 @@ export const CertificateLightbox = ({ group, onClose }) => {
                   type="button"
                   onClick={onClose}
                   aria-label="Close certificate preview"
-                  className="p-2 rounded-full liquid-glass-well text-slate-700 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white transition-colors cursor-pointer"
+                  className="p-2 rounded-full liquid-glass-well liquid-rim text-zinc-950 dark:text-white hover:opacity-80 transition-opacity cursor-pointer"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -124,7 +124,7 @@ export const CertificateLightbox = ({ group, onClose }) => {
 
             {/* Thumbnail Strip for Multi-Document Experiences */}
             {hasMultiple && (
-              <div className="px-4 py-3 border-t border-slate-900/10 dark:border-white/10 flex items-center gap-2 overflow-x-auto custom-scrollbar shrink-0">
+              <div className="px-4 py-3 border-t border-slate-900/15 dark:border-white/15 flex items-center gap-2 overflow-x-auto custom-scrollbar shrink-0">
                 {group.items.map((item, idx) => (
                   <button
                     key={item.imageUrl}
@@ -132,8 +132,8 @@ export const CertificateLightbox = ({ group, onClose }) => {
                     onClick={() => setActiveIndex(idx)}
                     className={`flex items-center gap-2 px-2.5 py-1.5 rounded-xl text-[11px] font-mono font-semibold transition-all cursor-pointer shrink-0 ${
                       idx === activeIndex
-                        ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-950'
-                        : 'liquid-glass-well text-slate-600 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white'
+                        ? 'liquid-btn-primary liquid-rim text-white'
+                        : 'liquid-glass-well liquid-rim text-slate-800 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white'
                     }`}
                   >
                     <img

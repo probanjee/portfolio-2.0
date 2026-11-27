@@ -16,7 +16,7 @@ export const Projects = () => {
             initial={{ opacity: 0, x: -15 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="text-xs font-mono text-blue-600 dark:text-sky-400 uppercase tracking-widest"
+            className="text-xs font-mono text-zinc-900 dark:text-zinc-300 uppercase tracking-widest font-semibold"
           >
             &gt;_ CORE REPOSITORIES
           </motion.h2>
@@ -25,7 +25,7 @@ export const Projects = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100"
+            className="text-3xl sm:text-4xl font-extrabold tracking-tight text-zinc-950 dark:text-white"
           >
             Featured Security &amp; System Pipelines
           </motion.h3>
