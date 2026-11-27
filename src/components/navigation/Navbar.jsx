@@ -10,7 +10,7 @@ export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
 
-  const activeSection = useScrollSpy(['dashboard', 'about', 'projects', 'achievements', 'skills', 'contact'], 180);
+  const activeSection = useScrollSpy(['dashboard', 'about', 'projects', 'achievements', 'skills', 'certification', 'contact'], 180);
 
   const navItems = [
     { name: 'Dashboard', path: '/' },
@@ -18,6 +18,7 @@ export const Navbar = () => {
     { name: 'Projects', path: '/#projects' },
     { name: 'Achievements', path: '/#achievements' },
     { name: 'Skills', path: '/#skills' },
+    { name: 'Certification', path: '/#certification' },
     { name: 'Contact', path: '/#contact' },
   ];
 
@@ -70,14 +71,14 @@ export const Navbar = () => {
           </Link>
 
           {/* Desktop iOS Liquid Glass Tab Capsule */}
-          <div className="hidden md:flex items-center gap-1 p-1 rounded-full liquid-glass-well">
+          <div className="hidden lg:flex items-center gap-0.5 xl:gap-1 p-1 rounded-full liquid-glass-well">
             {navItems.map((item) => {
               const active = isItemActive(item);
               return (
                 <button
                   key={item.name}
                   onClick={() => handleNavClick(item)}
-                  className={`relative px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-wider font-mono rounded-full transition-colors ${
+                  className={`relative px-2.5 xl:px-3.5 py-1.5 text-[10px] xl:text-[11px] font-semibold uppercase tracking-wider font-mono rounded-full transition-colors whitespace-nowrap ${
                     active
                       ? 'text-blue-700 dark:text-white'
                       : 'text-slate-700 hover:text-slate-950 dark:text-slate-200 dark:hover:text-white'
@@ -97,7 +98,7 @@ export const Navbar = () => {
           </div>
 
           {/* Right Controls */}
-          <div className="hidden md:flex items-center space-x-2.5">
+          <div className="hidden lg:flex items-center space-x-2.5">
             <button
               onClick={toggleTheme}
               aria-label={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
@@ -116,7 +117,7 @@ export const Navbar = () => {
           </div>
 
           {/* Mobile Controls */}
-          <div className="flex items-center space-x-2 md:hidden">
+          <div className="flex items-center space-x-2 lg:hidden">
             <button
               onClick={toggleTheme}
               aria-label={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
@@ -143,7 +144,7 @@ export const Navbar = () => {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -8, scale: 0.98 }}
               transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-              className="md:hidden mt-2.5 p-3 liquid-glass-strong liquid-rim rounded-[24px] flex flex-col space-y-1.5 pointer-events-auto"
+              className="lg:hidden mt-2.5 p-3 liquid-glass-strong liquid-rim rounded-[24px] flex flex-col space-y-1.5 pointer-events-auto"
             >
               {navItems.map((item) => {
                 const active = isItemActive(item);

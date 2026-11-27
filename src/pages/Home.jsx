@@ -6,6 +6,7 @@ import Projects from '../components/sections/Projects';
 import Achievements from '../components/sections/Achievements';
 import Skills from '../components/sections/Skills';
 import EducationCertifications from '../components/sections/EducationCertifications';
+import Certification from '../components/sections/Certification';
 import Contact from '../components/sections/Contact';
 
 export const Home = () => {
@@ -29,10 +30,13 @@ export const Home = () => {
       {/* 5. low-level and high-level Skills Matrix */}
       <Skills />
 
-      {/* 6. Academic Milestones & Credentials Grid */}
+      {/* 6. Academic Milestones Timeline */}
       <EducationCertifications />
 
-      {/* 7. Comms Telemetry Gateway Form Section */}
+      {/* 7. Verified Certification Credentials */}
+      <Certification />
+
+      {/* 8. Comms Telemetry Gateway Form Section */}
       <Contact />
     </div>
   );

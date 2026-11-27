@@ -238,19 +238,117 @@ export const portfolioData = {
 
   certifications: [
     {
-      title: "National IP Awareness Mission Certification",
-      issuer: "Govt. of India",
-      details: "Trained in Intellectual Property rights, copyright law, and research-focused software protections."
+      title: "Gen AI Tools",
+      issuer: "FutureSkills Prime · MeitY & Nasscom",
+      category: "AI & Cloud",
+      date: "Sep 2026",
+      credentialId: "26030931057",
+      imageUrl: "/assets/certificates/nasscom-gen-ai-tools.jpg",
+      details: "Completed coursework aligned to competency standards developed by IT-ITeS Sector Skills Council Nasscom in collaboration with Industry and Government."
     },
     {
-      title: "Cyber Security Fundamentals",
-      issuer: "Great Learning / Tech Mahindra",
-      details: "Comprehensive training in security policy management, vulnerability mitigation, threat modeling, and network firewalls."
+      title: "Solutions Architecture Job Simulation",
+      issuer: "AWS · Forage",
+      category: "AI & Cloud",
+      date: "Oct 2025",
+      credentialId: "4kXvkuoz8Qi4Lp5Q6",
+      imageUrl: "/assets/certificates/aws-forage-solutions-architecture.png",
+      details: "Completed practical architecture tasks designing a simple, scalable cloud hosting infrastructure."
     },
     {
-      title: "AI & Machine Learning Engineering Webinar",
-      issuer: "G.T.L Academy (Hosted by Grindx Technologies)",
-      details: "Focused on neural network integration, AI API structures, and automated heuristic models."
+      title: "Introduction to Generative AI",
+      issuer: "Google Cloud",
+      category: "AI & Cloud",
+      imageUrl: "/assets/certificates/google-cloud-gen-ai.jpg",
+      details: "Completion badge covering foundational Generative AI concepts, model types, and enterprise applications."
+    },
+    {
+      title: "Introduction to Large Language Models",
+      issuer: "Google Cloud",
+      category: "AI & Cloud",
+      imageUrl: "/assets/certificates/google-cloud-llms.jpg",
+      details: "Completion badge covering LLM capabilities, prompt design fundamentals, and tuning workflows."
+    },
+    {
+      title: "Introduction to Responsible AI",
+      issuer: "Google Cloud",
+      category: "AI & Cloud",
+      imageUrl: "/assets/certificates/google-cloud-responsible-ai.jpg",
+      details: "Completion badge focused on ethical AI principles, safety practices, and responsible deployment."
+    },
+    {
+      title: "AWS Free Certification Course",
+      issuer: "Intellipaat Academy",
+      category: "AI & Cloud",
+      date: "Jul 2024",
+      credentialId: "31679-1654-188827",
+      imageUrl: "/assets/certificates/intellipaat-aws-course.jpg",
+      details: "Completed structured AWS cloud architecture and core services training."
+    },
+    {
+      title: "AIML Webinar",
+      issuer: "G.T.L Academy · Grindx Technologies",
+      category: "AI & Cloud",
+      imageUrl: "/assets/certificates/gtl-aiml-webinar.jpg",
+      details: "Participated in applied AI & Machine Learning session covering neural networks and heuristic pipelines."
+    },
+    {
+      title: "Cybersecurity (Skill India Digital Hub)",
+      issuer: "Tech Mahindra Foundation · NSDC",
+      category: "Cybersecurity & IP",
+      date: "May 2024",
+      imageUrl: "/assets/certificates/tech-mahindra-skill-india-cybersecurity.jpg",
+      details: "Completed 10-hour online skilling course in Cybersecurity offered by Tech Mahindra Foundation through Skill India Digital Hub."
+    },
+    {
+      title: "Introduction to Information Security",
+      issuer: "Great Learning Academy",
+      category: "Cybersecurity & IP",
+      date: "Jul 2024",
+      imageUrl: "/assets/certificates/great-learning-info-security.jpg",
+      details: "Completed online coursework covering security policy management, vulnerability mitigation, and threat fundamentals."
+    },
+    {
+      title: "Cyber Security Internship Completion",
+      issuer: "Academor · Flutura",
+      category: "Cybersecurity & IP",
+      date: "May 2024",
+      credentialId: "ACM23-5379",
+      imageUrl: "/assets/certificates/academor-flutura-cybersecurity.jpg",
+      details: "Completed 2-month Cyber Security program with Academor from Feb 2024 to Mar 2024."
+    },
+    {
+      title: "National IP Awareness Mission (NIPAM)",
+      issuer: "Govt. of India · Intellectual Property Office",
+      category: "Cybersecurity & IP",
+      date: "Sep 2024",
+      imageUrl: "/assets/certificates/nipam-ip-awareness.jpg",
+      details: "Participated in IP Awareness/Training program under the National Intellectual Property Awareness Mission."
+    },
+    {
+      title: "Introduction to C++",
+      issuer: "Simplilearn SkillUP",
+      category: "Programming & Data",
+      date: "Aug 2024",
+      credentialId: "7074419",
+      imageUrl: "/assets/certificates/simplilearn-intro-cpp.jpg",
+      details: "Completed online C++ fundamentals coursework covering core syntax, object-oriented constructs, and standard libraries."
+    },
+    {
+      title: "C for Beginners",
+      issuer: "Great Learning Academy",
+      category: "Programming & Data",
+      date: "May 2024",
+      imageUrl: "/assets/certificates/great-learning-c-beginners.jpg",
+      details: "Completed foundational C programming coursework covering control structures, pointers, and memory basics."
+    },
+    {
+      title: "Data Visualization With Power BI",
+      issuer: "Great Learning Academy",
+      category: "Programming & Data",
+      date: "Jul 2024",
+      imageUrl: "/assets/certificates/great-learning-power-bi.jpg",
+      details: "Completed Power BI training focused on interactive dashboards, data modeling, and analytical reporting."
     }
   ]
 };

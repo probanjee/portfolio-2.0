@@ -153,7 +153,7 @@ export const Skills = () => {
           transition={{ duration: 0.45 }}
           className="text-center space-y-3"
         >
-          <p className="text-xs font-mono text-emerald-600 dark:text-emerald-400 uppercase tracking-[0.2em] font-semibold">
+          <p className="text-xs font-mono text-blue-600 dark:text-sky-400 uppercase tracking-[0.2em] font-semibold">
             TECH STACK
           </p>
           <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100">
@@ -221,7 +221,7 @@ export const Skills = () => {
                 {skill.name}
               </span>
 
-              <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 border border-emerald-500/25 dark:bg-emerald-400/10 dark:text-emerald-300 dark:border-emerald-400/25 whitespace-nowrap">
+              <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-700 border border-blue-500/25 dark:bg-sky-400/12 dark:text-sky-300 dark:border-sky-400/25 whitespace-nowrap">
                 {skill.badge}
               </span>
             </div>
