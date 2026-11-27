@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import { ReactLenis } from 'lenis/react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Github, Linkedin, Mail } from 'lucide-react';
-import { LeetCodeIcon } from './components/ui/Icons';
 
 import CyberBackground from './components/background/CyberBackground';
 import CinematicLoader from './components/loader/CinematicLoader';
@@ -11,6 +9,7 @@ import Navbar from './components/navigation/Navbar';
 import Home from './pages/Home';
 import ProjectDetails from './pages/ProjectDetails';
 import ProsenjitChatbot from './components/chatbot/ProsenjitChatbot';
+import SocialLinks from './components/ui/SocialLinks';
 
 export const App = () => {
   const [loading, setLoading] = useState(true);
@@ -64,43 +63,7 @@ export const App = () => {
                   </div>
 
                   {/* Right social shortcuts */}
-                  <div className="flex space-x-3">
-                    <a 
-                      href="https://github.com/probanjee" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="p-2.5 rounded-full liquid-glass-well text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-sky-400 transition-colors"
-                      title="GitHub"
-                    >
-                      <Github className="w-4 h-4" />
-                    </a>
-                    <a 
-                      href="https://linkedin.com/in/prosun-banerjee-545942293" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="p-2.5 rounded-full liquid-glass-well text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-sky-400 transition-colors"
-                      title="LinkedIn"
-                    >
-                      <Linkedin className="w-4 h-4" />
-                    </a>
-                    <a 
-                      href="https://leetcode.com/u/Prosun01/" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="p-2.5 rounded-full liquid-glass-well text-slate-600 dark:text-slate-300 hover:text-amber-600 dark:hover:text-amber-400 transition-colors"
-                      title="LeetCode"
-                      aria-label="LeetCode Profile"
-                    >
-                      <LeetCodeIcon className="w-4 h-4" />
-                    </a>
-                    <a 
-                      href="mailto:prosunbanerjee8@gmail.com"
-                      className="p-2.5 rounded-full liquid-glass-well text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-sky-400 transition-colors"
-                      title="Email Secure Interface"
-                    >
-                      <Mail className="w-4 h-4" />
-                    </a>
-                  </div>
+                  <SocialLinks />
 
                 </div>
               </footer>

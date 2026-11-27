@@ -1,44 +1,54 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Briefcase, Terminal, ShieldAlert, Cpu } from 'lucide-react';
+import { Eye, Terminal } from 'lucide-react';
 import { portfolioData } from '../../data/portfolioData';
 import Card from '../ui/Card';
+import CertificateLightbox from '../ui/CertificateLightbox';
 
 export const Experience = () => {
   const { experience } = portfolioData;
+  const [previewGroup, setPreviewGroup] = useState(null);
 
-  // Animation Variant Sets for Synchronized Hover Scales
   const containerVariants = {
     initial: { opacity: 0, y: 30 },
-    animate: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+    animate: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
   };
 
   const nodeVariants = {
     initial: { scale: 1, boxShadow: '0 0 0px rgba(59, 130, 246, 0)' },
-    hover: { 
-      scale: 1.25, 
+    hover: {
+      scale: 1.25,
       borderColor: 'rgba(59, 130, 246, 0.8)',
       boxShadow: '0 0 18px rgba(59, 130, 246, 0.7)',
-      transition: { duration: 0.3, ease: 'easeOut' }
-    }
+      transition: { duration: 0.3, ease: 'easeOut' },
+    },
   };
 
   const cardVariants = {
     initial: { scale: 1 },
-    hover: { 
+    hover: {
       scale: 1.015,
       y: -2,
-      transition: { duration: 0.3, ease: 'easeOut' }
-    }
+      transition: { duration: 0.3, ease: 'easeOut' },
+    },
+  };
+
+  const openJobCertificates = (job) => {
+    if (!job.certificates?.length) return;
+    setPreviewGroup({
+      title: `${job.role} — ${job.company}`,
+      issuer: job.company,
+      items: job.certificates,
+    });
   };
 
   return (
     <section id="experience" className="scroll-mt-24 py-16 sm:py-24 relative overflow-hidden">
       <div className="space-y-12">
-        
+
         {/* SECTION HEADER */}
         <div className="space-y-3">
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, x: -15 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -46,7 +56,7 @@ export const Experience = () => {
           >
             &gt;_ INDUSTRY ENGAGEMENTS
           </motion.h2>
-          <motion.h3 
+          <motion.h3
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -65,14 +75,13 @@ export const Experience = () => {
               initial="initial"
               whileInView="animate"
               whileHover="hover"
-              viewport={{ once: true, margin: "-100px" }}
+              viewport={{ once: true, margin: '-100px' }}
               transition={{ delay: idx * 0.15 }}
-              key={job.company}
+              key={`${job.company}-${job.period}`}
               className="relative pl-12 sm:pl-16 group"
             >
-              
               {/* SYNCHRONIZED TIMELINE NODE */}
-              <motion.div 
+              <motion.div
                 variants={nodeVariants}
                 className="absolute left-[10px] sm:left-[18px] top-6 w-3 h-3 rounded-full bg-white dark:bg-[#080E1E] border-2 border-blue-500/50 flex items-center justify-center z-10"
               >
@@ -82,7 +91,6 @@ export const Experience = () => {
               {/* CARD BLOCK */}
               <motion.div variants={cardVariants}>
                 <Card className="p-6 sm:p-8 space-y-6">
-                  
                   {/* Card Header Info */}
                   <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4 pb-4 border-b border-slate-900/[0.08] dark:border-white/[0.08]">
                     <div className="space-y-1.5">
@@ -103,12 +111,30 @@ export const Experience = () => {
                   <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-sans">
                     {job.description}
                   </p>
-                  
-                  {/* Internship Key Deliverables list */}
+
+                  {/* Internship Key Deliverables + Preview Certificate Action Row */}
                   <div className="space-y-3">
-                    <span className="text-[10px] font-mono uppercase tracking-widest text-slate-500 dark:text-slate-400 font-bold block">
-                      KEY DELIVERABLES:
-                    </span>
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <span className="text-[10px] font-mono uppercase tracking-widest text-slate-500 dark:text-slate-400 font-bold">
+                        KEY DELIVERABLES:
+                      </span>
+
+                      {job.certificates?.length > 0 && (
+                        <button
+                          type="button"
+                          onClick={() => openJobCertificates(job)}
+                          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full liquid-btn-primary text-[10px] font-mono font-bold uppercase tracking-wider cursor-pointer transition-transform hover:scale-[1.03]"
+                        >
+                          <Eye className="w-3.5 h-3.5 shrink-0" />
+                          <span>
+                            {job.certificates.length > 1
+                              ? `Preview Certificates (${job.certificates.length})`
+                              : 'Preview Certificate'}
+                          </span>
+                        </button>
+                      )}
+                    </div>
+
                     <ul className="grid grid-cols-1 gap-2.5">
                       {job.bullets.map((bullet, bIdx) => (
                         <li key={bIdx} className="text-xs text-slate-700 dark:text-slate-300 flex items-start space-x-2.5 liquid-glass-well p-3 rounded-2xl">
@@ -118,15 +144,15 @@ export const Experience = () => {
                       ))}
                     </ul>
                   </div>
-
                 </Card>
               </motion.div>
-
             </motion.div>
           ))}
         </div>
 
       </div>
+
+      <CertificateLightbox group={previewGroup} onClose={() => setPreviewGroup(null)} />
     </section>
   );
 };

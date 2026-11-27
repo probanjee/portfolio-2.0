@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Download, Github, ShieldAlert, Cpu, Terminal, Shield } from 'lucide-react';
+import { Download, Github } from 'lucide-react';
 import { portfolioData } from '../../data/portfolioData';
 import Button from '../ui/Button';
+import SocialLinks from '../ui/SocialLinks';
 
 export const Hero = () => {
   const { personalInfo } = portfolioData;
@@ -63,17 +64,6 @@ export const Hero = () => {
         {/* Left Side: Rich Typography & CTA Actions (Spans 7 Cols) */}
         <div className="lg:col-span-7 space-y-8 text-center lg:text-left">
           
-          {/* SECURE SUITE BADGE */}
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center space-x-2 px-3.5 py-2 rounded-full liquid-glass-well border border-blue-500/20 dark:border-sky-400/25 text-blue-700 dark:text-sky-300 text-[10px] sm:text-xs font-semibold uppercase tracking-widest font-mono mx-auto lg:mx-0"
-          >
-            <Shield className="w-3.5 h-3.5 text-blue-600 dark:text-sky-400 animate-pulse" />
-            <span>AI SECURITY NODE ACTIVE // v2.0</span>
-          </motion.div>
-
           {/* DYNAMIC HEADER */}
           <div className="space-y-4">
             <motion.h1
@@ -146,6 +136,16 @@ export const Hero = () => {
               <Github className="w-4 h-4 mr-2 text-slate-600 dark:text-slate-300 group-hover:text-blue-600 dark:group-hover:text-white transition-colors" />
               VIEW INFRASTRUCTURE
             </Button>
+          </motion.div>
+
+          {/* SOCIAL LINKS */}
+          <motion.div
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, delay: 0.6 }}
+            className="pt-1 flex justify-center lg:justify-start"
+          >
+            <SocialLinks />
           </motion.div>
 
         </div>

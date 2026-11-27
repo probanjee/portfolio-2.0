@@ -14,6 +14,8 @@ export const portfolioData = {
     location: "West Bengal, India",
     github: "https://github.com/probanjee",
     linkedin: "https://linkedin.com/in/prosun-banerjee-545942293",
+    leetcode: "https://leetcode.com/u/Prosun01/",
+    instagram: "", // Add your Instagram profile URL here when ready
     website: "https://probanjee.vercel.app/",
     resumeUrl: "/assets/Prosun_Banerjee_CV.pdf",
     avatarUrl: "/assets/avatar.png"
@@ -42,6 +44,14 @@ export const portfolioData = {
         "Built modular logic systems and efficient data structures inside CLI interfaces.",
         "Strengthened memory management workflows and localized algorithmic troubleshooting in C++.",
         "Refined testing and structural architecture for enterprise-style application models."
+      ],
+      certificates: [
+        {
+          label: "Internship Completion Certificate",
+          date: "Feb 2, 2026",
+          credentialId: "CA/DF1/3486",
+          imageUrl: "/assets/certificates/codealpha-internship-certificate.jpg"
+        }
       ]
     },
     {
@@ -54,6 +64,14 @@ export const portfolioData = {
         "Implemented high-speed sorting and search logic tailored for system processing constraints.",
         "Identified and mitigated memory leaks and logical runtime errors.",
         "Collaborated on documentation of modular system architectures for improved code reusability."
+      ],
+      certificates: [
+        {
+          label: "Internship Completion Certificate",
+          date: "Feb 17, 2025",
+          credentialId: "CTI/A1/C88676",
+          imageUrl: "/assets/certificates/cognifyz-internship-certificate.jpg"
+        }
       ]
     }
   ],

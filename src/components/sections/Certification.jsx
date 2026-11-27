@@ -1,8 +1,9 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Award, Cloud, Code2, ExternalLink, Maximize2, ShieldCheck, X } from 'lucide-react';
+import React, { useMemo, useState } from 'react';
+import { motion } from 'framer-motion';
+import { Award, Cloud, Code2, ExternalLink, Eye, Maximize2, ShieldCheck } from 'lucide-react';
 import { portfolioData } from '../../data/portfolioData';
 import Card from '../ui/Card';
+import CertificateLightbox from '../ui/CertificateLightbox';
 
 const CERT_TABS = [
   { id: 'All', label: 'All', Icon: Award },
@@ -14,21 +15,28 @@ const CERT_TABS = [
 export const Certification = () => {
   const { certifications } = portfolioData;
   const [activeCategory, setActiveCategory] = useState('All');
-  const [selectedCert, setSelectedCert] = useState(null);
+  const [previewGroup, setPreviewGroup] = useState(null);
 
   const visibleCertifications = useMemo(() => {
     if (activeCategory === 'All') return certifications;
     return certifications.filter((cert) => cert.category === activeCategory);
   }, [activeCategory, certifications]);
 
-  useEffect(() => {
-    if (!selectedCert) return undefined;
-    const handleKeyDown = (event) => {
-      if (event.key === 'Escape') setSelectedCert(null);
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [selectedCert]);
+  const openCertPreview = (cert) => {
+    if (!cert.imageUrl) return;
+    setPreviewGroup({
+      title: cert.title,
+      issuer: cert.issuer,
+      items: [
+        {
+          label: cert.title,
+          imageUrl: cert.imageUrl,
+          date: cert.date,
+          credentialId: cert.credentialId,
+        },
+      ],
+    });
+  };
 
   return (
     <section id="certification" className="scroll-mt-24 py-16 sm:py-24 relative overflow-hidden">
@@ -113,11 +121,10 @@ export const Certification = () => {
               className="p-4 sm:p-5 h-full flex flex-col justify-between space-y-4 group"
             >
               <div className="space-y-4">
-                {/* Interactive Certificate Image Thumbnail */}
                 {cert.imageUrl && (
                   <button
                     type="button"
-                    onClick={() => setSelectedCert(cert)}
+                    onClick={() => openCertPreview(cert)}
                     aria-label={`View full certificate: ${cert.title}`}
                     className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden bg-white dark:bg-slate-900/90 border border-slate-900/10 dark:border-white/15 shadow-inner group/img cursor-zoom-in block focus:outline-none focus:ring-2 focus:ring-blue-500/50"
                   >
@@ -156,26 +163,35 @@ export const Certification = () => {
                 </div>
               </div>
 
-              {(cert.credentialId || cert.credentialUrl) && (
-                <div className="pt-3 border-t border-slate-900/[0.08] dark:border-white/[0.08] flex items-center justify-between gap-3 text-[10px] font-mono">
-                  {cert.credentialId ? (
-                    <span className="text-slate-500 dark:text-slate-400 truncate">
-                      ID: {cert.credentialId}
-                    </span>
-                  ) : (
-                    <span />
-                  )}
-                  {cert.credentialUrl && (
-                    <a
-                      href={cert.credentialUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-blue-600 dark:text-sky-400 font-bold hover:underline shrink-0"
-                    >
-                      <span>Credential</span>
-                      <ExternalLink className="w-3 h-3" />
-                    </a>
-                  )}
+              {(cert.imageUrl || cert.credentialId || cert.credentialUrl) && (
+                <div className="pt-3 border-t border-slate-900/[0.08] dark:border-white/[0.08] flex items-center justify-between gap-2 text-[10px] font-mono">
+                  <span className="text-slate-500 dark:text-slate-400 truncate">
+                    {cert.credentialId ? `ID: ${cert.credentialId}` : 'Verified'}
+                  </span>
+
+                  <div className="flex items-center gap-2 shrink-0">
+                    {cert.imageUrl && (
+                      <button
+                        type="button"
+                        onClick={() => openCertPreview(cert)}
+                        className="inline-flex items-center gap-1 px-3 py-1 rounded-full liquid-glass-well text-blue-600 dark:text-sky-400 font-bold hover:text-blue-700 dark:hover:text-white transition-colors cursor-pointer"
+                      >
+                        <Eye className="w-3 h-3" />
+                        <span>Preview</span>
+                      </button>
+                    )}
+                    {cert.credentialUrl && (
+                      <a
+                        href={cert.credentialUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-blue-600 dark:text-sky-400 font-bold hover:underline"
+                      >
+                        <span>Credential</span>
+                        <ExternalLink className="w-3 h-3" />
+                      </a>
+                    )}
+                  </div>
                 </div>
               )}
             </Card>
@@ -184,63 +200,7 @@ export const Certification = () => {
 
       </div>
 
-      {/* Full-Resolution Certificate Lightbox Modal */}
-      <AnimatePresence>
-        {selectedCert && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            onClick={() => setSelectedCert(null)}
-            data-lenis-prevent="true"
-            role="dialog"
-            aria-modal="true"
-            aria-label={selectedCert.title}
-            className="fixed inset-0 z-[80] bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 pointer-events-auto"
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 12 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 12 }}
-              transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-              onClick={(e) => e.stopPropagation()}
-              className="w-full max-w-4xl max-h-[90vh] rounded-3xl liquid-glass-strong liquid-rim overflow-hidden flex flex-col"
-            >
-              {/* Modal Header */}
-              <div className="px-5 py-3.5 border-b border-slate-900/10 dark:border-white/10 flex items-center justify-between gap-4">
-                <div className="min-w-0">
-                  <p className="text-[10px] font-mono font-bold text-blue-600 dark:text-sky-400 uppercase tracking-wider truncate">
-                    {selectedCert.issuer}
-                    {selectedCert.date ? ` · ${selectedCert.date}` : ''}
-                    {selectedCert.credentialId ? ` · ID: ${selectedCert.credentialId}` : ''}
-                  </p>
-                  <h3 className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-slate-100 truncate">
-                    {selectedCert.title}
-                  </h3>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => setSelectedCert(null)}
-                  aria-label="Close certificate preview"
-                  className="p-2 rounded-full liquid-glass-well text-slate-700 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white transition-colors cursor-pointer shrink-0"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-              </div>
-
-              {/* Modal Image */}
-              <div className="p-4 sm:p-6 overflow-auto flex items-center justify-center bg-white/85 dark:bg-slate-950/60">
-                <img
-                  src={selectedCert.imageUrl}
-                  alt={selectedCert.title}
-                  className="max-h-[72vh] w-auto object-contain rounded-xl shadow-lg"
-                />
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <CertificateLightbox group={previewGroup} onClose={() => setPreviewGroup(null)} />
     </section>
   );
 };
