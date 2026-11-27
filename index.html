@@ -23,17 +23,7 @@
     <meta property="twitter:image" content="https://probanjee.vercel.app/assets/avatar.png" />
     
     <!-- Prevent theme flash before React mounts -->
-    <script>
-      (function () {
-        try {
-          var saved = localStorage.getItem('theme');
-          var theme = saved === 'light' || saved === 'dark' ? saved : 'dark';
-          var root = document.documentElement;
-          root.classList.remove('dark', 'light');
-          root.classList.add(theme);
-        } catch (e) {}
-      })();
-    </script>
+    <script src="/theme-init.js"></script>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

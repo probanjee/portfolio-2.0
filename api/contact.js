@@ -1,23 +1,10 @@
-import { sendContactEmail } from '../lib/contactService.js';
+import { getAllowedOrigins, sendContactEmail } from '../lib/contactService.js';
 
-const DEFAULT_ORIGINS = [
-  'http://localhost:5173',
-  'http://127.0.0.1:5173',
-  'http://localhost:4173',
-  'http://127.0.0.1:4173',
-  'https://probanjee.vercel.app',
-];
-
-const getAllowedOrigins = () =>
-  new Set(
-    (process.env.CORS_ORIGINS || DEFAULT_ORIGINS.join(','))
-      .split(',')
-      .map((origin) => origin.trim())
-      .filter(Boolean),
-  );
+const MAX_BODY_BYTES = 32 * 1024;
 
 export default async function handler(req, res) {
   res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
   res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
 
   const origin = req.headers.origin;
@@ -42,12 +29,29 @@ export default async function handler(req, res) {
     return res.status(403).json({ success: false, message: 'Origin not allowed.' });
   }
 
+  const contentType = String(req.headers['content-type'] || '').toLowerCase();
+  if (!contentType.includes('application/json')) {
+    return res.status(415).json({ success: false, message: 'Content-Type must be application/json.' });
+  }
+
+  const contentLength = Number(req.headers['content-length'] || 0);
+  if (contentLength > MAX_BODY_BYTES) {
+    return res.status(413).json({ success: false, message: 'Request body is too large.' });
+  }
+
   let body = req.body;
   if (typeof body === 'string') {
+    if (Buffer.byteLength(body, 'utf8') > MAX_BODY_BYTES) {
+      return res.status(413).json({ success: false, message: 'Request body is too large.' });
+    }
     try {
       body = JSON.parse(body);
     } catch {
       return res.status(400).json({ success: false, message: 'Invalid JSON payload.' });
+    }
+  } else if (body && typeof body === 'object') {
+    if (Buffer.byteLength(JSON.stringify(body), 'utf8') > MAX_BODY_BYTES) {
+      return res.status(413).json({ success: false, message: 'Request body is too large.' });
     }
   }
 

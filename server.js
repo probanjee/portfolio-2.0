@@ -4,7 +4,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import rateLimit from 'express-rate-limit';
-import { sendContactEmail } from './lib/contactService.js';
+import { getAllowedOrigins, sendContactEmail } from './lib/contactService.js';
 
 const preExistingEnvKeys = new Set(
   Object.keys(process.env).filter((key) => Boolean(process.env[key]?.trim())),
@@ -46,19 +46,7 @@ app.use((req, res, next) => {
   next();
 });
 
-const defaultOrigins = [
-  'http://localhost:5173',
-  'http://127.0.0.1:5173',
-  'http://localhost:4173',
-  'http://127.0.0.1:4173',
-  'https://probanjee.vercel.app',
-];
-const allowedOrigins = new Set(
-  (process.env.CORS_ORIGINS || defaultOrigins.join(','))
-    .split(',')
-    .map((origin) => origin.trim())
-    .filter(Boolean),
-);
+const allowedOrigins = getAllowedOrigins();
 
 app.use(cors({
   origin: (origin, callback) => callback(null, !origin || allowedOrigins.has(origin)),

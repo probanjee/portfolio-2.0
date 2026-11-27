@@ -1,15 +1,16 @@
 import { describe, it, expect, vi } from 'vitest';
-import { submitContactForm, WEB3FORMS_ENDPOINT } from '../contactClient';
+import { submitContactForm } from '../contactClient';
 
 const SAMPLE_PAYLOAD = {
   name: 'Ada Lovelace',
   email: 'ada@example.com',
   subject: 'Collaboration',
-  message: 'Testing multi-provider delivery flow.',
+  message: 'Testing server-only contact delivery flow.',
+  website: '',
 };
 
 describe('contactClient', () => {
-  it('succeeds via /api/contact without calling Web3Forms fallback', async () => {
+  it('submits strictly to /api/contact with omit credentials and no exposed keys', async () => {
     const fetchFn = vi.fn().mockResolvedValue({
       ok: true,
       status: 200,
@@ -17,10 +18,7 @@ describe('contactClient', () => {
       json: async () => ({ success: true, message: 'Message delivered successfully.' }),
     });
 
-    const result = await submitContactForm(SAMPLE_PAYLOAD, {
-      fetchFn,
-      web3formsKey: 'test-web3forms-key',
-    });
+    const result = await submitContactForm(SAMPLE_PAYLOAD, { fetchFn });
 
     expect(result).toEqual({
       provider: 'api',
@@ -28,9 +26,10 @@ describe('contactClient', () => {
     });
     expect(fetchFn).toHaveBeenCalledTimes(1);
     expect(fetchFn.mock.calls[0][0]).toBe('/api/contact');
+    expect(fetchFn.mock.calls[0][1].credentials).toBe('omit');
   });
 
-  it('does not fall back when /api/contact rejects with 400 validation error', async () => {
+  it('throws the server error message when /api/contact rejects the submission', async () => {
     const fetchFn = vi.fn().mockResolvedValue({
       ok: false,
       status: 400,
@@ -38,64 +37,20 @@ describe('contactClient', () => {
       json: async () => ({ success: false, message: 'Enter a valid email address.' }),
     });
 
-    await expect(
-      submitContactForm(SAMPLE_PAYLOAD, { fetchFn, web3formsKey: 'test-web3forms-key' }),
-    ).rejects.toThrow('Enter a valid email address.');
-    expect(fetchFn).toHaveBeenCalledTimes(1);
+    await expect(submitContactForm(SAMPLE_PAYLOAD, { fetchFn })).rejects.toThrow(
+      'Enter a valid email address.',
+    );
   });
 
-  it('falls back to Web3Forms when /api/contact returns 503', async () => {
-    const onFallback = vi.fn();
-    const fetchFn = vi
-      .fn()
-      .mockResolvedValueOnce({
-        ok: false,
-        status: 503,
-        headers: new Headers({ 'content-type': 'application/json' }),
-        json: async () => ({ success: false, code: 'MAIL_NOT_CONFIGURED', message: 'Not configured' }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        status: 200,
-        headers: new Headers({ 'content-type': 'application/json' }),
-        json: async () => ({ success: true, message: 'Form submitted successfully!' }),
-      });
-
-    const result = await submitContactForm(SAMPLE_PAYLOAD, {
-      fetchFn,
-      web3formsKey: 'test-web3forms-key',
-      onFallback,
+  it('surfaces a clean fallback error when the server returns non-JSON', async () => {
+    const fetchFn = vi.fn().mockResolvedValue({
+      ok: false,
+      status: 503,
+      headers: new Headers({ 'content-type': 'text/plain' }),
     });
 
-    expect(result).toEqual({
-      provider: 'web3forms',
-      message: 'Form submitted successfully!',
-    });
-    expect(onFallback).toHaveBeenCalledTimes(1);
-    expect(fetchFn).toHaveBeenCalledTimes(2);
-    expect(fetchFn.mock.calls[1][0]).toBe(WEB3FORMS_ENDPOINT);
-    const web3Body = fetchFn.mock.calls[1][1].body;
-    expect(web3Body).toBeInstanceOf(FormData);
-    expect(web3Body.get('access_key')).toBe('test-web3forms-key');
-    expect(web3Body.get('replyto')).toBe('ada@example.com');
-  });
-
-  it('surfaces meaningful context if both /api/contact and Web3Forms network fail', async () => {
-    const fetchFn = vi
-      .fn()
-      .mockResolvedValueOnce({
-        ok: false,
-        status: 503,
-        headers: new Headers({ 'content-type': 'application/json' }),
-        json: async () => ({ success: false, message: 'Mail server is not configured yet.' }),
-      })
-      .mockRejectedValueOnce(new TypeError('Failed to fetch'));
-
-    await expect(
-      submitContactForm(SAMPLE_PAYLOAD, {
-        fetchFn,
-        web3formsKey: 'test-web3forms-key',
-      }),
-    ).rejects.toThrow('Mail server is not configured yet.');
+    await expect(submitContactForm(SAMPLE_PAYLOAD, { fetchFn })).rejects.toThrow(
+      'Contact service unavailable (HTTP 503).',
+    );
   });
 });

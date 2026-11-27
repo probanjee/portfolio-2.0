@@ -1,6 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import {
   buildContactEmail,
+  getAllowedOrigins,
   getMailConfig,
   sendContactEmail,
   validateContactPayload,
@@ -13,6 +14,7 @@ describe('contactService', () => {
       email: ' ada@example.com ',
       subject: ' Hello ',
       message: ' Testing the contact pipeline! ',
+      website: '',
     });
 
     expect(result).toEqual({
@@ -26,7 +28,7 @@ describe('contactService', () => {
     });
   });
 
-  it('rejects newline injection and short messages', () => {
+  it('rejects newline injection, short messages, and populated honeypot fields', () => {
     expect(
       validateContactPayload({
         name: 'Ada\r\nBcc: evil@example.com',
@@ -44,6 +46,27 @@ describe('contactService', () => {
         message: 'hey',
       }).ok,
     ).toBe(false);
+
+    expect(
+      validateContactPayload({
+        name: 'Bot',
+        email: 'bot@example.com',
+        subject: 'Spam',
+        message: 'Buy something now',
+        website: 'https://spam.example.com',
+      }).ok,
+    ).toBe(false);
+  });
+
+  it('resolves allowed CORS origins with optional CORS_ORIGINS override', () => {
+    const defaults = getAllowedOrigins({});
+    expect(defaults.has('https://probanjee.vercel.app')).toBe(true);
+    expect(defaults.has('http://127.0.0.1:5173')).toBe(true);
+
+    const custom = getAllowedOrigins({ CORS_ORIGINS: 'https://example.com, http://localhost:3000' });
+    expect(custom.has('https://example.com')).toBe(true);
+    expect(custom.has('http://localhost:3000')).toBe(true);
+    expect(custom.has('https://probanjee.vercel.app')).toBe(false);
   });
 
   it('prefers RESEND_API_KEY when present and rejects placeholders', () => {
@@ -104,7 +127,7 @@ describe('contactService', () => {
     expect(mail.html).toContain('Hello<br/>World');
   });
 
-  it('returns 503 when credentials are missing and 200 for Resend or SMTP delivery', async () => {
+  it('returns 503 when credentials are missing, sanitizes 500 errors, and delivers via Resend or SMTP', async () => {
     const missing = await sendContactEmail(
       {
         name: 'Visitor',
@@ -117,6 +140,25 @@ describe('contactService', () => {
 
     expect(missing.status).toBe(503);
     expect(missing.body.code).toBe('MAIL_NOT_CONFIGURED');
+
+    const failingFetch = vi.fn().mockResolvedValue({
+      ok: false,
+      status: 401,
+      json: async () => ({ name: 'validation_error', message: 'Internal secret detail' }),
+    });
+    const sanitizedFailure = await sendContactEmail(
+      {
+        name: 'Visitor',
+        email: 'visitor@example.com',
+        subject: 'Hello',
+        message: 'Testing sanitized failure response.',
+      },
+      { env: { RESEND_API_KEY: 're_test_12345' }, fetchFn: failingFetch },
+    );
+
+    expect(sanitizedFailure.status).toBe(500);
+    expect(sanitizedFailure.body.code).toBe('MAIL_DELIVERY_ERROR');
+    expect(sanitizedFailure.body.message).not.toContain('Internal secret detail');
 
     const fetchFn = vi.fn().mockResolvedValue({
       ok: true,

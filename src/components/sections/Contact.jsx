@@ -12,7 +12,8 @@ export const Contact = () => {
     name: '',
     email: '',
     subject: '',
-    message: ''
+    message: '',
+    website: ''
   });
   const [isSending, setIsSending] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -65,6 +66,7 @@ export const Contact = () => {
       email: formData.email.trim(),
       subject: formData.subject.trim(),
       message: formData.message.trim(),
+      website: formData.website,
     };
 
     if (!trimmed.name) {
@@ -94,21 +96,17 @@ export const Contact = () => {
     ]);
 
     try {
-      const result = await submitContactForm(trimmed, {
-        onFallback: (notice) => {
-          setConsoleLogs((prev) => [...prev.slice(-4), `▶ ${notice}`]);
-        },
-      });
+      const result = await submitContactForm(trimmed);
 
       setIsSending(false);
       setPacketStatus('DELIVERED');
       setConsoleLogs((prev) => [
         ...prev.slice(-4),
-        `[SUCCESS] ${result.provider === 'web3forms' ? 'Web3Forms' : 'Contact service'} accepted the message.`,
+        '[SUCCESS] Contact service accepted the message.',
         '[DELIVERED] Email sent to Prosun Banerjee.',
         `[SUCCESS] ${result.message || 'Message delivered successfully.'}`
       ]);
-      setFormData({ name: '', email: '', subject: '', message: '' });
+      setFormData({ name: '', email: '', subject: '', message: '', website: '' });
     } catch (error) {
       const reason = error.message || 'Transmission failed. Please try again.';
       setIsSending(false);
@@ -362,6 +360,18 @@ export const Contact = () => {
                     className="w-full liquid-glass-well rounded-2xl px-4 py-3.5 text-slate-900 dark:text-slate-100 placeholder:text-slate-500 dark:placeholder:text-slate-400 focus:border-blue-500/60 focus:ring-2 focus:ring-blue-500/20 transition-colors outline-none resize-none"
                   />
                 </div>
+
+                {/* Anti-spam honeypot (kept hidden from real visitors) */}
+                <input
+                  type="text"
+                  name="website"
+                  value={formData.website}
+                  onChange={handleInputChange}
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  className="hidden"
+                />
 
                 {/* Submit Row */}
                 <div className="pt-4 border-t border-slate-900/[0.08] dark:border-white/[0.08] flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
