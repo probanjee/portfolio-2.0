@@ -46,22 +46,27 @@ const fetchJson = async (url) => {
     const response = await fetch(url, { signal: controller.signal });
     if (!response.ok) throw new Error('Weather service unavailable');
     return await response.json();
+  } catch (error) {
+    if (error?.name === 'AbortError') throw new Error('Weather lookup timed out. Please try again.');
+    if (error instanceof TypeError) throw new Error('Could not reach the weather service. Check your connection and try again.');
+    throw error;
   } finally {
     clearTimeout(timeoutId);
   }
 };
 
 const getRequestedPlace = (query) => {
-  const match = query.match(/\b(?:in|at|near)\s+([^?!]+)/i);
-  if (!match) return null;
+  const matches = [...query.matchAll(/\b(?:in|at|near|around|for)\s+([^?!]+)/gi)];
+  for (const match of matches.reverse()) {
+    const place = match[1]
+      .replace(/\s+(?:for|on)\s+(?:right now|currently|today|tonight|tomorrow|this week|next week|this weekend|the weekend)\b.*$/i, '')
+      .replace(/\b(?:right now|currently|today|tonight|tomorrow|please|for me|this week|next week|this weekend|the weekend)\b.*$/i, '')
+      .trim()
+      .replace(/[.,]+$/, '');
 
-  const place = match[1]
-    .replace(/\b(?:right now|currently|today|tonight|tomorrow|please|for me)\b.*$/i, '')
-    .trim()
-    .replace(/[.,]+$/, '');
-
-  if (!place || /^(here|outside|my area|my location|the moment)$/i.test(place)) return null;
-  return place;
+    if (place && !/^(me|here|outside|my area|my location|the moment)$/i.test(place)) return place;
+  }
+  return null;
 };
 
 const geocodePlace = async (place) => {
@@ -134,7 +139,9 @@ export const getCurrentWeatherReport = async (query) => {
   const fahrenheit = (temperature * 9 / 5) + 32;
   const condition = WEATHER_CODES[current.weather_code] || 'Conditions unavailable';
   const windDirection = getWindDirection(current.wind_direction_10m);
-  const wind = `${Math.round(current.wind_speed_10m)} km/h${windDirection ? ` ${windDirection}` : ''}`;
+  const wind = Number.isFinite(current.wind_speed_10m)
+    ? `${Math.round(current.wind_speed_10m)} km/h${windDirection ? ` ${windDirection}` : ''}`
+    : 'Unavailable';
   const reportedAt = [current.time?.replace('T', ' '), forecast.timezone_abbreviation || forecast.timezone]
     .filter(Boolean)
     .join(' ');
@@ -146,6 +153,7 @@ export const getCurrentWeatherReport = async (query) => {
     text: `**Current Weather — ${location.label}**\n\n- **Conditions:** ${condition}\n- **Temperature:** ${temperature.toFixed(1)}°C (${fahrenheit.toFixed(1)}°F)\n- **Feels like:** ${Number.isFinite(feelsLike) ? `${feelsLike.toFixed(1)}°C` : 'Unavailable'}\n- **Humidity:** ${Number.isFinite(current.relative_humidity_2m) ? `${current.relative_humidity_2m}%` : 'Unavailable'}\n- **Wind:** ${wind}\n- **Updated:** ${reportedAt || 'Current model update'}${fallbackNote}\n\nLocation is sent to Open-Meteo for this lookup.`,
     actions: [
       { label: 'Weather data by Open-Meteo', link: 'https://open-meteo.com/', external: true, icon: 'external' },
+      ...(requestedPlace ? [{ label: 'Place data by GeoNames', link: 'https://www.geonames.org/', external: true, icon: 'external' }] : []),
     ],
   };
 };

@@ -675,18 +675,22 @@ const generatePAIResponse = (query, unansweredCount, userName = '') => {
   // 17. Unhandled Questions
   if (unansweredCount === 0) {
     return {
-      text: `I am focused on answering questions regarding Prosun's development projects, technical skills, experience, and contact information.`,
+      text: `I do not know that one yet. My knowledge base is smaller than my confidence: try asking about Prosun's projects, skills, experience, or contact details.`,
       type: 'unhandled_1'
     };
   } else if (unansweredCount === 1) {
     return {
-      text: `I do not have specific details on that topic. Please feel free to ask about Prosun's C++ projects, Honeypot architecture, or skills.`,
+      text: `Still stumped. “Partial Automated Intelligence” is an honest job title—try a question about C++, the honeypot, or Prosun's skills.`,
       type: 'unhandled_2'
     };
   } else {
     return {
-      text: `I am unable to process that specific inquiry. You can contact Prosun directly via email or LinkedIn for custom discussions.`,
-      type: 'unhandled_3'
+      text: `Three mystery questions in a row. I am calling in a human before my confidence gets any more dangerous.`,
+      type: 'unhandled_3',
+      actions: [
+        { label: 'Email Prosun', link: 'mailto:prosunbanerjee8@gmail.com', external: true, icon: 'mail' },
+        { label: 'LinkedIn', link: 'https://linkedin.com/in/prosun-banerjee-545942293', external: true, icon: 'linkedin' },
+      ]
     };
   }
 };
@@ -730,6 +734,7 @@ export const ProsenjitChatbot = () => {
   const messagesEndRef = useRef(null);
   const messagesFeedRef = useRef(null);
   const inputRef = useRef(null);
+  const weatherRequestIdRef = useRef(0);
 
   // Screen width & mobile detector
   useEffect(() => {
@@ -910,6 +915,7 @@ export const ProsenjitChatbot = () => {
       const response = generatePAIResponse(textToSend, unansweredCount, userName);
 
       if (response.type === 'weather') {
+        const weatherRequestId = ++weatherRequestIdRef.current;
         const weatherMessageId = Date.now() + 1;
         const weatherMessage = {
           id: weatherMessageId,
@@ -922,6 +928,7 @@ export const ProsenjitChatbot = () => {
 
         try {
           const report = await getCurrentWeatherReport(textToSend);
+          if (weatherRequestIdRef.current !== weatherRequestId) return;
           setMessages(prev => prev.map(message => message.id === weatherMessageId
             ? {
                 ...message,
@@ -931,6 +938,7 @@ export const ProsenjitChatbot = () => {
               }
             : message));
         } catch (error) {
+          if (weatherRequestIdRef.current !== weatherRequestId) return;
           setMessages(prev => prev.map(message => message.id === weatherMessageId
             ? {
                 ...message,
@@ -938,7 +946,7 @@ export const ProsenjitChatbot = () => {
               }
             : message));
         } finally {
-          setIsTyping(false);
+          if (weatherRequestIdRef.current === weatherRequestId) setIsTyping(false);
         }
         return;
       }
@@ -985,7 +993,9 @@ export const ProsenjitChatbot = () => {
   };
 
   const handleReset = () => {
+    weatherRequestIdRef.current += 1;
     setMessages(INITIAL_MESSAGES);
+    setIsTyping(false);
     setUnhandledCount(0);
     setAwaitingUserName(false);
     setUserName('');
@@ -1077,8 +1087,8 @@ export const ProsenjitChatbot = () => {
                 height: isMobileScreen && visualViewportHeight ? `${visualViewportHeight}px` : undefined,
                 maxHeight: isMobileScreen && visualViewportHeight ? `${visualViewportHeight}px` : undefined
               }}
-              className="fixed inset-x-0 bottom-0 z-50 h-[86vh] max-h-[86dvh] rounded-t-3xl bg-[#040914]/95 backdrop-blur-xl border-t border-x border-brand-primary/40 shadow-[0_-16px_48px_rgba(0,0,0,0.85)] flex flex-col overflow-hidden text-slate-100 selection:bg-brand-primary/30
-                sm:static sm:inset-auto sm:mb-3 sm:w-[360px] sm:max-h-[500px] sm:h-[55vh] sm:rounded-2xl sm:bg-[#040914]/25 sm:backdrop-blur-xl sm:border sm:border-brand-primary/40 sm:shadow-[0_16px_48px_rgba(0,0,0,0.6)]"
+              className="fixed inset-x-0 bottom-0 z-50 h-[86vh] max-h-[86dvh] rounded-t-3xl bg-[#040914]/25 backdrop-blur-xl border-t border-x border-brand-primary/40 shadow-[0_-16px_48px_rgba(0,0,0,0.85)] flex flex-col overflow-hidden text-slate-100 selection:bg-brand-primary/30
+                sm:static sm:inset-auto sm:mb-3 sm:w-[360px] sm:max-h-[500px] sm:h-[55vh] sm:rounded-2xl sm:border sm:border-brand-primary/40 sm:shadow-[0_16px_48px_rgba(0,0,0,0.6)]"
             >
               {/* Mobile Drag Handle */}
               <div className="w-10 h-1 rounded-full bg-white/20 mx-auto mt-2 sm:hidden shrink-0" aria-hidden="true" />
@@ -1283,7 +1293,7 @@ export const ProsenjitChatbot = () => {
                       type="text"
                       value={inputValue}
                       onChange={(e) => setInputValue(e.target.value)}
-                      placeholder="Ask about Prosun's projects or skills..."
+                      placeholder="Ask about projects, math, weather, or time..."
                       className="w-full bg-black/40 sm:bg-black/30 backdrop-blur-md border border-white/15 rounded-xl px-3 py-2 sm:px-2.5 sm:py-1.5 text-xs sm:text-[10.5px] text-slate-100 placeholder-slate-400 focus:outline-none focus:border-brand-primary/60 focus:ring-1 focus:ring-brand-primary/50 transition-all font-mono"
                     />
                   </div>
@@ -1320,6 +1330,22 @@ export const ProsenjitChatbot = () => {
 
             {/* P.A.I. Robot Avatar with Online Indicator */}
             <div className="relative shrink-0 z-10 w-8 h-8 sm:w-8 sm:h-8 flex items-center justify-center">
+              <motion.div
+                aria-hidden="true"
+                animate={{ rotate: prefersReducedMotion ? 0 : 360 }}
+                transition={{ duration: prefersReducedMotion ? 0 : 5, ease: 'linear', repeat: prefersReducedMotion ? 0 : Infinity }}
+                className="pointer-events-none absolute -inset-[6px] rounded-full border border-cyan-200/20 border-t-cyan-100/90 border-r-cyan-300/70 shadow-[0_0_10px_rgba(34,211,238,0.28)]"
+              >
+                <span className="absolute -top-1 left-1/2 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-gradient-to-br from-white to-cyan-300 shadow-[0_0_8px_rgba(103,232,249,0.9)]" />
+              </motion.div>
+              <motion.div
+                aria-hidden="true"
+                animate={{ rotate: prefersReducedMotion ? 0 : -360 }}
+                transition={{ duration: prefersReducedMotion ? 0 : 8, ease: 'linear', repeat: prefersReducedMotion ? 0 : Infinity }}
+                className="pointer-events-none absolute -inset-[11px] rounded-full border border-purple-200/15 border-b-purple-200/80 border-l-cyan-200/40 shadow-[0_0_12px_rgba(192,132,252,0.2)]"
+              >
+                <span className="absolute -right-0.5 top-1/2 h-1 w-1 -translate-y-1/2 rounded-full bg-gradient-to-br from-white to-purple-300 shadow-[0_0_8px_rgba(216,180,254,0.9)]" />
+              </motion.div>
               <div className="w-8 h-8 rounded-full overflow-hidden border border-cyan-400/50 bg-[#08152c] shadow-[0_0_10px_rgba(6,182,212,0.35)] flex items-center justify-center p-0.5">
                 <img
                   src="/assets/pai.gif"
@@ -1339,7 +1365,7 @@ export const ProsenjitChatbot = () => {
                   P.A.I.
                 </span>
                       <span className="text-[8px] font-mono px-1 py-0.2 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
-                  P.A.I.
+                        AI
                 </span>
               </div>
               <p className="text-[9px] text-cyan-300/90 group-hover:text-cyan-200 transition-colors leading-none mt-0.5">
