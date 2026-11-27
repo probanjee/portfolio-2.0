@@ -11,19 +11,21 @@ export const Button = ({
   href,
   download
 }) => {
-  const baseStyles = 'inline-flex items-center justify-center font-mono font-semibold tracking-wider transition-all duration-300 rounded-xl focus:outline-none';
-  
+  const baseStyles =
+    'inline-flex items-center justify-center font-mono font-semibold tracking-wider transition-[transform,background-color,border-color,box-shadow,color] duration-200 rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary/50';
+
   const variants = {
-    primary: 'px-5 py-3 text-xs text-white bg-gradient-to-r from-brand-primary to-brand-secondary hover:shadow-[0_0_25px_rgba(59,130,246,0.4)] border border-brand-primary/20',
-    secondary: 'px-5 py-3 text-xs text-slate-300 light:text-slate-700 bg-white/5 light:bg-slate-200 hover:bg-white/10 light:hover:bg-slate-300 border border-white/5 light:border-black/5',
-    outline: 'px-5 py-3 text-xs text-brand-primary bg-transparent border border-brand-primary/30 hover:bg-brand-primary/10',
-    text: 'px-3 py-2 text-xs text-slate-400 hover:text-slate-200 light:text-slate-600 light:hover:text-slate-900 bg-transparent'
+    primary: 'px-5 py-3 text-xs liquid-btn-primary',
+    secondary: 'px-5 py-3 text-xs liquid-btn-secondary',
+    outline:
+      'px-5 py-3 text-xs text-blue-600 dark:text-sky-400 bg-blue-500/[0.08] dark:bg-sky-400/[0.08] border border-blue-500/25 dark:border-sky-400/25 hover:bg-blue-500/15 dark:hover:bg-sky-400/15 backdrop-blur-md',
+    text: 'px-3 py-2 text-xs text-slate-600 hover:text-slate-950 dark:text-slate-400 dark:hover:text-slate-100 bg-transparent'
   };
 
   const buttonContent = (
     <motion.span
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
+      whileHover={{ scale: 1.015 }}
+      whileTap={{ scale: 0.97 }}
       className="flex items-center justify-center space-x-2"
     >
       {children}
@@ -36,8 +38,8 @@ export const Button = ({
       <a
         href={href}
         download={download}
-        target={download || isExternal ? "_blank" : undefined}
-        rel={download || isExternal ? "noopener noreferrer" : undefined}
+        target={download || isExternal ? '_blank' : undefined}
+        rel={download || isExternal ? 'noopener noreferrer' : undefined}
         className={`${baseStyles} ${variants[variant]} ${className}`}
       >
         {buttonContent}

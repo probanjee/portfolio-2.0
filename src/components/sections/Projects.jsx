@@ -7,7 +7,7 @@ export const Projects = () => {
   const { projects } = portfolioData;
 
   return (
-    <section id="projects" className="scroll-mt-24 py-16 sm:py-24 relative overflow-hidden select-none">
+    <section id="projects" className="scroll-mt-24 py-16 sm:py-24 relative overflow-hidden">
       <div className="space-y-12">
         
         {/* SECTION HEADER */}
@@ -16,7 +16,7 @@ export const Projects = () => {
             initial={{ opacity: 0, x: -15 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="text-xs font-mono text-brand-primary uppercase tracking-widest"
+            className="text-xs font-mono text-blue-600 dark:text-sky-400 uppercase tracking-widest"
           >
             &gt;_ CORE REPOSITORIES
           </motion.h2>
@@ -25,13 +25,13 @@ export const Projects = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-3xl sm:text-4xl font-extrabold tracking-tight"
+            className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100"
           >
-            Featured Security & System Pipelines
+            Featured Security &amp; System Pipelines
           </motion.h3>
         </div>
 
-        {/* PROJECTS RESPONSIVE GRID (Featured card occupies full columns on desktop layouts) */}
+        {/* PROJECTS RESPONSIVE GRID */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 pointer-events-auto">
           {projects.map((proj, idx) => {
             const isFeatured = proj.id === 'honeypot-system' || proj.id === 'sqlsense';

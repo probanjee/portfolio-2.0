@@ -62,7 +62,7 @@ export const Skills = () => {
   };
 
   return (
-    <section id="skills" className="scroll-mt-24 py-16 sm:py-24 relative overflow-hidden select-none">
+    <section id="skills" className="scroll-mt-24 py-16 sm:py-24 relative overflow-hidden">
       <div className="space-y-12">
 
         {/* SECTION HEADER */}
@@ -71,7 +71,7 @@ export const Skills = () => {
             initial={{ opacity: 0, x: -15 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="text-xs font-mono text-brand-primary uppercase tracking-widest"
+            className="text-xs font-mono text-blue-600 dark:text-sky-400 uppercase tracking-widest"
           >
             &gt;_ CAPABILITIES MATRIX
           </motion.h2>
@@ -80,9 +80,9 @@ export const Skills = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-3xl sm:text-4xl font-extrabold tracking-tight"
+            className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100"
           >
-            Technical Framework & Knowledge Domains
+            Technical Framework &amp; Knowledge Domains
           </motion.h3>
         </div>
 
@@ -94,7 +94,7 @@ export const Skills = () => {
           viewport={{ once: true, margin: "-50px" }}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 pointer-events-auto"
         >
-          {skillCategories.map((cat, idx) => (
+          {skillCategories.map((cat) => (
             <motion.div
               variants={cardVariants}
               key={cat.title}
@@ -102,47 +102,27 @@ export const Skills = () => {
             >
               <Card
                 hoverEffect={false}
-                className="p-6 sm:p-8 h-full flex flex-col justify-between space-y-6 border border-white/[0.03] bg-[#02050D]/30 backdrop-blur-md hover:border-white/10 hover:shadow-[0_16px_40px_rgba(2,5,13,0.4)] transition-all duration-300 relative overflow-hidden"
+                className="p-6 sm:p-7 h-full flex flex-col justify-between space-y-6 relative overflow-hidden"
               >
-                {/* Accent Soft Halo Glow inside individual card */}
-                <div
-                  className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-10 transition-opacity duration-500 z-0"
-                  style={{
-                    background: `radial-gradient(circle at 10% 10%, ${cat.accent} 0%, transparent 50%)`
-                  }}
-                />
+                <div className="space-y-5 relative z-10">
 
-                <div className="space-y-6 relative z-10">
-
-                  {/* Category Header Row - Pure Text, No Logo */}
-                  <div className="pb-3 border-b border-white/[0.04]">
-                    <h4 className="text-sm sm:text-base font-extrabold text-slate-100 font-mono tracking-wide">
+                  {/* Category Header Row */}
+                  <div className="pb-3 border-b border-slate-900/[0.08] dark:border-white/[0.08]">
+                    <h4 className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-slate-100 font-mono tracking-wide">
                       {cat.title}
                     </h4>
                   </div>
 
-                  {/* Skill chips: authentic logos only (if not found in internet, render in text format) */}
-                  <div className="flex flex-wrap gap-2.5">
+                  {/* Skill chips */}
+                  <div className="flex flex-wrap gap-2">
                     {cat.skills.map(skill => {
                       const icon = getSkillIcon(skill, "w-3.5 h-3.5");
                       return (
                         <motion.span
                           key={skill}
-                          whileHover={{
-                            scale: 1.05,
-                            y: -2,
-                            color: '#fff',
-                            borderColor: cat.accent.replace('0.25', '0.6'),
-                            boxShadow: `0 0 15px ${cat.accent.replace('0.25', '0.4')}`
-                          }}
-                          transition={{
-                            type: "spring",
-                            stiffness: 420,
-                            damping: 14
-                          }}
-                          className={`inline-flex items-center rounded-xl text-[10px] sm:text-xs font-mono font-bold border border-white/[0.06] bg-slate-950/70 text-slate-300 hover:bg-slate-900 hover:text-white cursor-pointer transition-all shadow-sm ${
-                            icon ? 'space-x-2 px-3 py-1.5' : 'px-3 py-1.5'
-                          }`}
+                          whileHover={{ y: -1.5 }}
+                          transition={{ duration: 0.15 }}
+                          className="inline-flex items-center rounded-full text-[11px] font-mono font-semibold liquid-glass-well text-slate-800 dark:text-slate-200 hover:text-blue-700 dark:hover:text-white cursor-default transition-colors px-3 py-1.5 space-x-2"
                         >
                           {icon && (
                             <span className="w-3.5 h-3.5 shrink-0 flex items-center justify-center">
@@ -157,11 +137,11 @@ export const Skills = () => {
 
                 </div>
 
-                {/* Simulated Decryption Key Code bar for Tech-SaaS detailing */}
-                <div className="flex justify-between items-center pt-4 border-t border-white/[0.03] text-[9px] font-mono text-slate-600 font-bold relative z-10">
+                {/* Simulated Decryption Key Code bar */}
+                <div className="flex justify-between items-center pt-4 border-t border-slate-900/[0.08] dark:border-white/[0.08] text-[9px] font-mono text-slate-500 dark:text-slate-400 font-bold relative z-10">
                   <span>CAPABILITY::ENCRYPT</span>
-                  <span className="text-emerald-500 flex items-center">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse mr-1" />
+                  <span className="text-emerald-600 dark:text-emerald-400 flex items-center">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-pulse mr-1" />
                     VERIFIED
                   </span>
                 </div>

@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Sun, Moon, Shield, ExternalLink } from 'lucide-react';
+import { Menu, X, Sun, Moon } from 'lucide-react';
 import { useTheme } from '../../hooks/useTheme';
 import { useScrollSpy } from '../../hooks/useScrollSpy';
 
@@ -10,7 +10,6 @@ export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
 
-  // Watch key scroll viewports to drive link styling
   const activeSection = useScrollSpy(['dashboard', 'about', 'projects', 'achievements', 'skills', 'contact'], 180);
 
   const navItems = [
@@ -26,7 +25,7 @@ export const Navbar = () => {
     setIsOpen(false);
     const element = document.getElementById(id);
     if (element) {
-      const topOffset = 90; // Align perfectly with header boundaries
+      const topOffset = 90;
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - topOffset;
       window.scrollTo({
@@ -42,7 +41,6 @@ export const Navbar = () => {
       if (location.pathname === '/') {
         handleScrollTo(id);
       } else {
-        // Redirect to homepage anchor
         window.location.href = item.path;
       }
     } else if (item.path === '/') {
@@ -51,98 +49,101 @@ export const Navbar = () => {
     }
   };
 
-  // Resolve whether individual route items are active (using scroll spy as source of truth)
   const isItemActive = (item) => {
     const id = item.path === '/' ? 'dashboard' : item.path.replace('/#', '');
     return activeSection === id;
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 py-4 pointer-events-none select-none">
+    <nav className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 py-3.5 pointer-events-none select-none">
       <div className="max-w-7xl mx-auto pointer-events-auto">
-        <div className="glass-panel rounded-2xl border border-white/[0.03] dark:bg-[#02050D]/30 bg-white/60 backdrop-blur-premium px-4 sm:px-6 py-3 flex items-center justify-between transition-all duration-300 shadow-[0_8px_32px_0_rgba(2,5,13,0.3)]">
-          
-          {/* Brand Frame - Clean Typography, No Logo in Header */}
-          <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="flex items-center group py-0.5">
-            <span className="font-mono text-sm sm:text-base font-black tracking-widest text-slate-100 uppercase group-hover:text-white transition-colors">
-              PROSUN<span className="text-brand-primary">.SEC</span>
+        <div className="liquid-glass-strong liquid-rim rounded-full px-4 sm:px-5 py-2 flex items-center justify-between transition-colors duration-300">
+          {/* Brand Wordmark */}
+          <Link
+            to="/"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="flex items-center group py-1 pl-1"
+          >
+            <span className="font-mono text-sm sm:text-base font-bold tracking-widest text-slate-900 dark:text-slate-100 uppercase transition-colors">
+              PROSUN<span className="text-blue-600 dark:text-sky-400">.SEC</span>
             </span>
           </Link>
 
-          {/* Desktop Navigation Links */}
-          <div className="hidden md:flex items-center space-x-8">
+          {/* Desktop iOS Liquid Glass Tab Capsule */}
+          <div className="hidden md:flex items-center gap-1 p-1 rounded-full liquid-glass-well">
             {navItems.map((item) => {
               const active = isItemActive(item);
               return (
                 <button
                   key={item.name}
                   onClick={() => handleNavClick(item)}
-                  className={`text-[10px] font-bold uppercase tracking-wider font-mono relative py-1 transition-all ${
-                    active ? 'text-brand-primary' : 'text-slate-400 hover:text-slate-200'
+                  className={`relative px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-wider font-mono rounded-full transition-colors ${
+                    active
+                      ? 'text-blue-700 dark:text-white'
+                      : 'text-slate-700 hover:text-slate-950 dark:text-slate-200 dark:hover:text-white'
                   }`}
                 >
-                  <span>{item.name}</span>
                   {active && (
                     <motion.span
                       layoutId="activeNavIndicator"
-                      className="absolute -bottom-1.5 left-0 right-0 h-[1.5px] bg-brand-primary rounded-full shadow-[0_0_10px_rgba(59,130,246,0.5)]"
-                      transition={{ type: 'spring', stiffness: 350, damping: 25 }}
+                      className="absolute inset-0 rounded-full bg-white/75 dark:bg-white/20 backdrop-blur-md border border-white/80 dark:border-white/30 shadow-[0_2px_10px_rgba(15,23,42,0.08),inset_0_1px_0_rgba(255,255,255,0.95)] dark:shadow-[0_2px_12px_rgba(0,0,0,0.28),inset_0_1px_0_rgba(255,255,255,0.35)]"
+                      transition={{ type: 'spring', stiffness: 380, damping: 28 }}
                     />
                   )}
+                  <span className="relative z-10">{item.name}</span>
                 </button>
               );
             })}
           </div>
 
-          {/* Right Utilities Controls */}
-          <div className="hidden md:flex items-center space-x-4">
-            
-            {/* Theme Toggle Button */}
+          {/* Right Controls */}
+          <div className="hidden md:flex items-center space-x-2.5">
             <button
               onClick={toggleTheme}
-              className="p-2.5 rounded-xl bg-[#02050D]/40 border border-white/[0.04] text-slate-400 hover:text-brand-primary hover:border-brand-primary/20 hover:bg-brand-primary/5 transition-all"
+              aria-label={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+              className="p-2.5 rounded-full liquid-glass-well text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-sky-400 transition-colors cursor-pointer"
               title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
             >
-              {isDark ? <Sun className="w-3.5 h-3.5" /> : <Moon className="w-3.5 h-3.5" />}
+              {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
             </button>
 
-            {/* Quick Action Contact Button */}
             <button
               onClick={() => handleNavClick({ name: 'Contact', path: '/#contact' })}
-              className="px-4 py-2.5 text-[10px] font-bold font-mono tracking-wider text-white bg-gradient-to-r from-brand-primary to-brand-secondary rounded-xl hover:shadow-[0_0_20px_rgba(59,130,246,0.25)] border border-brand-primary/10 transition-all duration-300 flex items-center space-x-1.5 pointer-events-auto cursor-pointer"
+              className="px-4 py-2 text-[11px] font-bold font-mono tracking-wider rounded-full liquid-btn-primary transition-[transform,box-shadow,background] duration-200 flex items-center cursor-pointer"
             >
-              <span>LET'S TALK</span>
+              <span>LET&apos;S TALK</span>
             </button>
           </div>
 
-          {/* Mobile Navigation Toggles */}
+          {/* Mobile Controls */}
           <div className="flex items-center space-x-2 md:hidden">
             <button
               onClick={toggleTheme}
-              className="p-2.5 rounded-xl bg-[#02050D]/40 border border-white/[0.04] text-slate-400 transition-colors"
+              aria-label={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+              className="p-2.5 rounded-full liquid-glass-well text-slate-700 dark:text-slate-200 transition-colors"
             >
-              {isDark ? <Sun className="w-3.5 h-3.5" /> : <Moon className="w-3.5 h-3.5" />}
+              {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
             </button>
 
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="p-2.5 rounded-xl bg-[#02050D]/40 border border-white/[0.04] text-slate-400 transition-colors"
+              aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
+              className="p-2.5 rounded-full liquid-glass-well text-slate-700 dark:text-slate-200 transition-colors"
             >
               {isOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
             </button>
           </div>
-
         </div>
 
-        {/* Mobile Navigation Dropdown Drawer */}
+        {/* Mobile Liquid Glass Sheet */}
         <AnimatePresence>
           {isOpen && (
             <motion.div
-              initial={{ opacity: 0, y: -8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.2 }}
-              className="md:hidden mt-2 p-4 glass-panel rounded-2xl border border-white/[0.04] bg-[#02050D]/90 backdrop-blur-premium flex flex-col space-y-3 shadow-[0_8px_32px_0_rgba(2,5,13,0.4)] pointer-events-auto"
+              initial={{ opacity: 0, y: -8, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -8, scale: 0.98 }}
+              transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+              className="md:hidden mt-2.5 p-3 liquid-glass-strong liquid-rim rounded-[24px] flex flex-col space-y-1.5 pointer-events-auto"
             >
               {navItems.map((item) => {
                 const active = isItemActive(item);
@@ -150,21 +151,23 @@ export const Navbar = () => {
                   <button
                     key={item.name}
                     onClick={() => handleNavClick(item)}
-                    className={`text-left py-2 px-3 text-[10px] uppercase tracking-wider font-semibold font-mono rounded-xl transition-all flex justify-between items-center ${
-                      active ? 'bg-brand-primary/10 text-brand-primary border-l-2 border-brand-primary' : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
+                    className={`text-left py-2.5 px-3.5 text-xs uppercase tracking-wider font-semibold font-mono rounded-2xl transition-colors flex justify-between items-center ${
+                      active
+                        ? 'bg-blue-500/12 dark:bg-white/12 text-blue-700 dark:text-white border border-blue-500/20 dark:border-white/15'
+                        : 'text-slate-700 dark:text-slate-300 hover:bg-slate-900/5 dark:hover:bg-white/5'
                     }`}
                   >
                     <span>{item.name}</span>
-                    {active && <span className="w-1.5 h-1.5 rounded-full bg-brand-primary animate-pulse" />}
+                    {active && <span className="w-1.5 h-1.5 rounded-full bg-blue-600 dark:bg-sky-400" />}
                   </button>
                 );
               })}
-              <div className="pt-2 border-t border-white/[0.04]">
+              <div className="pt-2 border-t border-slate-900/10 dark:border-white/10">
                 <button
                   onClick={() => handleNavClick({ name: 'Contact', path: '/#contact' })}
-                  className="w-full text-center py-3 text-[10px] font-bold font-mono text-white bg-gradient-to-r from-brand-primary to-brand-secondary rounded-xl transition-all flex items-center justify-center space-x-1.5 cursor-pointer"
+                  className="w-full text-center py-3 text-xs font-bold font-mono rounded-full liquid-btn-primary cursor-pointer"
                 >
-                  <span>LET'S TALK</span>
+                  <span>LET&apos;S TALK</span>
                 </button>
               </div>
             </motion.div>

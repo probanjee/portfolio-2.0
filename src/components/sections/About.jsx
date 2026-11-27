@@ -64,7 +64,7 @@ export const About = () => {
   ];
 
   return (
-    <section id="about" className="scroll-mt-24 py-16 sm:py-24 relative overflow-hidden select-none">
+    <section id="about" className="scroll-mt-24 py-16 sm:py-24 relative overflow-hidden">
       
       {/* Cinematic grid spacer */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start relative z-10">
@@ -77,7 +77,7 @@ export const About = () => {
               initial={{ opacity: 0, x: -15 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="text-xs font-mono text-brand-primary uppercase tracking-widest"
+              className="text-xs font-mono text-blue-600 dark:text-sky-400 uppercase tracking-widest"
             >
               &gt;_ ARCHITECTURAL PROFILE
             </motion.h2>
@@ -86,11 +86,11 @@ export const About = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight"
+              className="text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight text-slate-900 dark:text-slate-100"
             >
               {about.title}
             </motion.h3>
-            <p className="text-xs font-mono text-slate-500 font-semibold uppercase tracking-wider italic pt-1">
+            <p className="text-xs font-mono text-slate-500 dark:text-slate-400 font-semibold uppercase tracking-wider italic pt-1">
               {about.subtitle}
             </p>
           </div>
@@ -102,13 +102,13 @@ export const About = () => {
             transition={{ delay: 0.2 }}
             className="space-y-4"
           >
-            <p className="text-sm sm:text-base text-slate-400 leading-relaxed font-sans font-medium">
+            <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed font-sans font-medium">
               {about.description}
             </p>
           </motion.div>
 
           {/* Inline Editorial System Metrics */}
-          <div className="grid grid-cols-2 gap-4 pt-4 border-t border-white/[0.03]">
+          <div className="grid grid-cols-2 gap-4 pt-4 border-t border-slate-900/[0.08] dark:border-white/[0.08]">
             {about.metrics.map((metric, idx) => (
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
@@ -116,13 +116,13 @@ export const About = () => {
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.08 + 0.3 }}
                 key={idx}
-                className="p-3.5 rounded-2xl bg-slate-950/40 border border-white/[0.02] flex flex-col justify-center space-y-1.5 hover:border-brand-primary/10 transition-colors duration-300"
+                className="p-4 rounded-[20px] liquid-glass-well flex flex-col justify-center space-y-1.5 transition-colors duration-300"
               >
-                <span className="text-xl sm:text-2xl font-black font-mono text-gradient">{metric.value}</span>
+                <span className="text-xl sm:text-2xl font-black font-mono text-gradient tabular-nums">{metric.value}</span>
                 {metric.label === "C/C++ Core Focus" ? (
                   <RotatingFocusLabel />
                 ) : (
-                  <span className="text-[9px] uppercase font-mono tracking-widest text-slate-500 font-bold">{metric.label}</span>
+                  <span className="text-[10px] uppercase font-mono tracking-widest text-slate-500 dark:text-slate-400 font-bold">{metric.label}</span>
                 )}
               </motion.div>
             ))}
@@ -141,21 +141,21 @@ export const About = () => {
               key={card.title}
               className="h-full"
             >
-              <Card className="h-full flex flex-col justify-between p-6 space-y-6 group hover:shadow-[0_12px_40px_rgba(59,130,246,0.06)] border border-white/[0.03] hover:border-brand-primary/15 transition-all">
+              <Card className="h-full flex flex-col justify-between p-6 space-y-6 group">
                 
                 <div className="space-y-4">
                   
                   {/* Card Icon Frame */}
-                  <div className="w-10 h-10 rounded-xl bg-slate-950 border border-white/[0.04] flex items-center justify-center shadow-inner group-hover:scale-105 transition-transform duration-300">
+                  <div className="w-11 h-11 rounded-2xl liquid-glass-well text-blue-600 dark:text-sky-400 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
                     {card.icon}
                   </div>
 
                   {/* Details */}
                   <div className="space-y-1.5">
-                    <h4 className="text-sm sm:text-base font-extrabold group-hover:text-brand-primary transition-colors">
+                    <h4 className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-slate-100 group-hover:text-blue-600 dark:group-hover:text-sky-400 transition-colors">
                       {card.title}
                     </h4>
-                    <p className="text-xs text-slate-400 font-sans leading-relaxed">
+                    <p className="text-xs text-slate-600 dark:text-slate-300 font-sans leading-relaxed">
                       {card.description}
                     </p>
                   </div>
@@ -163,10 +163,10 @@ export const About = () => {
                 </div>
 
                 {/* Secure telemetry dial */}
-                <div className="flex justify-between items-center pt-3 border-t border-white/[0.03] font-mono text-[9px] text-slate-500 font-bold">
+                <div className="flex justify-between items-center pt-3 border-t border-slate-900/[0.08] dark:border-white/[0.08] font-mono text-[9px] text-slate-500 dark:text-slate-400 font-bold">
                   <span>SECURE CHANNEL STATUS:</span>
-                  <span className="text-brand-primary flex items-center">
-                    <span className="w-1.5 h-1.5 rounded-full bg-brand-primary animate-pulse mr-1" />
+                  <span className="text-blue-600 dark:text-sky-400 flex items-center">
+                    <span className="w-1.5 h-1.5 rounded-full bg-blue-600 dark:bg-sky-400 animate-pulse mr-1" />
                     {card.status}
                   </span>
                 </div>

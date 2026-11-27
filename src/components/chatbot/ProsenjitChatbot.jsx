@@ -18,6 +18,72 @@ import { portfolioData } from '../../data/portfolioData';
 import { LeetCodeIcon } from '../ui/Icons';
 import { getCurrentWeatherReport } from '../../services/weatherService';
 
+// Concentric Liquid Glass Orb with 2 orbiting rings & rotating liquid droplets (contained cleanly inside orb bounds)
+const LiquidAIOrb = ({ variant = 'avatar', showStatus = false, animateCore = true }) => {
+  if (variant === 'launcher') {
+    return (
+      <div className="relative shrink-0 w-[52px] h-[52px] flex items-center justify-center">
+        {/* Outer Concentric Liquid Glass Ring 2 (counter-rotating with liquid droplet) */}
+        <motion.div
+          aria-hidden="true"
+          animate={{ rotate: animateCore ? -360 : 0 }}
+          transition={{ duration: animateCore ? 8 : 0, ease: 'linear', repeat: animateCore ? Infinity : 0 }}
+          className="pointer-events-none absolute inset-[2px] rounded-full border border-indigo-400/30 dark:border-purple-200/20 border-b-blue-500/75 dark:border-b-purple-200/85 border-l-sky-400/55 dark:border-l-cyan-200/50 shadow-[0_0_10px_rgba(59,130,246,0.2)] dark:shadow-[0_0_12px_rgba(192,132,252,0.25)]"
+        >
+          <span className="absolute -right-[3px] top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-gradient-to-br from-white via-sky-200 to-indigo-400 dark:from-white dark:to-purple-300 shadow-[0_0_7px_rgba(96,165,250,0.9)] dark:shadow-[0_0_8px_rgba(216,180,254,0.95)]" />
+        </motion.div>
+
+        {/* Inner Concentric Liquid Glass Ring 1 (clockwise with rotating liquid droplet) */}
+        <motion.div
+          aria-hidden="true"
+          animate={{ rotate: animateCore ? 360 : 0 }}
+          transition={{ duration: animateCore ? 5 : 0, ease: 'linear', repeat: animateCore ? Infinity : 0 }}
+          className="pointer-events-none absolute inset-[7px] rounded-full border border-sky-400/35 dark:border-cyan-200/25 border-t-blue-600/85 dark:border-t-cyan-100/95 border-r-sky-400/75 dark:border-r-cyan-300/75 shadow-[0_0_8px_rgba(56,189,248,0.25)] dark:shadow-[0_0_10px_rgba(34,211,238,0.3)]"
+        >
+          <span className="absolute -top-[3.5px] left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-gradient-to-br from-white via-sky-300 to-blue-500 dark:from-white dark:to-cyan-300 shadow-[0_0_7px_rgba(56,189,248,0.9)] dark:shadow-[0_0_8px_rgba(103,232,249,0.95)]" />
+        </motion.div>
+
+        {/* Center P.A.I. Glass Core Sphere */}
+        <div className="relative w-7 h-7 rounded-full overflow-hidden border border-white/80 dark:border-cyan-300/50 bg-gradient-to-br from-white/85 via-sky-100/75 to-blue-200/70 dark:from-[#0e2248]/90 dark:via-[#08152c]/90 dark:to-[#040a18]/95 shadow-[inset_0_1.5px_2px_rgba(255,255,255,0.9),0_4px_12px_rgba(37,99,235,0.25)] dark:shadow-[inset_0_1px_2px_rgba(255,255,255,0.35),0_0_12px_rgba(6,182,212,0.4)] flex items-center justify-center p-0.5">
+          <img
+            src="/assets/pai.png"
+            alt="P.A.I."
+            className="w-full h-full object-contain scale-110 select-none pointer-events-none"
+          />
+          <div
+            aria-hidden="true"
+            className="absolute inset-x-[15%] top-[6%] h-[38%] rounded-full bg-gradient-to-b from-white/75 to-transparent pointer-events-none"
+          />
+        </div>
+
+        {showStatus && (
+          <span className="absolute bottom-[3px] right-[3px] w-2.5 h-2.5 rounded-full bg-emerald-400 border-2 border-white dark:border-[#070d1d] z-20 shadow-[0_0_6px_rgba(52,211,153,0.8)]" />
+        )}
+      </div>
+    );
+  }
+
+  const dims = variant === 'header' ? 'w-8 h-8' : 'w-7 h-7';
+  return (
+    <div className={`relative shrink-0 ${dims} flex items-center justify-center`}>
+      <div className="w-full h-full rounded-full overflow-hidden border border-white/80 dark:border-cyan-300/45 bg-gradient-to-br from-white/85 via-sky-100/75 to-blue-200/70 dark:from-[#0e2248]/90 dark:via-[#08152c]/90 dark:to-[#040a18]/95 shadow-[inset_0_1.5px_2px_rgba(255,255,255,0.9),0_4px_10px_rgba(37,99,235,0.2)] dark:shadow-[inset_0_1px_2px_rgba(255,255,255,0.3),0_0_10px_rgba(6,182,212,0.35)] flex items-center justify-center p-0.5">
+        <img
+          src="/assets/pai.png"
+          alt="P.A.I."
+          className="w-full h-full object-contain scale-110 select-none pointer-events-none"
+        />
+        <div
+          aria-hidden="true"
+          className="absolute inset-x-[15%] top-[6%] h-[38%] rounded-full bg-gradient-to-b from-white/70 to-transparent pointer-events-none"
+        />
+      </div>
+      {showStatus && (
+        <span className="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-emerald-400 border-2 border-white dark:border-[#070d1d] z-20 shadow-sm" />
+      )}
+    </div>
+  );
+};
+
 // Action Chip Icon Router
 const ActionChipIcon = ({ type, className = "w-3 h-3 shrink-0" }) => {
   switch (type) {
@@ -1031,18 +1097,17 @@ export const ProsenjitChatbot = () => {
         <AnimatePresence>
           {!isOpen && showMangaBubble && (
             <motion.div
-              initial={{ opacity: 0, y: 10, scale: 0.85 }}
+              initial={{ opacity: 0, y: 10, scale: 0.92 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 8, scale: 0.85 }}
-              transition={{ duration: prefersReducedMotion ? 0 : 0.3, ease: [0.16, 1, 0.3, 1] }}
+              exit={{ opacity: 0, y: 8, scale: 0.92 }}
+              transition={{ duration: prefersReducedMotion ? 0 : 0.25, ease: [0.22, 1, 0.36, 1] }}
               onClick={() => setIsOpen(true)}
-              className="mb-2 mr-1 cursor-pointer group relative z-20 hidden sm:block"
+              className="mb-2.5 mr-1 cursor-pointer group relative z-20 hidden sm:block"
             >
-              <div className="relative px-3 py-1.5 rounded-xl bg-[#091124]/90 border border-brand-primary/40 shadow-[0_6px_20px_rgba(59,130,246,0.25)] text-slate-100 backdrop-blur-2xl flex items-center space-x-2 group-hover:border-brand-primary group-hover:shadow-[0_8px_25px_rgba(59,130,246,0.35)] transition-all">
-                <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-white/10 via-transparent to-white/5 opacity-60 pointer-events-none" />
-                <MessageSquare className="w-3.5 h-3.5 text-brand-primary shrink-0" />
+              <div className="relative px-3.5 py-2 rounded-full liquid-glass-strong liquid-rim text-slate-800 dark:text-slate-100 flex items-center space-x-2 transition-transform group-hover:-translate-y-0.5">
+                <MessageSquare className="w-3.5 h-3.5 text-blue-600 dark:text-sky-400 shrink-0" />
                 <div className="text-left font-mono text-[10px] leading-tight">
-                  <span className="font-extrabold text-cyan-300 tracking-wider uppercase">
+                  <span className="font-bold text-slate-800 dark:text-sky-300 tracking-wider uppercase">
                     Have questions? Chat with P.A.I.
                   </span>
                 </div>
@@ -1051,26 +1116,25 @@ export const ProsenjitChatbot = () => {
                     e.stopPropagation();
                     setShowMangaBubble(false);
                   }}
-                  className="ml-1 p-0.5 rounded-full text-slate-400 hover:text-white hover:bg-white/10 transition-colors shrink-0"
+                  className="ml-1 p-1 rounded-full text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-900/5 dark:hover:bg-white/10 transition-colors shrink-0"
                   title="Dismiss"
                   aria-label="Dismiss greeting"
                 >
                   <X className="w-3 h-3" />
                 </button>
-                <div className="absolute -bottom-1.5 right-5 w-2.5 h-2.5 bg-[#091124] border-r border-b border-brand-primary/40 rotate-45 group-hover:border-brand-primary transition-colors" />
               </div>
             </motion.div>
           )}
         </AnimatePresence>
 
-        {/* Modal Window: Responsive Bottom Sheet on Mobile, Floating Glass Modal on Desktop */}
+        {/* Modal Window: 25% Ultra-Transparent Liquid Glass Modal */}
         <AnimatePresence>
           {isOpen && (
             <motion.div
               initial={
                 isMobileScreen
                   ? { opacity: 0, y: '100%' }
-                  : { opacity: 0, y: 15, scale: 0.95 }
+                  : { opacity: 0, y: 14, scale: 0.96 }
               }
               animate={
                 isMobileScreen
@@ -1080,46 +1144,37 @@ export const ProsenjitChatbot = () => {
               exit={
                 isMobileScreen
                   ? { opacity: 0, y: '100%' }
-                  : { opacity: 0, y: 15, scale: 0.95 }
+                  : { opacity: 0, y: 14, scale: 0.96 }
               }
-              transition={{ duration: prefersReducedMotion ? 0 : 0.25, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: prefersReducedMotion ? 0 : 0.25, ease: [0.22, 1, 0.36, 1] }}
               style={{
                 height: isMobileScreen && visualViewportHeight ? `${visualViewportHeight}px` : undefined,
                 maxHeight: isMobileScreen && visualViewportHeight ? `${visualViewportHeight}px` : undefined
               }}
-              className="fixed inset-x-0 bottom-0 z-50 h-[86vh] max-h-[86dvh] rounded-t-3xl bg-[#040914]/25 backdrop-blur-xl border-t border-x border-brand-primary/40 shadow-[0_-16px_48px_rgba(0,0,0,0.85)] flex flex-col overflow-hidden text-slate-100 selection:bg-brand-primary/30
-                sm:static sm:inset-auto sm:mb-3 sm:w-[360px] sm:max-h-[500px] sm:h-[55vh] sm:rounded-2xl sm:border sm:border-brand-primary/40 sm:shadow-[0_16px_48px_rgba(0,0,0,0.6)]"
+              className="fixed inset-x-0 bottom-0 z-50 h-[86vh] max-h-[86dvh] rounded-t-[28px] bg-white/25 dark:bg-[#040914]/25 backdrop-blur-xl backdrop-saturate-150 liquid-rim border border-white/60 dark:border-white/15 shadow-[0_-16px_48px_rgba(15,23,42,0.18),inset_0_1.5px_1px_rgba(255,255,255,0.85)] dark:shadow-[0_-16px_48px_rgba(0,0,0,0.85),inset_0_1.5px_1px_rgba(255,255,255,0.28)] flex flex-col overflow-hidden text-slate-900 dark:text-slate-100 selection:bg-blue-500/25
+                sm:static sm:inset-auto sm:mb-3 sm:w-[376px] sm:max-h-[520px] sm:h-[58vh] sm:rounded-[26px] sm:shadow-[0_20px_50px_rgba(15,23,42,0.16),inset_0_1.5px_1px_rgba(255,255,255,0.85)] dark:sm:shadow-[0_20px_52px_rgba(0,0,0,0.75),inset_0_1.5px_1px_rgba(255,255,255,0.28)]"
             >
               {/* Mobile Drag Handle */}
-              <div className="w-10 h-1 rounded-full bg-white/20 mx-auto mt-2 sm:hidden shrink-0" aria-hidden="true" />
+              <div className="w-10 h-1 rounded-full bg-slate-900/20 dark:bg-white/25 mx-auto mt-2.5 sm:hidden shrink-0" aria-hidden="true" />
 
               {/* Liquid Highlight Reflection */}
-              <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-white/10 via-transparent to-transparent pointer-events-none rounded-t-2xl sm:rounded-t-2xl" />
+              <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-white/30 dark:from-white/10 via-transparent to-transparent pointer-events-none rounded-t-[26px]" />
 
               {/* Header */}
-              <div className="px-4 py-3 sm:px-3.5 sm:py-2.5 bg-white/[0.03] backdrop-blur-md border-b border-white/10 flex items-center justify-between relative z-10 shrink-0">
+              <div className="px-4 py-3 sm:px-4 sm:py-3 bg-white/20 dark:bg-white/[0.04] backdrop-blur-md border-b border-white/40 dark:border-white/10 flex items-center justify-between relative z-10 shrink-0">
                 <div className="flex items-center space-x-2.5">
-                  <div className="relative w-8 h-8 sm:w-7.5 sm:h-7.5 flex items-center justify-center">
-                    <div className="w-8 h-8 sm:w-7.5 sm:h-7.5 rounded-full overflow-hidden border border-cyan-400/50 bg-[#08152c] shadow-[0_0_12px_rgba(6,182,212,0.35)] flex items-center justify-center p-0.5">
-                      <img
-                        src="/assets/pai.gif"
-                        alt="P.A.I."
-                        className="w-full h-full object-contain drop-shadow-[0_2px_4px_rgba(6,182,212,0.4)]"
-                      />
-                    </div>
-                    <span className="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-emerald-400 border border-[#070D1D]" />
-                  </div>
+                  <LiquidAIOrb variant="header" showStatus={true} animateCore={!prefersReducedMotion} />
                   <div>
                     <div className="flex items-center space-x-1.5">
-                      <h3 className="font-mono text-xs font-bold tracking-wider text-slate-100 flex items-center space-x-1">
+                      <h3 className="font-mono text-xs font-bold tracking-wider text-slate-900 dark:text-slate-100 flex items-center space-x-1">
                         <span>P.A.I.</span>
                       </h3>
-                      <span className="text-[9px] font-mono px-1 py-0.5 rounded bg-cyan-500/15 text-cyan-300 border border-cyan-500/30">
+                      <span className="text-[9px] font-mono px-1.5 py-0.5 rounded-full bg-blue-500/15 dark:bg-cyan-500/15 text-blue-700 dark:text-cyan-300 border border-blue-500/25 dark:border-cyan-500/30 font-semibold">
                         v2.0
                       </span>
                     </div>
-                    <p className="text-[8.5px] font-mono text-emerald-400/90 flex items-center space-x-1">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping inline-block" />
+                    <p className="text-[9px] font-mono text-emerald-600 dark:text-emerald-400 flex items-center space-x-1 font-semibold">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-ping inline-block" />
                       <span>ONLINE</span>
                     </p>
                   </div>
@@ -1129,7 +1184,7 @@ export const ProsenjitChatbot = () => {
                 <div className="flex items-center space-x-1">
                   <button
                     onClick={handleReset}
-                    className="p-2 sm:p-1 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-white/10 transition-colors"
+                    className="p-2 sm:p-1.5 rounded-full text-slate-600 hover:text-slate-950 dark:text-slate-300 dark:hover:text-white hover:bg-white/35 dark:hover:bg-white/10 transition-colors cursor-pointer"
                     title="Reset Chat"
                     aria-label="Reset chat"
                   >
@@ -1137,11 +1192,11 @@ export const ProsenjitChatbot = () => {
                   </button>
                   <button
                     onClick={() => setIsOpen(false)}
-                    className="p-2 sm:p-1 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 active:bg-white/20 transition-colors"
+                    className="p-2 sm:p-1.5 rounded-full text-slate-600 hover:text-slate-950 dark:text-slate-300 dark:hover:text-white hover:bg-white/35 dark:hover:bg-white/10 transition-colors cursor-pointer"
                     title="Close Assistant"
                     aria-label="Close Assistant"
                   >
-                    <X className="w-5 h-5 sm:w-4 sm:h-4 text-slate-200" />
+                    <X className="w-5 h-5 sm:w-4 sm:h-4" />
                   </button>
                 </div>
               </div>
@@ -1154,28 +1209,24 @@ export const ProsenjitChatbot = () => {
                 role="region"
                 aria-label="Chat messages list"
                 data-lenis-prevent="true"
-                className="flex-1 min-h-0 p-3.5 sm:p-3 overflow-y-auto space-y-3 custom-scrollbar relative z-10 text-[11px] overscroll-contain"
+                className="flex-1 min-h-0 p-3.5 sm:p-3.5 overflow-y-auto space-y-3 custom-scrollbar relative z-10 text-xs overscroll-contain"
               >
                 {messages.map((msg) => (
                   <div
                     key={msg.id}
                     className={`flex flex-col ${msg.sender === 'user' ? 'items-end' : 'items-start'}`}
                   >
-                    <div className="flex items-end space-x-1.5 max-w-[90%]">
+                    <div className="flex items-end space-x-2 max-w-[90%]">
                       {msg.sender === 'bot' && (
-                        <div className="w-7 h-7 rounded-full overflow-hidden border border-cyan-400/40 bg-[#08152c] shrink-0 mb-0.5 shadow-sm flex items-center justify-center p-0.5">
-                          <img
-                            src="/assets/pai.gif"
-                            alt="P.A.I."
-                            className="w-full h-full object-contain drop-shadow-[0_1px_3px_rgba(6,182,212,0.4)]"
-                          />
+                        <div className="mb-0.5 shrink-0">
+                          <LiquidAIOrb variant="avatar" animateCore={false} />
                         </div>
                       )}
                       <div
-                        className={`p-2.5 rounded-xl leading-relaxed ${
+                        className={`p-3 rounded-2xl leading-relaxed ${
                           msg.sender === 'user'
-                            ? 'bg-[#1e1e1e]/95 border border-brand-primary/40 text-[#d4d4d4] font-mono text-[11px] rounded-br-none shadow-md shadow-black/60 backdrop-blur-md'
-                            : 'bg-[#060D1E]/60 border border-white/10 backdrop-blur-md text-slate-200 rounded-bl-none shadow-sm'
+                            ? 'bg-[#0B1736]/80 dark:bg-[#111827]/75 backdrop-blur-md border border-white/30 dark:border-sky-400/35 shadow-[inset_0_1px_0_rgba(255,255,255,0.28),0_8px_20px_-6px_rgba(15,23,42,0.35)] text-slate-100 font-mono text-[11px] rounded-br-sm'
+                            : 'bg-white/55 dark:bg-[#060D1E]/45 border border-white/60 dark:border-white/15 backdrop-blur-md shadow-[inset_0_1px_0_rgba(255,255,255,0.75)] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] text-slate-800 dark:text-slate-100 rounded-bl-sm text-[11.5px]'
                         }`}
                       >
                         <div className="whitespace-pre-wrap font-sans">
@@ -1192,7 +1243,7 @@ export const ProsenjitChatbot = () => {
                                   {parts.map((part, pIdx) => {
                                     if (part.startsWith('**') && part.endsWith('**')) {
                                       return (
-                                        <strong key={pIdx} className="font-semibold text-brand-primary">
+                                        <strong key={pIdx} className="font-semibold text-blue-600 dark:text-sky-400">
                                           {part.slice(2, -2)}
                                         </strong>
                                       );
@@ -1205,9 +1256,9 @@ export const ProsenjitChatbot = () => {
                           )}
                         </div>
 
-                        {/* Interactive Action Chips with Real SVG Logos */}
+                        {/* Interactive Action Chips */}
                         {msg.actions && msg.actions.length > 0 && (
-                          <div className="mt-2 pt-1.5 border-t border-white/10 flex flex-wrap gap-1.5">
+                          <div className="mt-2.5 pt-2 border-t border-slate-900/[0.08] dark:border-white/10 flex flex-wrap gap-1.5">
                             {msg.actions.map((act, aIdx) => (
                               act.link ? (
                                 <a
@@ -1216,7 +1267,7 @@ export const ProsenjitChatbot = () => {
                                   download={act.download}
                                   target={act.external ? "_blank" : "_self"}
                                   rel={act.external ? "noopener noreferrer" : ""}
-                                  className="inline-flex items-center space-x-1.5 text-[9.5px] font-mono px-2.5 py-1 rounded-lg bg-brand-primary/10 hover:bg-brand-primary/20 text-brand-primary border border-brand-primary/30 transition-all shadow-sm"
+                                  className="inline-flex items-center space-x-1.5 text-[10px] font-mono font-semibold px-2.5 py-1 rounded-full bg-blue-500/12 hover:bg-blue-500/20 dark:bg-sky-400/12 dark:hover:bg-sky-400/20 text-blue-700 dark:text-sky-300 border border-blue-500/20 dark:border-sky-400/25 transition-colors"
                                 >
                                   <ActionChipIcon type={act.icon} className="w-3 h-3 shrink-0" />
                                   <span>{act.label}</span>
@@ -1225,9 +1276,9 @@ export const ProsenjitChatbot = () => {
                                 <button
                                   key={aIdx}
                                   onClick={() => handleSend(act.query)}
-                                  className="inline-flex items-center space-x-1.5 text-[9.5px] font-mono px-2.5 py-1 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 transition-all text-left"
+                                  className="inline-flex items-center space-x-1.5 text-[10px] font-mono font-medium px-2.5 py-1 rounded-full bg-slate-900/[0.05] hover:bg-slate-900/[0.09] dark:bg-white/[0.06] dark:hover:bg-white/[0.12] text-slate-700 dark:text-slate-200 border border-slate-900/[0.08] dark:border-white/10 transition-colors text-left cursor-pointer"
                                 >
-                                  <ActionChipIcon type={act.icon} className="w-3 h-3 text-brand-primary shrink-0" />
+                                  <ActionChipIcon type={act.icon} className="w-3 h-3 text-blue-600 dark:text-sky-400 shrink-0" />
                                   <span>{act.label}</span>
                                 </button>
                               )
@@ -1236,7 +1287,7 @@ export const ProsenjitChatbot = () => {
                         )}
                       </div>
                     </div>
-                    <span className="text-[8px] font-mono text-slate-500 mt-0.5 px-1">
+                    <span className="text-[9px] font-mono text-slate-500 dark:text-slate-400 mt-1 px-1">
                       {msg.timestamp}
                     </span>
                   </div>
@@ -1244,18 +1295,12 @@ export const ProsenjitChatbot = () => {
 
                 {/* Typing indicator */}
                 {isTyping && (
-                  <div className="flex items-center space-x-1.5">
-                    <div className="w-7 h-7 rounded-full overflow-hidden border border-cyan-400/40 bg-[#08152c] shrink-0 shadow-sm flex items-center justify-center p-0.5">
-                      <img
-                        src="/assets/pai.gif"
-                        alt="P.A.I."
-                        className="w-full h-full object-contain"
-                      />
-                    </div>
-                    <div className="p-2 rounded-xl bg-[#060D1E]/40 border border-white/10 backdrop-blur-md rounded-bl-none flex items-center space-x-1">
-                      <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
-                      <span className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse delay-150" />
-                      <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse delay-300" />
+                  <div className="flex items-center space-x-2">
+                    <LiquidAIOrb variant="avatar" animateCore={!prefersReducedMotion} />
+                    <div className="px-3 py-2.5 rounded-2xl bg-white/55 dark:bg-[#060D1E]/45 border border-white/60 dark:border-white/15 backdrop-blur-md rounded-bl-sm flex items-center space-x-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-blue-500 dark:bg-cyan-400 animate-pulse" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 dark:bg-purple-400 animate-pulse delay-150" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-blue-500 dark:bg-cyan-400 animate-pulse delay-300" />
                     </div>
                   </div>
                 )}
@@ -1270,7 +1315,7 @@ export const ProsenjitChatbot = () => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 10 }}
                     onClick={scrollToBottom}
-                    className="absolute bottom-16 sm:bottom-14 right-4 z-20 px-2 py-1 rounded-full bg-[#09152b]/95 border border-brand-primary/50 text-brand-primary font-mono text-[9px] shadow-lg flex items-center space-x-1 hover:bg-brand-primary/20 transition-all cursor-pointer backdrop-blur-md"
+                    className="absolute bottom-16 sm:bottom-14 right-4 z-20 px-3 py-1.5 rounded-full liquid-glass-strong liquid-rim text-blue-600 dark:text-sky-300 font-mono text-[10px] font-semibold flex items-center space-x-1 cursor-pointer"
                   >
                     <span>Scroll to bottom</span>
                     <span className="text-[10px]">&darr;</span>
@@ -1279,13 +1324,13 @@ export const ProsenjitChatbot = () => {
               </AnimatePresence>
 
               {/* Input Bar with Safe Area Handling */}
-              <div className="p-2.5 sm:p-2 bg-slate-950/95 sm:bg-white/[0.03] backdrop-blur-md border-t border-white/10 relative z-10 shrink-0 pb-[calc(0.75rem+env(safe-area-inset-bottom,0px))] sm:pb-2">
+              <div className="p-3 sm:p-2.5 bg-white/25 dark:bg-white/[0.04] backdrop-blur-md border-t border-white/40 dark:border-white/10 relative z-10 shrink-0 pb-[calc(0.75rem+env(safe-area-inset-bottom,0px))] sm:pb-2.5">
                 <form
                   onSubmit={(e) => {
                     e.preventDefault();
                     handleSend();
                   }}
-                  className="flex items-center space-x-1.5"
+                  className="flex items-center space-x-2"
                 >
                   <div className="relative flex-1">
                     <input
@@ -1294,20 +1339,20 @@ export const ProsenjitChatbot = () => {
                       value={inputValue}
                       onChange={(e) => setInputValue(e.target.value)}
                       placeholder="Ask about projects, math, weather, or time..."
-                      className="w-full bg-black/40 sm:bg-black/30 backdrop-blur-md border border-white/15 rounded-xl px-3 py-2 sm:px-2.5 sm:py-1.5 text-xs sm:text-[10.5px] text-slate-100 placeholder-slate-400 focus:outline-none focus:border-brand-primary/60 focus:ring-1 focus:ring-brand-primary/50 transition-all font-mono"
+                      className="w-full liquid-glass-well rounded-full px-3.5 py-2 text-xs sm:text-[11px] text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:border-blue-500/60 focus:ring-2 focus:ring-blue-500/20 transition-colors font-mono"
                     />
                   </div>
                   <button
                     type="submit"
                     disabled={!inputValue.trim()}
                     aria-label="Send Message"
-                    className="p-2.5 sm:p-2 rounded-xl bg-gradient-to-r from-brand-primary to-cyan-500 text-white disabled:opacity-40 disabled:cursor-not-allowed hover:shadow-lg hover:shadow-brand-primary/30 transition-all shrink-0 cursor-pointer"
+                    className="p-2.5 sm:p-2 rounded-full liquid-btn-primary disabled:opacity-40 disabled:cursor-not-allowed transition-[transform,opacity] shrink-0 cursor-pointer"
                   >
                     <Send className="w-4 h-4 sm:w-3.5 sm:h-3.5" />
                   </button>
                 </form>
 
-                <div className="hidden sm:flex items-center justify-end mt-1 px-1 text-[8.5px] text-slate-500 font-mono">
+                <div className="hidden sm:flex items-center justify-end mt-1 px-2 text-[9px] text-slate-600 dark:text-slate-400 font-mono">
                   <span>Press Enter &crarr;</span>
                 </div>
               </div>
@@ -1316,59 +1361,29 @@ export const ProsenjitChatbot = () => {
           )}
         </AnimatePresence>
 
-        {/* Floating Capsule / Compact FAB Launcher */}
+        {/* Liquid Glass Widget Launcher with 2 Concentric Orbiting Rings & Rotating Liquid Droplets */}
         {(!isOpen || !isMobileScreen) && (
           <motion.button
             onClick={() => setIsOpen(!isOpen)}
-            whileHover={prefersReducedMotion ? {} : { scale: 1.05, y: -2 }}
-            whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
+            whileHover={prefersReducedMotion ? {} : { scale: 1.03, y: -2 }}
+            whileTap={prefersReducedMotion ? {} : { scale: 0.96 }}
             aria-label={isOpen ? "Close P.A.I." : "Open P.A.I."}
-            className="relative group flex items-center justify-center p-2 sm:px-3 sm:py-1.5 rounded-full bg-[#080E1E]/90 sm:bg-[#080E1E]/85 backdrop-blur-2xl border border-cyan-400/50 shadow-[0_6px_20px_rgba(6,182,212,0.25)] text-slate-100 hover:border-cyan-300 hover:shadow-[0_8px_25px_rgba(6,182,212,0.35)] transition-all cursor-pointer overflow-visible w-12 h-12 sm:w-auto sm:h-auto min-w-[48px] min-h-[48px] sm:min-w-0 sm:min-h-0 sm:space-x-2.5 touch-manipulation"
+            className="relative group flex items-center justify-center p-1 sm:p-1.5 sm:pr-4 rounded-full liquid-glass-strong liquid-rim text-slate-900 dark:text-slate-100 transition-transform cursor-pointer w-[60px] h-[60px] sm:w-auto sm:h-auto sm:space-x-2.5 touch-manipulation"
           >
-            {/* Ambient Highlight Reflection */}
-            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-white/15 via-cyan-400/10 to-transparent opacity-80 group-hover:opacity-100 transition-opacity pointer-events-none" />
-
-            {/* P.A.I. Robot Avatar with Online Indicator */}
-            <div className="relative shrink-0 z-10 w-8 h-8 sm:w-8 sm:h-8 flex items-center justify-center">
-              <motion.div
-                aria-hidden="true"
-                animate={{ rotate: prefersReducedMotion ? 0 : 360 }}
-                transition={{ duration: prefersReducedMotion ? 0 : 5, ease: 'linear', repeat: prefersReducedMotion ? 0 : Infinity }}
-                className="pointer-events-none absolute -inset-[6px] rounded-full border border-cyan-200/20 border-t-cyan-100/90 border-r-cyan-300/70 shadow-[0_0_10px_rgba(34,211,238,0.28)]"
-              >
-                <span className="absolute -top-1 left-1/2 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-gradient-to-br from-white to-cyan-300 shadow-[0_0_8px_rgba(103,232,249,0.9)]" />
-              </motion.div>
-              <motion.div
-                aria-hidden="true"
-                animate={{ rotate: prefersReducedMotion ? 0 : -360 }}
-                transition={{ duration: prefersReducedMotion ? 0 : 8, ease: 'linear', repeat: prefersReducedMotion ? 0 : Infinity }}
-                className="pointer-events-none absolute -inset-[11px] rounded-full border border-purple-200/15 border-b-purple-200/80 border-l-cyan-200/40 shadow-[0_0_12px_rgba(192,132,252,0.2)]"
-              >
-                <span className="absolute -right-0.5 top-1/2 h-1 w-1 -translate-y-1/2 rounded-full bg-gradient-to-br from-white to-purple-300 shadow-[0_0_8px_rgba(216,180,254,0.9)]" />
-              </motion.div>
-              <div className="w-8 h-8 rounded-full overflow-hidden border border-cyan-400/50 bg-[#08152c] shadow-[0_0_10px_rgba(6,182,212,0.35)] flex items-center justify-center p-0.5">
-                <img
-                  src="/assets/pai.gif"
-                  alt="P.A.I."
-                  className="w-full h-full object-contain group-hover:scale-110 transition-transform drop-shadow-[0_2px_4px_rgba(6,182,212,0.5)]"
-                />
-              </div>
-
-              {/* Green Online Dot */}
-              <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-400 border-2 border-[#080E1E] z-20 shadow-[0_0_4px_#34d399]" />
-            </div>
+            {/* 2 Concentric Liquid Glass Orbiting Rings + Droplets */}
+            <LiquidAIOrb variant="launcher" showStatus={true} animateCore={!prefersReducedMotion} />
 
             {/* Desktop-only Widget Label */}
-            <div className="hidden sm:block text-left z-10 pr-0.5 font-mono">
+            <div className="hidden sm:block text-left z-10 font-mono">
               <div className="flex items-center space-x-1.5">
-                <span className="text-[11px] font-bold tracking-wider text-slate-100 font-sans">
+                <span className="text-xs font-bold tracking-wider text-slate-900 dark:text-slate-100 font-sans">
                   P.A.I.
                 </span>
-                      <span className="text-[8px] font-mono px-1 py-0.2 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
-                        AI
+                <span className="text-[8px] font-mono px-1.5 py-0.5 rounded-full bg-blue-500/12 dark:bg-cyan-500/20 text-blue-700 dark:text-cyan-300 border border-blue-500/20 dark:border-cyan-500/30 font-bold">
+                  AI
                 </span>
               </div>
-              <p className="text-[9px] text-cyan-300/90 group-hover:text-cyan-200 transition-colors leading-none mt-0.5">
+              <p className="text-[9.5px] text-blue-600 dark:text-sky-300 font-medium leading-none mt-0.5">
                 {isOpen ? 'Close P.A.I.' : 'How can I assist you today?'}
               </p>
             </div>

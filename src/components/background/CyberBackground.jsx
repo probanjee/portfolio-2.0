@@ -1,13 +1,14 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useMousePosition } from '../../hooks/useMousePosition';
+import { useTheme } from '../../hooks/useTheme';
 
 export const CyberBackground = () => {
   const mouse = useMousePosition();
+  const { isDark } = useTheme();
   const glowRef = useRef(null);
   const [isMobile, setIsMobile] = useState(false);
 
-  // Monitor screen width for mobile optimization
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
@@ -17,104 +18,84 @@ export const CyberBackground = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Sync mouse glow on desktop only for maximized GPU processing speeds
   useEffect(() => {
     if (!isMobile && glowRef.current) {
-      glowRef.current.style.transform = `translate3d(${mouse.x - 250}px, ${mouse.y - 250}px, 0)`;
+      glowRef.current.style.transform = `translate3d(${mouse.x - 260}px, ${mouse.y - 260}px, 0)`;
     }
   }, [mouse, isMobile]);
 
   return (
-    <div className="fixed inset-0 -z-50 overflow-hidden bg-[#02050D] transition-colors duration-700 light:bg-slate-50">
-      
-      {/* 1. Animated Liquid Mesh Gradients (Desktop Only) */}
-      {!isMobile && (
-        <div className="absolute inset-0 opacity-40 mix-blend-screen pointer-events-none blur-[140px] animate-[pulse_10s_ease-in-out_infinite]">
-          <div className="absolute top-1/4 left-1/4 w-[40vw] h-[40vw] rounded-full bg-gradient-to-r from-brand-primary/10 to-brand-secondary/15 animate-[spin_40s_linear_infinite]" />
-          <div className="absolute bottom-1/4 right-1/4 w-[35vw] h-[35vw] rounded-full bg-gradient-to-l from-brand-accent/10 to-brand-primary/15 animate-[spin_30s_linear_infinite]" style={{ animationDirection: 'reverse' }} />
-        </div>
-      )}
+    <div
+      className="fixed inset-0 -z-50 overflow-hidden transition-colors duration-500"
+      style={{
+        background: isDark
+          ? 'linear-gradient(135deg, #020308 0%, #050914 38%, #0A1022 72%, #03060E 100%)'
+          : 'linear-gradient(135deg, #D5E6FF 0%, #EEF4FF 38%, #E1E7FF 72%, #D4EEFF 100%)',
+      }}
+      aria-hidden="true"
+    >
+      {/* 1. Deep Dark-Toned Gradient Blooms (dark obsidian/midnight tones in dark mode, daylight sky in light mode) */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div
+          className="absolute -top-[18%] -left-[12%] w-[64vw] h-[64vw] max-w-[880px] max-h-[880px] rounded-full blur-[120px] transition-opacity duration-500"
+          style={{
+            background: isDark
+              ? 'radial-gradient(circle, rgba(29, 78, 216, 0.16) 0%, rgba(15, 23, 42, 0.25) 48%, transparent 74%)'
+              : 'radial-gradient(circle, rgba(96, 165, 250, 0.45) 0%, rgba(147, 197, 253, 0.28) 48%, transparent 76%)',
+          }}
+        />
+        <div
+          className="absolute top-[18%] -right-[14%] w-[58vw] h-[58vw] max-w-[820px] max-h-[820px] rounded-full blur-[130px] transition-opacity duration-500"
+          style={{
+            background: isDark
+              ? 'radial-gradient(circle, rgba(49, 46, 129, 0.16) 0%, rgba(15, 23, 42, 0.22) 52%, transparent 76%)'
+              : 'radial-gradient(circle, rgba(165, 180, 252, 0.48) 0%, rgba(196, 181, 253, 0.28) 50%, transparent 76%)',
+          }}
+        />
+        <div
+          className="absolute -bottom-[22%] left-[18%] w-[60vw] h-[60vw] max-w-[840px] max-h-[840px] rounded-full blur-[130px] transition-opacity duration-500"
+          style={{
+            background: isDark
+              ? 'radial-gradient(circle, rgba(15, 41, 90, 0.22) 0%, rgba(2, 6, 23, 0.35) 55%, transparent 78%)'
+              : 'radial-gradient(circle, rgba(103, 232, 249, 0.36) 0%, rgba(186, 230, 253, 0.28) 55%, transparent 78%)',
+          }}
+        />
+      </div>
 
-      {/* 2. Precision Cyber Grid Pattern */}
-      <div 
-        className="absolute inset-0 opacity-[0.03] dark:opacity-[0.045] transition-opacity duration-500 pointer-events-none"
-        style={{
-          backgroundImage: `
-            radial-gradient(circle at center, rgba(59, 130, 246, 0.45) 1.5px, transparent 1.5px),
-            linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px)
-          `,
-          backgroundSize: '48px 48px, 48px 48px, 48px 48px',
-        }}
-      />
-
-      {/* 3. Scanline/Vignette Shadow Filters */}
-      <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-[#02050D]/20 via-transparent to-[#02050D]/90 dark:to-[#02050D] opacity-80" />
-      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,transparent_20%,rgba(2,5,13,0.7)_80%)]" />
-
-      {/* 4. Interactive Cursor Ambient Spotlight (Desktop Only, disabled on mobile to boost scroll speed) */}
+      {/* 2. Subtle Specular Cursor Wash (Desktop Only) */}
       {!isMobile && (
         <div
           ref={glowRef}
-          className="absolute w-[500px] h-[500px] rounded-full filter blur-[120px] opacity-25 dark:opacity-40 pointer-events-none transition-opacity duration-500 mix-blend-screen"
+          className="absolute w-[520px] h-[520px] rounded-full blur-[110px] pointer-events-none transition-opacity duration-500"
           style={{
-            background: 'radial-gradient(circle at center, rgba(59, 130, 246, 0.5) 0%, rgba(139, 92, 246, 0.25) 50%, transparent 100%)',
+            background: isDark
+              ? 'radial-gradient(circle at center, rgba(37, 99, 235, 0.13) 0%, rgba(30, 41, 59, 0.08) 50%, transparent 76%)'
+              : 'radial-gradient(circle at center, rgba(255, 255, 255, 0.85) 0%, rgba(125, 211, 252, 0.32) 50%, transparent 76%)',
             willChange: 'transform',
           }}
         />
       )}
 
-      {/* 5. Fluid Floating Blobs (Framer Motion orchestrated float vectors, simplified on mobile) */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden select-none">
-        {/* Blob A - Indigo Bubble */}
+      {/* 3. Subtle Floating Dark-Toned Gradient Mesh (Desktop) */}
+      {!isMobile && (
         <motion.div
-          animate={isMobile ? { y: [-10, 10, -10] } : {
-            x: [0, 40, -30, 0],
-            y: [0, -60, 40, 0],
-            scale: [1, 1.1, 0.9, 1]
+          animate={{
+            x: [0, 36, -24, 0],
+            y: [0, -28, 22, 0],
           }}
           transition={{
-            duration: isMobile ? 8 : 22,
+            duration: 22,
             repeat: Infinity,
-            ease: "easeInOut"
+            ease: 'easeInOut',
           }}
-          className="absolute -top-40 -left-40 w-[450px] h-[450px] rounded-full bg-brand-primary/10 dark:bg-brand-primary/4 blur-[130px] mix-blend-screen"
+          className="absolute top-[30%] left-[38%] w-[440px] h-[440px] rounded-full blur-[130px] pointer-events-none"
+          style={{
+            background: isDark
+              ? 'radial-gradient(circle, rgba(30, 64, 175, 0.10) 0%, rgba(15, 23, 42, 0.12) 50%, transparent 74%)'
+              : 'radial-gradient(circle, rgba(255, 255, 255, 0.85) 0%, rgba(186, 230, 253, 0.35) 50%, transparent 74%)',
+          }}
         />
-
-        {/* Blob B - Violet Bubble */}
-        <motion.div
-          animate={isMobile ? { y: [15, -15, 15] } : {
-            x: [0, -50, 40, 0],
-            y: [0, 80, -50, 0],
-            scale: [1, 0.9, 1.1, 1]
-          }}
-          transition={{
-            duration: isMobile ? 10 : 26,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 2
-          }}
-          className="absolute -bottom-60 -right-40 w-[550px] h-[550px] rounded-full bg-brand-secondary/10 dark:bg-brand-secondary/4 blur-[150px] mix-blend-screen"
-        />
-
-        {/* Blob C - Cyan Spark (Hidden on mobile to save GPU cycles) */}
-        {!isMobile && (
-          <motion.div
-            animate={{
-              x: [0, 60, -50, 0],
-              y: [0, 50, -60, 0],
-            }}
-            transition={{
-              duration: 18,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 4
-            }}
-            className="absolute top-1/2 left-2/3 w-[350px] h-[350px] rounded-full bg-brand-accent/5 blur-[120px] mix-blend-screen"
-          />
-        )}
-      </div>
-
+      )}
     </div>
   );
 };

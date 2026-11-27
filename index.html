@@ -22,12 +22,25 @@
     <meta property="twitter:description" content="Portfolio of Prosun Banerjee - Full-Stack Engineer & Cybersecurity Developer. Building intelligent scalable systems and premium AI startup-grade software." />
     <meta property="twitter:image" content="https://probanjee.vercel.app/assets/avatar.png" />
     
+    <!-- Prevent theme flash before React mounts -->
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem('theme');
+          var theme = saved === 'light' || saved === 'dark' ? saved : 'dark';
+          var root = document.documentElement;
+          root.classList.remove('dark', 'light');
+          root.classList.add(theme);
+        } catch (e) {}
+      })();
+    </script>
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   </head>
-  <body class="bg-[#030712] text-slate-100 antialiased overflow-x-hidden selection:bg-brand-primary/30 selection:text-white">
+  <body class="antialiased overflow-x-hidden selection:bg-brand-primary/25 selection:text-slate-900 dark:selection:text-white">
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

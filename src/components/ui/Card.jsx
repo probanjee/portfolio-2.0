@@ -4,10 +4,10 @@ import { motion } from 'framer-motion';
 export const Card = ({ children, className = '', hoverEffect = true, delay = 0 }) => {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay }}
-      className={`glass-panel glow-border rounded-3xl p-6 ${
+      transition={{ duration: 0.45, delay, ease: [0.22, 1, 0.36, 1] }}
+      className={`glass-panel glow-border rounded-[24px] p-6 ${
         hoverEffect ? 'card-hover-effect glow-border-hover' : ''
       } ${className}`}
     >
