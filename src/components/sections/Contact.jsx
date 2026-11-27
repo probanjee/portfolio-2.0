@@ -16,7 +16,7 @@ export const Contact = () => {
     'CONTACT FORM: Ready',
     `TRANSPORT: ${window.location.protocol === 'https:' ? 'HTTPS active' : 'Local HTTP'}`
   ]);
-  const [packetStatus, setPacketStatus] = useState('PENDING_USER_INPUT');
+  const [packetStatus, setPacketStatus] = useState('AWAITING_INPUT');
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -24,7 +24,7 @@ export const Contact = () => {
       const updated = { ...prev, [name]: value };
       
       // Dynamic terminal log feedback on input change
-      let status = 'PENDING_USER_INPUT';
+      let status = 'AWAITING_INPUT';
       let logs = [...consoleLogs];
       
       if (name === 'name' && value.length > 0) {
@@ -32,7 +32,7 @@ export const Contact = () => {
       } else if (name === 'email' && value.includes('@')) {
         logs.push('[VALIDATED] Email field format detected.');
       } else if (name === 'message' && value.length > 5) {
-        logs.push(`[BUFFER] Payload integrity validated. Size: ${value.length} bytes`);
+        logs.push(`[BUFFER] Message draft updated. Size: ${value.length} characters`);
       }
 
       // Max 6 logs to prevent clutter
@@ -45,8 +45,6 @@ export const Contact = () => {
         if (packetStatus !== 'TRANSMISSION_READY') {
           setConsoleLogs(prevLogs => [...prevLogs.slice(-4), '[OK] Form validation passed. Ready to send.']);
         }
-      } else {
-        status = 'INTEGRITY_COMPROMISED';
       }
       
       setPacketStatus(status);
@@ -90,8 +88,8 @@ export const Contact = () => {
         setPacketStatus('DELIVERED');
         setConsoleLogs((prev) => [
           ...prev.slice(-4),
-          '[SUCCESS] Handshake verified by remote portal.',
-          '[DELIVERED] Message payload safely committed to logs.',
+          '[SUCCESS] Contact service accepted the message.',
+          '[DELIVERED] Contact email sent successfully.',
           `[SUCCESS] ${data.message || 'Successfully Transmitted'}`
         ]);
         setFormData({ name: '', email: '', subject: '', message: '' });
@@ -100,10 +98,10 @@ export const Contact = () => {
       }
     } catch (error) {
       setIsSending(false);
-      setPacketStatus('INTEGRITY_COMPROMISED');
+      setPacketStatus('SEND_FAILED');
       setConsoleLogs((prev) => [
         ...prev.slice(-4),
-        '[ERROR] Connection intercepted or dropped.',
+        '[ERROR] Message delivery failed.',
         `[ERROR] ${error.message || 'Transmission Failed. Please try again.'}`
       ]);
     }
@@ -213,7 +211,8 @@ export const Contact = () => {
                   <span className="text-[8px] text-slate-500 block uppercase">FORM STATE</span>
                   <span className={`font-black uppercase text-[10px] ${
                     packetStatus === 'DELIVERED' ? 'text-emerald-400' :
-                    packetStatus === 'TRANSMISSION_READY' ? 'text-brand-primary' : 'text-amber-500'
+                    packetStatus === 'TRANSMISSION_READY' || packetStatus === 'TRANSMITTING' ? 'text-brand-primary' :
+                    packetStatus === 'SEND_FAILED' ? 'text-red-400' : 'text-amber-500'
                   }`}>{packetStatus.replace(/_/g, ' ')}</span>
                 </div>
                 <div className="p-2.5 bg-[#02050D]/50 border border-white/5 rounded-xl space-y-0.5">
@@ -352,6 +351,16 @@ export const Contact = () => {
                         <ShieldCheck className="w-4 h-4 mr-1.5 text-brand-primary" /> 
                         FORM VALIDATED & READY
                       </span>
+                    ) : packetStatus === 'TRANSMITTING' ? (
+                      <span className="text-brand-primary flex items-center">
+                        <RefreshCw className="w-4 h-4 mr-1.5 animate-spin" />
+                        SENDING MESSAGE...
+                      </span>
+                    ) : packetStatus === 'SEND_FAILED' ? (
+                      <span className="text-red-400 flex items-center">
+                        <ShieldAlert className="w-4 h-4 mr-1.5" />
+                        SEND FAILED. PLEASE TRY AGAIN.
+                      </span>
                     ) : (
                       <span className="text-slate-500 flex items-center uppercase tracking-widest">
                         <ShieldAlert className="w-4 h-4 mr-1.5 text-slate-600" /> 
@@ -366,7 +375,7 @@ export const Contact = () => {
                     disabled={packetStatus !== 'TRANSMISSION_READY' || isSending}
                     className="w-full sm:w-auto px-6 py-3.5 flex items-center justify-center space-x-2 font-mono text-[10px] font-bold uppercase tracking-wider"
                   >
-                    <span>{isSending ? 'SENDING PACKET...' : 'TRANSMIT PACKET'}</span>
+                    <span>{isSending ? 'SENDING...' : 'SEND MESSAGE'}</span>
                     <Send className={`w-3.5 h-3.5 ${isSending ? 'animate-pulse' : 'group-hover:translate-x-1 transition-transform'}`} />
                   </Button>
 
