@@ -9,17 +9,17 @@ export default {
     extend: {
       colors: {
         brand: {
-          primary: '#3B82F6',   // Blue
-          secondary: '#8B5CF6', // Violet
-          accent: '#06B6D4',    // Cyan
+          primary: '#55D6C8',   // Dark Accent Teal
+          secondary: '#087F79', // Light Accent Teal
+          accent: '#55D6C8',    // Unified Teal Accent
         },
         cyber: {
-          black: '#030712',     // Extremely dark gray/navy
-          dark: '#0B0F19',      // Dark tech slate
-          surface: '#111827',   // Gray 900
-          muted: '#1F2937',     // Gray 800
-          border: 'rgba(255, 255, 255, 0.08)',
-          glow: 'rgba(59, 130, 246, 0.15)',
+          black: '#0B0D10',     // Primary Dark Canvas
+          dark: '#151A22',      // Dark Card Surface
+          surface: '#1D242E',   // Raised Dark Surface
+          muted: '#252E3B',     // Subtle Hover Surface
+          border: 'rgba(255, 255, 255, 0.09)',
+          glow: 'rgba(85, 214, 200, 0.14)',
         }
       },
       fontFamily: {

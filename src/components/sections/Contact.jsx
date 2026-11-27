@@ -136,7 +136,7 @@ export const Contact = () => {
             initial={{ opacity: 0, x: -15 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="text-xs font-mono text-zinc-900 dark:text-zinc-300 uppercase tracking-widest font-semibold"
+            className="text-xs font-mono text-[#5B6573] dark:text-[#A7B0BC] uppercase tracking-widest font-semibold"
           >
             &gt;_ SECURE CONNECTION NODE
           </motion.h2>
@@ -145,7 +145,7 @@ export const Contact = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-3xl sm:text-4xl font-extrabold tracking-tight text-zinc-950 dark:text-white"
+            className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#17202B] dark:text-[#F4F6F8]"
           >
             Let&apos;s Build Secure Systems Together
           </motion.h3>
@@ -157,51 +157,51 @@ export const Contact = () => {
           <div className="lg:col-span-5 space-y-6">
             <Card hoverEffect={false} className="p-6 sm:p-8 space-y-6 relative overflow-hidden">
               <div className="space-y-4">
-                <span className="text-[10px] font-mono font-bold uppercase tracking-widest liquid-glass-well liquid-rim text-zinc-950 dark:text-white px-3 py-1.5 rounded-full inline-flex items-center">
+                <span className="text-[10px] font-mono font-bold uppercase tracking-widest liquid-glass-well text-[#17202B] dark:text-[#F4F6F8] px-3 py-1.5 rounded-full inline-flex items-center">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 dark:bg-emerald-400 mr-2 animate-pulse" />
                   AVAILABLE_FOR_ROLES
                 </span>
 
                 <div className="space-y-1.5">
-                  <h4 className="text-xl font-black text-zinc-950 dark:text-white">Prosun Banerjee</h4>
-                  <p className="text-xs font-mono text-zinc-900 dark:text-zinc-300 font-bold uppercase tracking-wider">
-                    Junior Software Developer <span className="text-zinc-700 dark:text-zinc-400 font-normal">&bull;</span> Cybersecurity Enthusiast
+                  <h4 className="text-xl font-black text-[#17202B] dark:text-[#F4F6F8]">Prosun Banerjee</h4>
+                  <p className="text-xs font-mono text-[#5B6573] dark:text-[#A7B0BC] font-bold uppercase tracking-wider">
+                    Junior Software Developer <span className="text-[#5B6573]/60 dark:text-[#A7B0BC]/60 font-normal">&bull;</span> Cybersecurity Enthusiast
                   </p>
                 </div>
               </div>
 
               {/* Verified positioning tag blocks */}
-              <div className="space-y-2 text-xs font-mono text-zinc-950 dark:text-zinc-100">
-                <div className="flex items-center space-x-2 liquid-glass-well liquid-rim p-2.5 rounded-2xl">
-                  <span className="text-zinc-950 dark:text-white font-black">▸</span>
+              <div className="space-y-2 text-xs font-mono text-[#17202B] dark:text-[#F4F6F8]">
+                <div className="flex items-center space-x-2 liquid-glass-well p-2.5 rounded-2xl">
+                  <span className="text-[#087F79] dark:text-[#55D6C8] font-black">▸</span>
                   <span>Full-Stack Development Learner</span>
                 </div>
-                <div className="flex items-center space-x-2 liquid-glass-well liquid-rim p-2.5 rounded-2xl">
-                  <span className="text-zinc-950 dark:text-white font-black">▸</span>
+                <div className="flex items-center space-x-2 liquid-glass-well p-2.5 rounded-2xl">
+                  <span className="text-[#087F79] dark:text-[#55D6C8] font-black">▸</span>
                   <span>Security-Focused Builder</span>
                 </div>
               </div>
 
-              <p className="text-xs sm:text-sm text-zinc-900 dark:text-zinc-200 leading-relaxed font-sans font-medium">
+              <p className="text-xs sm:text-sm text-[#5B6573] dark:text-[#A7B0BC] leading-relaxed font-sans font-medium">
                 I&apos;m an ambitious programmer merging low-level C/C++ logic structures with modern web APIs to engineer highly secure, responsive, and performance-oriented systems. Seeking internships or entry-level roles where I can commit robust codes and defend infrastructures.
               </p>
 
               {/* Direct Coordinate Parameters */}
-              <div className="space-y-3 pt-5 border-t border-zinc-950/20 dark:border-white/20 font-mono text-[11px] text-zinc-900 dark:text-zinc-200">
-                <a href="mailto:prosunbanerjee8@gmail.com" className="flex items-center space-x-3 text-zinc-950 dark:text-white hover:opacity-75 transition-opacity py-1.5 rounded-xl">
-                  <Mail className="w-4 h-4 text-zinc-900 dark:text-zinc-300" />
+              <div className="space-y-3 pt-5 border-t border-[#17202B]/10 dark:border-white/[0.09] font-mono text-[11px] text-[#5B6573] dark:text-[#A7B0BC]">
+                <a href="mailto:prosunbanerjee8@gmail.com" className="flex items-center space-x-3 text-[#17202B] dark:text-[#F4F6F8] hover:text-[#087F79] dark:hover:text-[#55D6C8] transition-colors py-1.5 rounded-xl">
+                  <Mail className="w-4 h-4 text-[#5B6573] dark:text-[#A7B0BC]" />
                   <span>prosunbanerjee8@gmail.com</span>
                 </a>
-                <a href="https://github.com/probanjee" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-3 text-zinc-950 dark:text-white hover:opacity-75 transition-opacity py-1.5 rounded-xl">
-                  <Github className="w-4 h-4 text-zinc-900 dark:text-zinc-300" />
+                <a href="https://github.com/probanjee" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-3 text-[#17202B] dark:text-[#F4F6F8] hover:text-[#087F79] dark:hover:text-[#55D6C8] transition-colors py-1.5 rounded-xl">
+                  <Github className="w-4 h-4 text-[#5B6573] dark:text-[#A7B0BC]" />
                   <span>github.com/probanjee</span>
                 </a>
-                <a href="https://linkedin.com/in/prosun-banerjee-545942293" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-3 text-zinc-950 dark:text-white hover:opacity-75 transition-opacity py-1.5 rounded-xl">
-                  <Linkedin className="w-4 h-4 text-zinc-900 dark:text-zinc-300" />
+                <a href="https://linkedin.com/in/prosun-banerjee-545942293" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-3 text-[#17202B] dark:text-[#F4F6F8] hover:text-[#087F79] dark:hover:text-[#55D6C8] transition-colors py-1.5 rounded-xl">
+                  <Linkedin className="w-4 h-4 text-[#5B6573] dark:text-[#A7B0BC]" />
                   <span>linkedin.com/in/prosun-banerjee-545942293</span>
                 </a>
-                <div className="flex items-center space-x-3 text-zinc-950 dark:text-white py-1.5 rounded-xl">
-                  <MapPin className="w-4 h-4 text-zinc-900 dark:text-zinc-300" />
+                <div className="flex items-center space-x-3 text-[#17202B] dark:text-[#F4F6F8] py-1.5 rounded-xl">
+                  <MapPin className="w-4 h-4 text-[#5B6573] dark:text-[#A7B0BC]" />
                   <span>West Bengal, India</span>
                 </div>
               </div>
@@ -211,28 +211,28 @@ export const Contact = () => {
             {/* Contact form status */}
             <Card hoverEffect={false} className="p-5 font-mono text-[11px] space-y-4">
 
-              <div className="flex justify-between items-center pb-2.5 border-b border-zinc-950/20 dark:border-white/20 text-zinc-900 dark:text-zinc-300 text-[9px] font-semibold">
+              <div className="flex justify-between items-center pb-2.5 border-b border-[#17202B]/10 dark:border-white/[0.09] text-[#5B6573] dark:text-[#A7B0BC] text-[9px] font-semibold">
                 <span className="flex items-center">
-                  <Terminal className="w-3.5 h-3.5 mr-1.5 text-zinc-950 dark:text-white" />
+                  <Terminal className="w-3.5 h-3.5 mr-1.5 text-[#17202B] dark:text-[#F4F6F8]" />
                   CONTACT_FORM_STATUS
                 </span>
-                <span className={`flex items-center space-x-1 font-bold text-[8px] tracking-widest ${window.location.protocol === 'https:' ? 'text-emerald-900 dark:text-emerald-300' : 'text-zinc-950 dark:text-zinc-200'}`}>
-                  <span className={`w-1.5 h-1.5 rounded-full mr-1 ${window.location.protocol === 'https:' ? 'bg-emerald-600 dark:bg-emerald-400' : 'bg-zinc-950 dark:bg-white'}`} />
+                <span className={`flex items-center space-x-1 font-bold text-[8px] tracking-widest ${window.location.protocol === 'https:' ? 'text-emerald-900 dark:text-emerald-300' : 'text-[#17202B] dark:text-[#F4F6F8]'}`}>
+                  <span className={`w-1.5 h-1.5 rounded-full mr-1 ${window.location.protocol === 'https:' ? 'bg-emerald-600 dark:bg-emerald-400' : 'bg-[#17202B] dark:bg-[#F4F6F8]'}`} />
                   {window.location.protocol === 'https:' ? 'HTTPS ACTIVE' : 'LOCAL HTTP'}
                 </span>
               </div>
 
               {/* Active Dials */}
               <div className="grid grid-cols-2 gap-3 text-center">
-                <div className="p-2.5 liquid-glass-well liquid-rim rounded-2xl space-y-0.5">
-                  <span className="text-[8px] text-zinc-900 dark:text-zinc-300 block uppercase font-semibold">FORM STATE</span>
+                <div className="p-2.5 liquid-glass-well rounded-2xl space-y-0.5">
+                  <span className="text-[8px] text-[#5B6573] dark:text-[#A7B0BC] block uppercase font-semibold">FORM STATE</span>
                   <span className={`font-black uppercase text-[10px] ${packetStatus === 'DELIVERED' ? 'text-emerald-900 dark:text-emerald-300' :
-                      packetStatus === 'SEND_FAILED' ? 'text-red-900 dark:text-red-300' : 'text-zinc-950 dark:text-white'
+                      packetStatus === 'SEND_FAILED' ? 'text-red-900 dark:text-red-300' : 'text-[#17202B] dark:text-[#F4F6F8]'
                     }`}>{packetStatus.replace(/_/g, ' ')}</span>
                 </div>
-                <div className="p-2.5 liquid-glass-well liquid-rim rounded-2xl space-y-0.5">
-                  <span className="text-[8px] text-zinc-900 dark:text-zinc-300 block uppercase font-semibold">TRANSPORT</span>
-                  <span className="text-zinc-950 dark:text-white font-black text-[10px]">
+                <div className="p-2.5 liquid-glass-well rounded-2xl space-y-0.5">
+                  <span className="text-[8px] text-[#5B6573] dark:text-[#A7B0BC] block uppercase font-semibold">TRANSPORT</span>
+                  <span className="text-[#17202B] dark:text-[#F4F6F8] font-black text-[10px]">
                     {window.location.protocol === 'https:' ? 'HTTPS / TLS ACTIVE' : 'HTTP / NO TLS'}
                   </span>
                 </div>
@@ -250,7 +250,7 @@ export const Contact = () => {
                       transition={{ duration: 0.15 }}
                       className={`text-[10px] sm:text-[11px] ${log.startsWith('[SUCCESS]') || log.startsWith('[DELIVERED]') ? 'text-emerald-900 dark:text-emerald-300 font-bold' :
                           log.startsWith('[ERROR]') ? 'text-red-900 dark:text-red-300 font-bold' :
-                            log.startsWith('[RESOLVED]') || log.startsWith('[VALIDATED]') || log.startsWith('[OK]') ? 'text-zinc-950 dark:text-white font-semibold' : 'text-zinc-900 dark:text-zinc-300'
+                            log.startsWith('[RESOLVED]') || log.startsWith('[VALIDATED]') || log.startsWith('[OK]') ? 'text-[#17202B] dark:text-[#F4F6F8] font-semibold' : 'text-[#5B6573] dark:text-[#A7B0BC]'
                         }`}
                     >
                       {log}
@@ -258,7 +258,7 @@ export const Contact = () => {
                   ))}
                 </AnimatePresence>
                 {isSending && (
-                  <div className="flex items-center space-x-2 text-zinc-950 dark:text-white pt-1 font-bold">
+                  <div className="flex items-center space-x-2 text-[#17202B] dark:text-[#F4F6F8] pt-1 font-bold">
                     <RefreshCw className="w-3.5 h-3.5 animate-spin" />
                     <span>Sending message to mail service...</span>
                   </div>
@@ -266,12 +266,12 @@ export const Contact = () => {
               </div>
 
               {/* Footer specs */}
-              <div className="pt-2.5 border-t border-zinc-950/20 dark:border-white/20 flex justify-between items-center text-[9px] text-zinc-900 dark:text-zinc-300">
+              <div className="pt-2.5 border-t border-[#17202B]/10 dark:border-white/[0.09] flex justify-between items-center text-[9px] text-[#5B6573] dark:text-[#A7B0BC]">
                 <span className="flex items-center uppercase tracking-wider font-bold">
-                  <Cpu className="w-3.5 h-3.5 mr-1 text-zinc-950 dark:text-white" />
+                  <Cpu className="w-3.5 h-3.5 mr-1 text-[#17202B] dark:text-[#F4F6F8]" />
                   REQUEST VALIDATION
                 </span>
-                <span className="text-zinc-950 dark:text-white font-bold">CLIENT + SERVER</span>
+                <span className="text-[#17202B] dark:text-[#F4F6F8] font-bold">CLIENT + SERVER</span>
               </div>
             </Card>
           </div>
@@ -284,8 +284,8 @@ export const Contact = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   {/* Name field */}
                   <div className="space-y-1.5">
-                    <label htmlFor="contact-name" className="text-zinc-950 dark:text-zinc-200 uppercase tracking-widest text-[9px] font-bold flex items-center">
-                      Name Signature <span className="text-zinc-950 dark:text-white ml-0.5">*</span>
+                    <label htmlFor="contact-name" className="text-[#17202B] dark:text-[#A7B0BC] uppercase tracking-widest text-[9px] font-bold flex items-center">
+                      Name Signature <span className="text-[#087F79] dark:text-[#55D6C8] ml-0.5">*</span>
                     </label>
                     <input
                       id="contact-name"
@@ -297,7 +297,7 @@ export const Contact = () => {
                       placeholder="e.g. Alan Turing"
                       value={formData.name}
                       onChange={handleInputChange}
-                      className="w-full liquid-glass-well rounded-2xl px-4 py-3.5 text-zinc-950 dark:text-white placeholder:text-zinc-800/75 dark:placeholder:text-zinc-400 focus:border-white focus:ring-2 focus:ring-white/30 transition-colors outline-none"
+                      className="w-full liquid-glass-well rounded-2xl px-4 py-3.5 text-[#17202B] dark:text-[#F4F6F8] placeholder:text-[#5B6573]/60 dark:placeholder:text-[#A7B0BC]/50 focus:border-[#087F79] dark:focus:border-[#55D6C8] focus:ring-2 focus:ring-[#087F79]/30 dark:focus:ring-[#55D6C8]/30 transition-colors outline-none"
                     />
                   </div>
 
@@ -316,7 +316,7 @@ export const Contact = () => {
                       placeholder="e.g. operator@discovery.com"
                       value={formData.email}
                       onChange={handleInputChange}
-                      className="w-full liquid-glass-well rounded-2xl px-4 py-3.5 text-zinc-950 dark:text-white placeholder:text-zinc-800/75 dark:placeholder:text-zinc-400 focus:border-white focus:ring-2 focus:ring-white/30 transition-colors outline-none"
+                      className="w-full liquid-glass-well rounded-2xl px-4 py-3.5 text-[#17202B] dark:text-[#F4F6F8] placeholder:text-[#5B6573]/60 dark:placeholder:text-[#A7B0BC]/50 focus:border-[#087F79] dark:focus:border-[#55D6C8] focus:ring-2 focus:ring-[#087F79]/30 dark:focus:ring-[#55D6C8]/30 transition-colors outline-none"
                     />
                   </div>
                 </div>

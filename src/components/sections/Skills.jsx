@@ -153,13 +153,13 @@ export const Skills = () => {
           transition={{ duration: 0.45 }}
           className="text-center space-y-3"
         >
-          <p className="text-xs font-mono text-zinc-900 dark:text-zinc-300 uppercase tracking-[0.2em] font-semibold">
+          <p className="text-xs font-mono text-[#5B6573] dark:text-[#A7B0BC] uppercase tracking-[0.2em] font-semibold">
             TECH STACK
           </p>
-          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-zinc-950 dark:text-white">
+          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#17202B] dark:text-[#F4F6F8]">
             Technologies I Work With
           </h2>
-          <p className="text-sm text-zinc-900 dark:text-zinc-200 max-w-lg mx-auto leading-relaxed font-medium">
+          <p className="text-sm text-[#5B6573] dark:text-[#A7B0BC] max-w-lg mx-auto leading-relaxed font-medium">
             From low-level C/C++ systems and cybersecurity telemetry to full-stack web architectures — my toolkit spans multiple domains
           </p>
         </motion.div>
@@ -181,8 +181,8 @@ export const Skills = () => {
                 onClick={() => setActiveTab(id)}
                 className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all duration-200 cursor-pointer ${
                   isSelected
-                    ? 'liquid-btn-primary liquid-rim'
-                    : 'liquid-glass-well liquid-rim text-zinc-900 dark:text-zinc-200 hover:text-zinc-950 dark:hover:text-white'
+                    ? 'liquid-btn-primary'
+                    : 'liquid-glass-well text-[#5B6573] dark:text-[#A7B0BC] hover:text-[#17202B] dark:hover:text-[#F4F6F8]'
                 }`}
               >
                 {Icon && <Icon className="w-3.5 h-3.5 shrink-0 relative z-10" aria-hidden="true" />}
@@ -194,7 +194,7 @@ export const Skills = () => {
 
         {/* Dynamic Count Pill */}
         <div className="flex items-center justify-center">
-          <span className="text-xs font-mono px-3.5 py-1 rounded-full liquid-glass-well liquid-rim text-zinc-900 dark:text-zinc-200 font-medium">
+          <span className="text-xs font-mono px-3.5 py-1 rounded-full liquid-glass-well text-[#5B6573] dark:text-[#A7B0BC] font-medium">
             {visibleSkills.length} {activeTab === 'All' ? 'technologies total' : `in ${activeTab}`}
           </span>
         </div>
@@ -211,17 +211,17 @@ export const Skills = () => {
             <div
               key={skill.name}
               title={skill.name}
-              className="group flex flex-col items-center justify-between gap-2 p-3 sm:p-4 rounded-2xl glass-panel liquid-rim card-hover-effect cursor-default"
+              className="group flex flex-col items-center justify-between gap-2 p-3 sm:p-4 rounded-2xl glass-panel card-hover-effect cursor-default"
             >
-              <div className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-xl liquid-glass-well liquid-rim transition-transform duration-300 group-hover:scale-110">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-xl liquid-glass-well transition-transform duration-300 group-hover:scale-110">
                 {renderSkillTileIcon(skill.name)}
               </div>
 
-              <span className="text-xs font-semibold text-center leading-tight line-clamp-1 text-zinc-950 dark:text-white">
+              <span className="text-xs font-semibold text-center leading-tight line-clamp-1 text-[#17202B] dark:text-[#F4F6F8]">
                 {skill.name}
               </span>
 
-              <span className="text-[10px] font-medium px-2 py-0.5 rounded-full liquid-glass-well liquid-rim text-zinc-900 dark:text-zinc-200 whitespace-nowrap">
+              <span className="text-[10px] font-medium px-2 py-0.5 rounded-full liquid-glass-well text-[#5B6573] dark:text-[#A7B0BC] whitespace-nowrap">
                 {skill.badge}
               </span>
             </div>

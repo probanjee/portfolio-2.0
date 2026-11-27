@@ -13,7 +13,6 @@ export const SocialLinks = ({ className = '', iconClassName = 'w-4 h-4' }) => {
       href: linkedin,
       external: true,
       Icon: Linkedin,
-      hoverClass: 'hover:text-black dark:hover:text-white',
     },
     github && {
       id: 'github',
@@ -21,7 +20,6 @@ export const SocialLinks = ({ className = '', iconClassName = 'w-4 h-4' }) => {
       href: github,
       external: true,
       Icon: Github,
-      hoverClass: 'hover:text-black dark:hover:text-white',
     },
     leetcode && {
       id: 'leetcode',
@@ -29,7 +27,6 @@ export const SocialLinks = ({ className = '', iconClassName = 'w-4 h-4' }) => {
       href: leetcode,
       external: true,
       Icon: LeetCodeIcon,
-      hoverClass: 'hover:text-black dark:hover:text-white',
     },
     email && {
       id: 'mail',
@@ -37,7 +34,6 @@ export const SocialLinks = ({ className = '', iconClassName = 'w-4 h-4' }) => {
       href: `mailto:${email}`,
       external: false,
       Icon: Mail,
-      hoverClass: 'hover:text-black dark:hover:text-white',
     },
     instagram && {
       id: 'instagram',
@@ -45,13 +41,12 @@ export const SocialLinks = ({ className = '', iconClassName = 'w-4 h-4' }) => {
       href: instagram,
       external: true,
       Icon: Instagram,
-      hoverClass: 'hover:text-black dark:hover:text-white',
     },
   ].filter(Boolean);
 
   return (
-    <div className={`flex flex-wrap items-center gap-3 ${className}`}>
-      {links.map(({ id, label, href, external, Icon, hoverClass }) => (
+    <div className={`flex flex-wrap items-center gap-2.5 ${className}`}>
+      {links.map(({ id, label, href, external, Icon }) => (
         <a
           key={id}
           href={href}
@@ -59,9 +54,9 @@ export const SocialLinks = ({ className = '', iconClassName = 'w-4 h-4' }) => {
           rel={external ? 'noopener noreferrer' : undefined}
           title={label}
           aria-label={label}
-          className={`p-2.5 sm:p-3 rounded-full liquid-glass-well liquid-rim card-hover-effect text-zinc-950 dark:text-white ${hoverClass} hover:-translate-y-0.5 transition-[transform,color] duration-200 inline-flex items-center justify-center`}
+          className="p-2.5 rounded-full liquid-glass-well text-[#5B6573] dark:text-[#A7B0BC] hover:text-[#087F79] dark:hover:text-[#55D6C8] hover:border-[#087F79]/40 dark:hover:border-[#55D6C8]/40 transition-colors duration-200 inline-flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#087F79] dark:focus-visible:ring-[#55D6C8]"
         >
-          <Icon className={iconClassName} />
+          <Icon className={iconClassName} aria-hidden="true" />
         </a>
       ))}
     </div>

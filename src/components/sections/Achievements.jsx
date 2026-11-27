@@ -47,7 +47,7 @@ export const Achievements = () => {
       description: 'Merged a pull request without code review.',
       link: 'https://github.com/probanjee',
       tag: 'GitHub Milestone',
-      tagColor: 'text-zinc-950 dark:text-white liquid-glass-well liquid-rim'
+      tagColor: 'text-[#17202B] dark:text-[#F4F6F8] liquid-glass-well'
     },
     {
       id: 'pull-shark',
@@ -58,7 +58,7 @@ export const Achievements = () => {
       description: 'Opened multiple pull requests that were reviewed & merged.',
       link: 'https://github.com/probanjee',
       tag: 'PR Automation',
-      tagColor: 'text-zinc-950 dark:text-white liquid-glass-well liquid-rim'
+      tagColor: 'text-[#17202B] dark:text-[#F4F6F8] liquid-glass-well'
     },
     {
       id: 'quickdraw',
@@ -69,7 +69,7 @@ export const Achievements = () => {
       description: 'Closed an issue or pull request within 5 minutes of opening.',
       link: 'https://github.com/probanjee',
       tag: 'Rapid Response',
-      tagColor: 'text-zinc-950 dark:text-white liquid-glass-well liquid-rim'
+      tagColor: 'text-[#17202B] dark:text-[#F4F6F8] liquid-glass-well'
     },
     {
       id: 'leetcode-50',
@@ -80,23 +80,23 @@ export const Achievements = () => {
       description: 'Solved daily coding challenges consistently for 50+ consecutive days.',
       link: 'https://leetcode.com/u/Prosun01/',
       tag: 'Problem Solving',
-      tagColor: 'text-zinc-950 dark:text-white liquid-glass-well liquid-rim'
+      tagColor: 'text-[#17202B] dark:text-[#F4F6F8] liquid-glass-well'
     }
   ];
 
-  // Intensity color mapper aligned with Monochrome Dark & Light Liquid Glass
+  // Restrained teal/green activity scale with neutral empty cells
   const getCellColorClass = (level) => {
     switch (level) {
       case 1:
-        return 'bg-zinc-900/25 dark:bg-white/25 border-zinc-950/35 dark:border-white/30 hover:bg-zinc-900/40 dark:hover:bg-white/40';
+        return 'bg-[#087F79]/20 dark:bg-[#55D6C8]/15 border-[#087F79]/25 dark:border-[#55D6C8]/20 hover:bg-[#087F79]/30 dark:hover:bg-[#55D6C8]/25';
       case 2:
-        return 'bg-zinc-900/50 dark:bg-white/45 border-zinc-950/55 dark:border-white/50 hover:bg-zinc-900/65 dark:hover:bg-white/60';
+        return 'bg-[#087F79]/40 dark:bg-[#55D6C8]/30 border-[#087F79]/45 dark:border-[#55D6C8]/35 hover:bg-[#087F79]/50 dark:hover:bg-[#55D6C8]/40';
       case 3:
-        return 'bg-zinc-900/75 dark:bg-white/75 border-zinc-950/80 dark:border-white/80 hover:bg-zinc-900/85 dark:hover:bg-white/90';
+        return 'bg-[#087F79]/65 dark:bg-[#55D6C8]/55 border-[#087F79]/70 dark:border-[#55D6C8]/60 hover:bg-[#087F79]/75 dark:hover:bg-[#55D6C8]/65';
       case 4:
-        return 'bg-zinc-950 dark:bg-white border-zinc-950 dark:border-white hover:opacity-90';
+        return 'bg-[#087F79] dark:bg-[#55D6C8] border-[#087F79] dark:border-[#55D6C8] hover:opacity-90';
       default:
-        return 'bg-white/20 dark:bg-white/[0.06] border-white/45 dark:border-white/15 hover:border-white/80 dark:hover:border-white/40';
+        return 'bg-[#17202B]/[0.06] dark:bg-white/[0.06] border-[#17202B]/10 dark:border-white/10 hover:border-[#17202B]/20 dark:hover:border-white/20';
     }
   };
 
@@ -115,7 +115,7 @@ export const Achievements = () => {
             initial={{ opacity: 0, x: -15 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="text-xs font-mono text-zinc-900 dark:text-zinc-300 uppercase tracking-widest font-semibold"
+            className="text-xs font-mono text-[#5B6573] dark:text-[#A7B0BC] uppercase tracking-widest font-semibold"
           >
             &gt;_ ACHIEVEMENT LOG
           </motion.h2>
@@ -124,7 +124,7 @@ export const Achievements = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-3xl sm:text-4xl font-extrabold tracking-tight text-zinc-950 dark:text-white"
+            className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#17202B] dark:text-[#F4F6F8]"
           >
             Developer Achievements &amp; Activity
           </motion.h3>
@@ -133,7 +133,7 @@ export const Achievements = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="text-sm sm:text-base text-zinc-900 dark:text-zinc-200 max-w-3xl font-medium"
+            className="text-sm sm:text-base text-[#5B6573] dark:text-[#A7B0BC] max-w-3xl font-medium"
           >
             Tracking verified open-source contributions, daily problem-solving consistency, and earned developer badges across GitHub and LeetCode.
           </motion.p>
@@ -145,20 +145,20 @@ export const Achievements = () => {
           <div className="lg:col-span-7 w-full">
             <Card hoverEffect={false} className="p-6 sm:p-7 space-y-6">
               {/* Heatmap Card Header */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-zinc-950/20 dark:border-white/20">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-[#17202B]/10 dark:border-white/[0.09]">
                 <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 rounded-2xl liquid-glass-well liquid-rim flex items-center justify-center text-zinc-950 dark:text-white">
-                    <Github className="w-5 h-5 text-zinc-950 dark:text-white" />
+                  <div className="w-10 h-10 rounded-2xl liquid-glass-well flex items-center justify-center text-[#17202B] dark:text-[#F4F6F8]">
+                    <Github className="w-5 h-5 text-[#17202B] dark:text-[#F4F6F8]" />
                   </div>
                   <div>
-                    <h4 className="text-sm font-bold text-zinc-950 dark:text-white flex items-center gap-2">
+                    <h4 className="text-sm font-bold text-[#17202B] dark:text-[#F4F6F8] flex items-center gap-2">
                       <span>GitHub Contribution Heatmap</span>
                     </h4>
                     <a
                       href="https://github.com/probanjee"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-xs font-mono text-zinc-900 dark:text-zinc-300 hover:opacity-75 transition-opacity flex items-center gap-1 group/user"
+                      className="text-xs font-mono text-[#5B6573] dark:text-[#A7B0BC] hover:text-[#087F79] dark:hover:text-[#55D6C8] transition-colors flex items-center gap-1 group/user"
                     >
                       <span>@probanjee</span>
                       <ExternalLink className="w-3 h-3 group-hover/user:translate-x-0.5 transition-transform" />
@@ -168,7 +168,7 @@ export const Achievements = () => {
 
                 {/* Real Annual Count Badge */}
                 {contribData && (
-                  <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full liquid-glass-well liquid-rim text-zinc-950 dark:text-white font-mono text-xs">
+                  <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full liquid-glass-well text-[#17202B] dark:text-[#F4F6F8] font-mono text-xs">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 dark:bg-emerald-400 animate-pulse" />
                     <span className="font-bold tabular-nums">{contribData.totalContributions.toLocaleString()} Contributions</span>
                     <span className="text-[10px] text-zinc-900 dark:text-zinc-300 font-normal">/ year</span>
@@ -277,7 +277,7 @@ export const Achievements = () => {
                                     onMouseLeave={() => setHoveredDay(null)}
                                     onFocus={() => setHoveredDay(day)}
                                     onBlur={() => setHoveredDay(null)}
-                                    className={`w-[11px] h-[11px] rounded-[3px] border transition-transform duration-150 cursor-pointer focus:outline-none focus:ring-1 focus:ring-zinc-950 dark:focus:ring-white ${getCellColorClass(
+                                    className={`w-[11px] h-[11px] rounded-[3px] border transition-transform duration-150 cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#087F79] dark:focus:ring-[#55D6C8] ${getCellColorClass(
                                       day.level
                                     )} ${isHovered ? 'scale-125 z-10' : ''}`}
                                   />
@@ -291,27 +291,27 @@ export const Achievements = () => {
                   </div>
 
                   {/* Heatmap Footer */}
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-3 border-t border-zinc-950/20 dark:border-white/20 text-[10px] font-mono">
-                    <div className="text-zinc-900 dark:text-zinc-200 min-h-[18px]">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-3 border-t border-[#17202B]/10 dark:border-white/[0.09] text-[10px] font-mono">
+                    <div className="text-[#5B6573] dark:text-[#A7B0BC] min-h-[18px]">
                       {hoveredDay ? (
                         <span>
-                          <strong className="text-zinc-950 dark:text-white font-bold tabular-nums">{hoveredDay.count}</strong> contribution{hoveredDay.count === 1 ? '' : 's'} on{' '}
-                          <span className="text-zinc-950 dark:text-white font-semibold">{hoveredDay.date}</span>
+                          <strong className="text-[#17202B] dark:text-[#F4F6F8] font-bold tabular-nums">{hoveredDay.count}</strong> contribution{hoveredDay.count === 1 ? '' : 's'} on{' '}
+                          <span className="text-[#17202B] dark:text-[#F4F6F8] font-semibold">{hoveredDay.date}</span>
                         </span>
                       ) : (
-                        <span className="text-zinc-900 dark:text-zinc-300">Hover or focus any square to inspect metrics</span>
+                        <span className="text-[#5B6573] dark:text-[#A7B0BC]">Hover or focus any square to inspect metrics</span>
                       )}
                     </div>
 
                     {/* Intensity Legend */}
-                    <div className="flex items-center space-x-2 text-zinc-900 dark:text-zinc-300">
+                    <div className="flex items-center space-x-2 text-[#5B6573] dark:text-[#A7B0BC]">
                       <span>Less</span>
                       <div className="flex items-center space-x-1" aria-hidden="true">
-                        <span className="w-2.5 h-2.5 rounded-[3px] border bg-white/20 dark:bg-white/[0.06] border-white/45 dark:border-white/15" />
-                        <span className="w-2.5 h-2.5 rounded-[3px] border bg-zinc-900/25 dark:bg-white/25 border-zinc-950/35 dark:border-white/30" />
-                        <span className="w-2.5 h-2.5 rounded-[3px] border bg-zinc-900/50 dark:bg-white/45 border-zinc-950/55 dark:border-white/50" />
-                        <span className="w-2.5 h-2.5 rounded-[3px] border bg-zinc-900/75 dark:bg-white/75 border-zinc-950/80 dark:border-white/80" />
-                        <span className="w-2.5 h-2.5 rounded-[3px] border bg-zinc-950 dark:bg-white border-zinc-950 dark:border-white" />
+                        <span className="w-2.5 h-2.5 rounded-[3px] border bg-[#17202B]/[0.06] dark:bg-white/[0.06] border-[#17202B]/10 dark:border-white/10" />
+                        <span className="w-2.5 h-2.5 rounded-[3px] border bg-[#087F79]/20 dark:bg-[#55D6C8]/15 border-[#087F79]/25 dark:border-[#55D6C8]/20" />
+                        <span className="w-2.5 h-2.5 rounded-[3px] border bg-[#087F79]/40 dark:bg-[#55D6C8]/30 border-[#087F79]/45 dark:border-[#55D6C8]/35" />
+                        <span className="w-2.5 h-2.5 rounded-[3px] border bg-[#087F79]/65 dark:bg-[#55D6C8]/55 border-[#087F79]/70 dark:border-[#55D6C8]/60" />
+                        <span className="w-2.5 h-2.5 rounded-[3px] border bg-[#087F79] dark:bg-[#55D6C8] border-[#087F79] dark:border-[#55D6C8]" />
                       </div>
                       <span>More</span>
                     </div>
@@ -324,11 +324,11 @@ export const Achievements = () => {
           {/* RIGHT: Compact List of Verified Achievements (5 Cols) */}
           <div className="lg:col-span-5 w-full space-y-4">
             <div className="flex items-center justify-between px-1">
-              <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-zinc-950 dark:text-white flex items-center gap-1.5">
-                <Award className="w-3.5 h-3.5 text-zinc-950 dark:text-white" />
+              <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#17202B] dark:text-[#F4F6F8] flex items-center gap-1.5">
+                <Award className="w-3.5 h-3.5 text-[#087F79] dark:text-[#55D6C8]" />
                 <span>Verified Badges ({achievements.length})</span>
               </span>
-              <span className="text-[9px] font-mono text-zinc-900 dark:text-zinc-300 uppercase font-semibold">
+              <span className="text-[9px] font-mono text-[#5B6573] dark:text-[#A7B0BC] uppercase font-semibold">
                 Official Credentials
               </span>
             </div>
@@ -344,12 +344,12 @@ export const Achievements = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: idx * 0.08, duration: 0.4 }}
-                  className="group block p-4 rounded-[22px] glass-panel liquid-rim card-hover-effect focus:outline-none focus:ring-2 focus:ring-white/50"
+                  className="group block p-4 rounded-[22px] glass-panel card-hover-effect focus:outline-none focus:ring-2 focus:ring-[#087F79]/50 dark:focus:ring-[#55D6C8]/50"
                   aria-label={`${item.platform} Achievement: ${item.title} - ${item.description}`}
                 >
                   <div className="flex items-center space-x-4">
                     {/* Official Badge Image */}
-                    <div className="relative flex-shrink-0 w-14 h-14 rounded-2xl liquid-glass-well liquid-rim flex items-center justify-center p-1.5 group-hover:scale-105 transition-transform">
+                    <div className="relative flex-shrink-0 w-14 h-14 rounded-2xl liquid-glass-well flex items-center justify-center p-1.5 group-hover:scale-105 transition-transform">
                       <img
                         src={item.badgeUrl}
                         alt={`${item.platform} ${item.title} badge`}
@@ -366,7 +366,7 @@ export const Achievements = () => {
                     {/* Badge Info */}
                     <div className="flex-1 min-w-0 space-y-1">
                       <div className="flex items-center justify-between gap-2">
-                        <h4 className="text-sm font-bold text-zinc-950 dark:text-white group-hover:opacity-85 transition-opacity truncate">
+                        <h4 className="text-sm font-bold text-[#17202B] dark:text-[#F4F6F8] group-hover:opacity-85 transition-opacity truncate">
                           {item.title}
                         </h4>
                         <span className={`text-[8px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-full shrink-0 ${item.tagColor}`}>
@@ -374,13 +374,13 @@ export const Achievements = () => {
                         </span>
                       </div>
 
-                      <p className="text-xs text-zinc-900 dark:text-zinc-200 font-sans leading-relaxed line-clamp-2">
+                      <p className="text-xs text-[#5B6573] dark:text-[#A7B0BC] font-sans leading-relaxed line-clamp-2">
                         {item.description}
                       </p>
 
-                      <div className="pt-1 flex items-center justify-between text-[10px] font-mono text-zinc-900 dark:text-zinc-300">
+                      <div className="pt-1 flex items-center justify-between text-[10px] font-mono text-[#5B6573] dark:text-[#A7B0BC]">
                         <span className="text-[9px] font-semibold">{item.tag}</span>
-                        <span className="text-zinc-950 dark:text-white font-bold flex items-center space-x-1 group-hover:translate-x-0.5 transition-transform">
+                        <span className="text-[#087F79] dark:text-[#55D6C8] font-bold flex items-center space-x-1 group-hover:translate-x-0.5 transition-transform">
                           <span>View</span>
                           <ExternalLink className="w-3 h-3" />
                         </span>

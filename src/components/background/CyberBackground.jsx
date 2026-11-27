@@ -28,71 +28,61 @@ export const CyberBackground = () => {
     <div
       className="fixed inset-0 -z-50 overflow-hidden transition-colors duration-500"
       style={{
-        background: isDark
-          ? 'linear-gradient(135deg, #020203 0%, #050507 40%, #0A0B0E 74%, #030304 100%)'
-          : 'linear-gradient(135deg, #7E828B 0%, #8C9099 42%, #858992 75%, #797D86 100%)',
+        background: isDark ? '#0B0D10' : '#F3F5F7',
       }}
       aria-hidden="true"
     >
-      {/* 1. Monochrome Atmospheric Blooms Behind Liquid Glass Surfaces */}
+      {/* 1. Calm Atmospheric Teal Depth */}
       <div className="absolute inset-0 pointer-events-none">
         <div
-          className="absolute -top-[16%] -left-[10%] w-[64vw] h-[64vw] max-w-[900px] max-h-[900px] rounded-full blur-[120px] transition-opacity duration-500"
+          className="absolute -top-[18%] -left-[12%] w-[60vw] h-[60vw] max-w-[820px] max-h-[820px] rounded-full blur-[130px] transition-opacity duration-500"
           style={{
             background: isDark
-              ? 'radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, rgba(161, 161, 170, 0.05) 42%, transparent 74%)'
-              : 'radial-gradient(circle, rgba(255, 255, 255, 0.28) 0%, rgba(255, 255, 255, 0.12) 48%, transparent 76%)',
+              ? 'radial-gradient(circle, rgba(85, 214, 200, 0.055) 0%, rgba(21, 26, 34, 0.25) 45%, transparent 74%)'
+              : 'radial-gradient(circle, rgba(8, 127, 121, 0.055) 0%, rgba(232, 237, 241, 0.45) 50%, transparent 76%)',
           }}
         />
         <div
-          className="absolute top-[14%] -right-[12%] w-[58vw] h-[58vw] max-w-[840px] max-h-[840px] rounded-full blur-[130px] transition-opacity duration-500"
+          className="absolute top-[18%] -right-[14%] w-[54vw] h-[54vw] max-w-[760px] max-h-[760px] rounded-full blur-[140px] transition-opacity duration-500"
           style={{
             background: isDark
-              ? 'radial-gradient(circle, rgba(228, 228, 231, 0.07) 0%, rgba(113, 113, 122, 0.04) 48%, transparent 76%)'
-              : 'radial-gradient(circle, rgba(255, 255, 255, 0.24) 0%, rgba(212, 212, 216, 0.10) 50%, transparent 76%)',
-          }}
-        />
-        <div
-          className="absolute -bottom-[20%] left-[18%] w-[60vw] h-[60vw] max-w-[860px] max-h-[860px] rounded-full blur-[130px] transition-opacity duration-500"
-          style={{
-            background: isDark
-              ? 'radial-gradient(circle, rgba(255, 255, 255, 0.06) 0%, rgba(63, 63, 70, 0.06) 52%, transparent 78%)'
-              : 'radial-gradient(circle, rgba(255, 255, 255, 0.22) 0%, rgba(161, 161, 170, 0.14) 55%, transparent 78%)',
+              ? 'radial-gradient(circle, rgba(29, 36, 46, 0.35) 0%, rgba(85, 214, 200, 0.03) 50%, transparent 76%)'
+              : 'radial-gradient(circle, rgba(255, 255, 255, 0.70) 0%, rgba(8, 127, 121, 0.035) 50%, transparent 76%)',
           }}
         />
       </div>
 
-      {/* 2. Neutral Specular Cursor Wash (Desktop Only) */}
+      {/* 2. Restrained Specular Cursor Wash (Desktop Only) */}
       {!isMobile && (
         <div
           ref={glowRef}
-          className="absolute w-[520px] h-[520px] rounded-full blur-[110px] pointer-events-none transition-opacity duration-500"
+          className="absolute w-[480px] h-[480px] rounded-full blur-[120px] pointer-events-none transition-opacity duration-500"
           style={{
             background: isDark
-              ? 'radial-gradient(circle at center, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.02) 48%, transparent 76%)'
-              : 'radial-gradient(circle at center, rgba(255, 255, 255, 0.34) 0%, rgba(255, 255, 255, 0.12) 50%, transparent 76%)',
+              ? 'radial-gradient(circle at center, rgba(85, 214, 200, 0.05) 0%, transparent 72%)'
+              : 'radial-gradient(circle at center, rgba(8, 127, 121, 0.045) 0%, transparent 72%)',
             willChange: 'transform',
           }}
         />
       )}
 
-      {/* 3. Subtle Floating Monochrome Mist (Desktop) */}
+      {/* 3. Static Calm Subtle Horizon Mist (Reduced-motion friendly) */}
       {!isMobile && (
         <motion.div
           animate={{
-            x: [0, 36, -24, 0],
-            y: [0, -28, 22, 0],
+            x: [0, 18, -12, 0],
+            y: [0, -14, 10, 0],
           }}
           transition={{
-            duration: 22,
+            duration: 28,
             repeat: Infinity,
             ease: 'easeInOut',
           }}
-          className="absolute top-[28%] left-[38%] w-[460px] h-[460px] rounded-full blur-[125px] pointer-events-none"
+          className="absolute top-[34%] left-[40%] w-[420px] h-[420px] rounded-full blur-[135px] pointer-events-none"
           style={{
             background: isDark
-              ? 'radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, rgba(113, 113, 122, 0.04) 48%, transparent 74%)'
-              : 'radial-gradient(circle, rgba(255, 255, 255, 0.28) 0%, rgba(255, 255, 255, 0.08) 50%, transparent 74%)',
+              ? 'radial-gradient(circle, rgba(85, 214, 200, 0.035) 0%, transparent 74%)'
+              : 'radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, transparent 74%)',
           }}
         />
       )}

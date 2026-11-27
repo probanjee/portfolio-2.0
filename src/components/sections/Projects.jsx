@@ -11,21 +11,21 @@ export const Projects = () => {
       <div className="space-y-12">
         
         {/* SECTION HEADER */}
-        <div className="space-y-3">
+        <div className="space-y-2.5">
           <motion.h2 
-            initial={{ opacity: 0, x: -15 }}
+            initial={{ opacity: 0, x: -12 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="text-xs font-mono text-zinc-900 dark:text-zinc-300 uppercase tracking-widest font-semibold"
+            className="text-xs font-mono text-[#087F79] dark:text-[#55D6C8] uppercase tracking-widest font-semibold"
           >
-            &gt;_ CORE REPOSITORIES
+            &gt;_ Core Repositories
           </motion.h2>
           <motion.h3 
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="text-3xl sm:text-4xl font-extrabold tracking-tight text-zinc-950 dark:text-white"
+            transition={{ delay: 0.08 }}
+            className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#17202B] dark:text-[#F4F6F8]"
           >
             Featured Security &amp; System Pipelines
           </motion.h3>
