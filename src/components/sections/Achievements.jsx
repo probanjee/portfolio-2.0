@@ -84,21 +84,16 @@ export const Achievements = () => {
     }
   ];
 
-  // Restrained teal/green activity scale with neutral empty cells
-  const getCellColorClass = (level) => {
-    switch (level) {
-      case 1:
-        return 'bg-[#087F79]/20 dark:bg-[#55D6C8]/15 border-[#087F79]/25 dark:border-[#55D6C8]/20 hover:bg-[#087F79]/30 dark:hover:bg-[#55D6C8]/25';
-      case 2:
-        return 'bg-[#087F79]/40 dark:bg-[#55D6C8]/30 border-[#087F79]/45 dark:border-[#55D6C8]/35 hover:bg-[#087F79]/50 dark:hover:bg-[#55D6C8]/40';
-      case 3:
-        return 'bg-[#087F79]/65 dark:bg-[#55D6C8]/55 border-[#087F79]/70 dark:border-[#55D6C8]/60 hover:bg-[#087F79]/75 dark:hover:bg-[#55D6C8]/65';
-      case 4:
-        return 'bg-[#087F79] dark:bg-[#55D6C8] border-[#087F79] dark:border-[#55D6C8] hover:opacity-90';
-      default:
-        return 'bg-[#17202B]/[0.06] dark:bg-white/[0.06] border-[#17202B]/10 dark:border-white/10 hover:border-[#17202B]/20 dark:hover:border-white/20';
-    }
+  // Distinct restrained teal-to-green activity scale with neutral empty cells
+  const HEATMAP_CELL_CLASSES = {
+    0: 'bg-[#E8EDF1] dark:bg-[#1D242E] border-[#17202B]/10 dark:border-white/10 hover:border-[#17202B]/25 dark:hover:border-white/25',
+    1: 'bg-[#99F6E4] dark:bg-[#115E59] border-[#087F79]/30 dark:border-[#2DD4BF]/35 hover:brightness-95 dark:hover:brightness-110',
+    2: 'bg-[#34D399] dark:bg-[#059669] border-[#059669]/40 dark:border-[#34D399]/40 hover:brightness-95 dark:hover:brightness-110',
+    3: 'bg-[#16A34A] dark:bg-[#22C55E] border-[#15803D]/50 dark:border-[#4ADE80]/45 hover:brightness-95 dark:hover:brightness-110',
+    4: 'bg-[#14532D] dark:bg-[#4ADE80] border-[#14532D] dark:border-[#86EFAC]/60 hover:brightness-110 dark:hover:brightness-105',
   };
+
+  const getCellColorClass = (level) => HEATMAP_CELL_CLASSES[level] || HEATMAP_CELL_CLASSES[0];
 
   const dayOfWeekLabels = [
     { row: 1, label: 'Mon' },
@@ -307,11 +302,12 @@ export const Achievements = () => {
                     <div className="flex items-center space-x-2 text-[#5B6573] dark:text-[#A7B0BC]">
                       <span>Less</span>
                       <div className="flex items-center space-x-1" aria-hidden="true">
-                        <span className="w-2.5 h-2.5 rounded-[3px] border bg-[#17202B]/[0.06] dark:bg-white/[0.06] border-[#17202B]/10 dark:border-white/10" />
-                        <span className="w-2.5 h-2.5 rounded-[3px] border bg-[#087F79]/20 dark:bg-[#55D6C8]/15 border-[#087F79]/25 dark:border-[#55D6C8]/20" />
-                        <span className="w-2.5 h-2.5 rounded-[3px] border bg-[#087F79]/40 dark:bg-[#55D6C8]/30 border-[#087F79]/45 dark:border-[#55D6C8]/35" />
-                        <span className="w-2.5 h-2.5 rounded-[3px] border bg-[#087F79]/65 dark:bg-[#55D6C8]/55 border-[#087F79]/70 dark:border-[#55D6C8]/60" />
-                        <span className="w-2.5 h-2.5 rounded-[3px] border bg-[#087F79] dark:bg-[#55D6C8] border-[#087F79] dark:border-[#55D6C8]" />
+                        {[0, 1, 2, 3, 4].map((level) => (
+                          <span
+                            key={level}
+                            className={`w-2.5 h-2.5 rounded-[3px] border ${HEATMAP_CELL_CLASSES[level]}`}
+                          />
+                        ))}
                       </div>
                       <span>More</span>
                     </div>
