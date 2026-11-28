@@ -1,6 +1,8 @@
 import { processContributions } from './githubService';
 
 const FAISAL_LEETCODE_API = 'https://leetcode-api-faisalshohag.vercel.app';
+const PIED_LEETCODE_API = 'https://leetcode-api-pied.vercel.app';
+const TASHIF_LEETCODE_API = 'https://leetcode-stats.tashif.codes';
 const ALFA_LEETCODE_API = 'https://alfa-leetcode-api.onrender.com';
 
 const getSessionStorage = () => {
@@ -10,6 +12,15 @@ const getSessionStorage = () => {
     }
   } catch {}
   return null;
+};
+
+const isHostedOrigin = () => {
+  try {
+    const hostname = window?.location?.hostname;
+    return Boolean(hostname && hostname !== 'localhost' && hostname !== '127.0.0.1');
+  } catch {
+    return false;
+  }
 };
 
 /**
@@ -107,13 +118,17 @@ export const processLeetCodeCalendar = (submissionCalendar, { referenceDate } = 
   return { totalContributions, activeDays, weeks, monthLabels };
 };
 
-const fetchWithTimeout = async (url, timeoutMs = 7000) => {
+const fetchJsonWithTimeout = async (url, timeoutMs = 10000) => {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
     const res = await fetch(url, { signal: controller.signal });
     clearTimeout(timer);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const contentType = res.headers?.get?.('content-type') || '';
+    if (contentType && !contentType.includes('application/json')) {
+      throw new Error('Unexpected non-JSON response');
+    }
     return await res.json();
   } catch (err) {
     clearTimeout(timer);
@@ -121,8 +136,34 @@ const fetchWithTimeout = async (url, timeoutMs = 7000) => {
   }
 };
 
+const normalizeApiResponse = (rawData) => {
+  if (!rawData || typeof rawData !== 'object') return null;
+  if (rawData.status === 'error') return null;
+  if (Array.isArray(rawData.errors) ? rawData.errors.length > 0 : Boolean(rawData.errors)) {
+    return null;
+  }
+
+  const rawCalendar =
+    rawData.submissionCalendar ??
+    rawData.data?.matchedUser?.userCalendar?.submissionCalendar;
+  if (rawCalendar == null) return null;
+
+  const processed = processLeetCodeCalendar(rawCalendar);
+  if (processed.weeks.length === 0) return null;
+
+  return {
+    ...processed,
+    ...(typeof rawData.totalActiveDays === 'number' ? { activeDays: rawData.totalActiveDays } : {}),
+    ...(typeof rawData.totalSolved === 'number' ? { totalSolved: rawData.totalSolved } : {}),
+    ...(typeof rawData.easySolved === 'number' ? { easySolved: rawData.easySolved } : {}),
+    ...(typeof rawData.mediumSolved === 'number' ? { mediumSolved: rawData.mediumSolved } : {}),
+    ...(typeof rawData.hardSolved === 'number' ? { hardSolved: rawData.hardSolved } : {}),
+  };
+};
+
 /**
- * Fetch live LeetCode submission calendar telemetry with caching and fallback.
+ * Fetch live LeetCode submission calendar telemetry with caching, first-party API support,
+ * and multi-provider fallbacks.
  *
  * @param {string} username - LeetCode username (defaults to 'Prosun01')
  * @returns {Promise<{totalContributions: number, activeDays: number, totalSolved?: number, easySolved?: number, mediumSolved?: number, hardSolved?: number, weeks: Array, monthLabels: Array}>}
@@ -144,58 +185,27 @@ export const fetchLeetCodeContributions = async (username = 'Prosun01') => {
   }
 
   const safeUser = encodeURIComponent(username);
+  const endpoints = [
+    ...(isHostedOrigin() ? [`/api/leetcode?username=${safeUser}`] : []),
+    `${FAISAL_LEETCODE_API}/${safeUser}`,
+    `${PIED_LEETCODE_API}/user/${safeUser}/calendar`,
+    `${TASHIF_LEETCODE_API}/${safeUser}`,
+    `${ALFA_LEETCODE_API}/userProfileCalendar?username=${safeUser}`,
+  ];
 
-  // 1. Primary CORS-enabled endpoint
-  try {
-    const rawData = await fetchWithTimeout(`${FAISAL_LEETCODE_API}/${safeUser}`);
-    if (rawData && rawData.submissionCalendar != null && !rawData.errors) {
-      const processed = processLeetCodeCalendar(rawData.submissionCalendar);
-      if (processed.weeks.length > 0) {
-        const result = {
-          ...processed,
-          ...(typeof rawData.totalSolved === 'number' ? { totalSolved: rawData.totalSolved } : {}),
-          ...(typeof rawData.easySolved === 'number' ? { easySolved: rawData.easySolved } : {}),
-          ...(typeof rawData.mediumSolved === 'number' ? { mediumSolved: rawData.mediumSolved } : {}),
-          ...(typeof rawData.hardSolved === 'number' ? { hardSolved: rawData.hardSolved } : {}),
-        };
-
+  for (const url of endpoints) {
+    try {
+      const rawData = await fetchJsonWithTimeout(url, 10000);
+      const normalized = normalizeApiResponse(rawData);
+      if (normalized) {
         try {
-          storage?.setItem(cacheKey, JSON.stringify({ data: result, timestamp: Date.now() }));
+          storage?.setItem(cacheKey, JSON.stringify({ data: normalized, timestamp: Date.now() }));
         } catch {}
-
-        return result;
+        return normalized;
       }
+    } catch {
+      // Try next fallback endpoint
     }
-  } catch {
-    // Proceed to fallback endpoint
-  }
-
-  // 2. Fallback calendar endpoint
-  try {
-    const fallbackData = await fetchWithTimeout(`${ALFA_LEETCODE_API}/userProfileCalendar?username=${safeUser}`);
-    const rawCalendar =
-      fallbackData?.submissionCalendar ??
-      fallbackData?.data?.matchedUser?.userCalendar?.submissionCalendar;
-
-    if (rawCalendar != null) {
-      const processed = processLeetCodeCalendar(rawCalendar);
-      if (processed.weeks.length > 0) {
-        const result = {
-          ...processed,
-          ...(typeof fallbackData?.totalActiveDays === 'number'
-            ? { activeDays: fallbackData.totalActiveDays }
-            : {}),
-        };
-
-        try {
-          storage?.setItem(cacheKey, JSON.stringify({ data: result, timestamp: Date.now() }));
-        } catch {}
-
-        return result;
-      }
-    }
-  } catch {
-    // Both endpoints failed
   }
 
   throw new Error('LeetCode submission activity is currently unavailable from public endpoints.');

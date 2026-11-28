@@ -5,6 +5,7 @@ import {
   processLeetCodeCalendar,
   fetchLeetCodeContributions,
 } from '../leetcodeService';
+import leetcodeHandler from '../../../api/leetcode';
 
 describe('leetcodeService', () => {
   let store = {};
@@ -102,26 +103,88 @@ describe('leetcodeService', () => {
       expect(mockStorage.setItem).toHaveBeenCalled();
     });
 
-    it('falls back to secondary calendar endpoint if primary fails', async () => {
+    it('falls back to secondary endpoints if primary fails and uses /api/leetcode on hosted origins', async () => {
       const day = Math.floor(Date.UTC(2026, 10, 27) / 1000);
+      global.window.location = { hostname: 'probanjee.vercel.app' };
+
       global.fetch = vi.fn()
-        .mockRejectedValueOnce(new Error('Primary offline'))
+        .mockRejectedValueOnce(new Error('Same-origin proxy 404'))
+        .mockResolvedValueOnce({
+          ok: true,
+          json: async () => ({ status: 'error' }),
+        })
         .mockResolvedValueOnce({
           ok: true,
           json: async () => ({
-            totalActiveDays: 58,
+            totalActiveDays: 59,
             submissionCalendar: JSON.stringify({ [day]: 5 }),
           }),
         });
 
       const res = await fetchLeetCodeContributions('Prosun01_fallback');
+      expect(global.fetch).toHaveBeenNthCalledWith(1, '/api/leetcode?username=Prosun01_fallback', expect.any(Object));
       expect(res.totalContributions).toBe(5);
-      expect(res.activeDays).toBe(58);
+      expect(res.activeDays).toBe(59);
     });
 
     it('throws error when all endpoints fail', async () => {
       global.fetch = vi.fn().mockRejectedValue(new Error('Network unavailable'));
       await expect(fetchLeetCodeContributions('missing_user')).rejects.toThrow();
+    });
+  });
+
+  describe('api/leetcode handler', () => {
+    const createMockRes = () => {
+      const headers = {};
+      return {
+        statusCode: 200,
+        headers,
+        body: null,
+        setHeader(k, v) { headers[k] = v; },
+        status(code) { this.statusCode = code; return this; },
+        json(data) { this.body = data; return this; },
+      };
+    };
+
+    it('rejects non-GET requests and invalid usernames', async () => {
+      const res405 = createMockRes();
+      await leetcodeHandler({ method: 'POST', query: {} }, res405);
+      expect(res405.statusCode).toBe(405);
+
+      const res400 = createMockRes();
+      await leetcodeHandler({ method: 'GET', query: { username: 'bad/user?$' } }, res400);
+      expect(res400.statusCode).toBe(400);
+    });
+
+    it('queries LeetCode GraphQL and returns normalized stats + calendar', async () => {
+      global.fetch = vi.fn().mockResolvedValue({
+        ok: true,
+        json: async () => ({
+          data: {
+            matchedUser: {
+              submitStatsGlobal: {
+                acSubmissionNum: [
+                  { difficulty: 'All', count: 371 },
+                  { difficulty: 'Easy', count: 100 },
+                  { difficulty: 'Medium', count: 200 },
+                  { difficulty: 'Hard', count: 71 },
+                ],
+              },
+              userCalendar: {
+                totalActiveDays: 59,
+                submissionCalendar: '{"1795737600":16}',
+              },
+            },
+          },
+        }),
+      });
+
+      const res = createMockRes();
+      await leetcodeHandler({ method: 'GET', query: { username: 'Prosun01' } }, res);
+      expect(res.statusCode).toBe(200);
+      expect(res.body.totalSolved).toBe(371);
+      expect(res.body.submissionCalendar).toBe('{"1795737600":16}');
+      expect(res.headers['Cache-Control']).toContain('s-maxage=600');
     });
   });
 });
