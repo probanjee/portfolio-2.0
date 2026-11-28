@@ -303,8 +303,8 @@ export const Contact = () => {
 
                   {/* Email field */}
                   <div className="space-y-1.5">
-                    <label htmlFor="contact-email" className="text-zinc-950 dark:text-zinc-200 uppercase tracking-widest text-[9px] font-bold flex items-center">
-                      Secure Channel (Email) <span className="text-zinc-950 dark:text-white ml-0.5">*</span>
+                    <label htmlFor="contact-email" className="text-[#17202B] dark:text-[#A7B0BC] uppercase tracking-widest text-[9px] font-bold flex items-center">
+                      Secure Channel (Email) <span className="text-[#087F79] dark:text-[#55D6C8] ml-0.5">*</span>
                     </label>
                     <input
                       id="contact-email"
@@ -323,7 +323,7 @@ export const Contact = () => {
 
                 {/* Subject field */}
                 <div className="space-y-1.5">
-                  <label htmlFor="contact-subject" className="text-zinc-950 dark:text-zinc-200 uppercase tracking-widest text-[9px] font-bold">
+                  <label htmlFor="contact-subject" className="text-[#17202B] dark:text-[#A7B0BC] uppercase tracking-widest text-[9px] font-bold">
                     Transmission Subject
                   </label>
                   <input
@@ -334,14 +334,14 @@ export const Contact = () => {
                     placeholder="e.g. Full-Stack / C++ Software Development Opportunity"
                     value={formData.subject}
                     onChange={handleInputChange}
-                    className="w-full liquid-glass-well rounded-2xl px-4 py-3.5 text-zinc-950 dark:text-white placeholder:text-zinc-800/75 dark:placeholder:text-zinc-400 focus:border-white focus:ring-2 focus:ring-white/30 transition-colors outline-none"
+                    className="w-full liquid-glass-well rounded-2xl px-4 py-3.5 text-[#17202B] dark:text-[#F4F6F8] placeholder:text-[#5B6573]/60 dark:placeholder:text-[#A7B0BC]/50 focus:border-[#087F79] dark:focus:border-[#55D6C8] focus:ring-2 focus:ring-[#087F79]/30 dark:focus:ring-[#55D6C8]/30 transition-colors outline-none"
                   />
                 </div>
 
                 {/* Message field */}
                 <div className="space-y-1.5">
-                  <label htmlFor="contact-message" className="text-zinc-950 dark:text-zinc-200 uppercase tracking-widest text-[9px] font-bold flex items-center">
-                    Payload Message <span className="text-zinc-950 dark:text-white ml-0.5">*</span>
+                  <label htmlFor="contact-message" className="text-[#17202B] dark:text-[#A7B0BC] uppercase tracking-widest text-[9px] font-bold flex items-center">
+                    Payload Message <span className="text-[#087F79] dark:text-[#55D6C8] ml-0.5">*</span>
                   </label>
                   <textarea
                     id="contact-message"
@@ -353,7 +353,7 @@ export const Contact = () => {
                     placeholder="Provide secure connection parameters..."
                     value={formData.message}
                     onChange={handleInputChange}
-                    className="w-full liquid-glass-well rounded-2xl px-4 py-3.5 text-zinc-950 dark:text-white placeholder:text-zinc-800/75 dark:placeholder:text-zinc-400 focus:border-white focus:ring-2 focus:ring-white/30 transition-colors outline-none resize-none"
+                    className="w-full liquid-glass-well rounded-2xl px-4 py-3.5 text-[#17202B] dark:text-[#F4F6F8] placeholder:text-[#5B6573]/60 dark:placeholder:text-[#A7B0BC]/50 focus:border-[#087F79] dark:focus:border-[#55D6C8] focus:ring-2 focus:ring-[#087F79]/30 dark:focus:ring-[#55D6C8]/30 transition-colors outline-none resize-none"
                   />
                 </div>
 
@@ -370,7 +370,7 @@ export const Contact = () => {
                 />
 
                 {/* Submit Row */}
-                <div className="pt-4 border-t border-zinc-950/20 dark:border-white/20 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div className="pt-4 border-t border-[#17202B]/10 dark:border-white/[0.09] flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
 
                   {/* Status Indicator */}
                   <div className="flex flex-col gap-1 text-[10px] font-bold font-mono">
@@ -380,12 +380,12 @@ export const Contact = () => {
                         TRANSMITTED SUCCESSFULLY
                       </span>
                     ) : packetStatus === 'TRANSMISSION_READY' ? (
-                      <span className="text-zinc-950 dark:text-white flex items-center">
+                      <span className="text-[#17202B] dark:text-[#F4F6F8] flex items-center">
                         <ShieldCheck className="w-4 h-4 mr-1.5 shrink-0" />
                         FORM VALIDATED &amp; READY
                       </span>
                     ) : packetStatus === 'TRANSMITTING' ? (
-                      <span className="text-zinc-950 dark:text-white flex items-center">
+                      <span className="text-[#17202B] dark:text-[#F4F6F8] flex items-center">
                         <RefreshCw className="w-4 h-4 mr-1.5 shrink-0 animate-spin" />
                         SENDING MESSAGE...
                       </span>
@@ -397,14 +397,14 @@ export const Contact = () => {
                         </span>
                         <a
                           href={mailtoFallbackHref}
-                          className="inline-flex items-center text-[9px] text-zinc-950 dark:text-white hover:underline pl-5"
+                          className="inline-flex items-center text-[9px] text-[#087F79] dark:text-[#55D6C8] hover:underline pl-5"
                         >
                           Open in your mail app instead &rarr;
                         </a>
                       </div>
                     ) : (
-                      <span className="text-zinc-900 dark:text-zinc-300 flex items-center uppercase tracking-widest">
-                        <ShieldAlert className="w-4 h-4 mr-1.5 shrink-0 text-zinc-900 dark:text-zinc-300" />
+                      <span className="text-[#5B6573] dark:text-[#A7B0BC] flex items-center uppercase tracking-widest">
+                        <ShieldAlert className="w-4 h-4 mr-1.5 shrink-0 text-[#5B6573] dark:text-[#A7B0BC]" />
                         Awaiting input fields...
                       </span>
                     )}

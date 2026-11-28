@@ -41,7 +41,7 @@ export const ProjectCard = ({ project, isFeatured }) => {
             </div>
 
             {isFeatured && (
-              <span className="text-[11px] font-mono font-semibold px-2.5 py-0.5 rounded-full bg-[#087F79]/10 text-[#087F79] dark:bg-[#55D6C8]/12 dark:text-[#55D6C8] shrink-0">
+              <span className="text-[11px] font-mono font-semibold px-2.5 py-0.5 rounded-full bg-[#087F79]/10 text-[#087F79] dark:bg-[#55D6C8]/15 dark:text-[#55D6C8] shrink-0">
                 Featured
               </span>
             )}

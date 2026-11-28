@@ -27,7 +27,7 @@ export const EducationCertifications = () => {
             initial={{ opacity: 0, x: -15 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="text-xs font-mono text-zinc-900 dark:text-zinc-300 uppercase tracking-widest font-semibold"
+            className="text-xs font-mono text-[#5B6573] dark:text-[#A7B0BC] uppercase tracking-widest font-semibold"
           >
             &gt;_ ACADEMIC LEDGER
           </motion.h2>
@@ -36,7 +36,7 @@ export const EducationCertifications = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-3xl sm:text-4xl font-extrabold tracking-tight text-zinc-950 dark:text-white"
+            className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#17202B] dark:text-[#F4F6F8]"
           >
             Education Background
           </motion.h3>
@@ -48,7 +48,7 @@ export const EducationCertifications = () => {
           initial="initial"
           whileInView="animate"
           viewport={{ once: true, margin: "-80px" }}
-          className="space-y-6 relative before:absolute before:left-4 sm:before:left-6 before:top-4 before:bottom-4 before:w-[2px] before:bg-gradient-to-b before:from-zinc-950/60 before:to-transparent dark:before:from-white/60 dark:before:to-transparent"
+          className="space-y-6 relative before:absolute before:left-4 sm:before:left-6 before:top-4 before:bottom-4 before:w-[2px] before:bg-gradient-to-b before:from-[#087F79]/50 before:to-transparent dark:before:from-[#55D6C8]/40 dark:before:to-transparent"
         >
           {education.map((edu, idx) => (
             <motion.div
@@ -57,32 +57,32 @@ export const EducationCertifications = () => {
               className="relative pl-12 sm:pl-16 group"
             >
               {/* Timeline Node */}
-              <div className="absolute left-[10px] sm:left-[18px] top-6 w-3 h-3 rounded-full bg-white dark:bg-black border-2 border-zinc-950/50 dark:border-white/60 flex items-center justify-center z-10 group-hover:scale-110 transition-transform">
-                <span className="w-1.5 h-1.5 rounded-full bg-zinc-950 dark:bg-white" />
+              <div className="absolute left-[10px] sm:left-[18px] top-6 w-3 h-3 rounded-full bg-white dark:bg-black border-2 border-[#087F79]/60 dark:border-[#55D6C8]/60 flex items-center justify-center z-10 group-hover:scale-110 transition-transform">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#087F79] dark:bg-[#55D6C8]" />
               </div>
 
               <Card className="p-6 sm:p-7 space-y-4 group-hover:translate-x-1">
                 <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3">
                   <div className="space-y-1">
-                    <h4 className="text-base sm:text-lg font-extrabold text-zinc-950 dark:text-white group-hover:opacity-85 transition-opacity">
+                    <h4 className="text-base sm:text-lg font-extrabold text-[#17202B] dark:text-[#F4F6F8] group-hover:opacity-85 transition-opacity">
                       {edu.degree}
                     </h4>
-                    <p className="text-xs font-mono font-bold text-zinc-900 dark:text-zinc-300 uppercase tracking-wider flex items-center">
-                      <GraduationCap className="w-3.5 h-3.5 mr-1.5 text-zinc-900 dark:text-zinc-300" />
+                    <p className="text-xs font-mono font-bold text-[#5B6573] dark:text-[#A7B0BC] uppercase tracking-wider flex items-center">
+                      <GraduationCap className="w-3.5 h-3.5 mr-1.5 text-[#087F79] dark:text-[#55D6C8]" />
                       {edu.institution}
                     </p>
                   </div>
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="text-[10px] font-mono px-3 py-1 rounded-full liquid-glass-well liquid-rim text-zinc-950 dark:text-white font-bold tracking-wider">
+                    <span className="text-[10px] font-mono px-3 py-1 rounded-full liquid-glass-well text-[#17202B] dark:text-[#F4F6F8] font-bold tracking-wider">
                       {edu.grade}
                     </span>
-                    <span className="text-[10px] font-mono px-3 py-1 rounded-full liquid-glass-well liquid-rim text-zinc-950 dark:text-white font-bold tracking-wider">
+                    <span className="text-[10px] font-mono px-3 py-1 rounded-full liquid-glass-well text-[#17202B] dark:text-[#F4F6F8] font-bold tracking-wider">
                       {edu.period}
                     </span>
                   </div>
                 </div>
 
-                <p className="text-xs sm:text-sm text-zinc-900 dark:text-zinc-200 leading-relaxed font-sans pt-3 border-t border-zinc-950/20 dark:border-white/20">
+                <p className="text-xs sm:text-sm text-[#5B6573] dark:text-[#A7B0BC] leading-relaxed font-sans pt-3 border-t border-[#17202B]/10 dark:border-white/[0.09]">
                   {edu.details}
                 </p>
               </Card>

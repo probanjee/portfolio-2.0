@@ -48,7 +48,7 @@ export const Certification = () => {
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-xs font-mono text-zinc-900 dark:text-zinc-300 uppercase tracking-[0.2em] font-semibold"
+            className="text-xs font-mono text-[#5B6573] dark:text-[#A7B0BC] uppercase tracking-[0.2em] font-semibold"
           >
             VERIFIED CREDENTIALS
           </motion.p>
@@ -57,7 +57,7 @@ export const Certification = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.08 }}
-            className="text-3xl sm:text-4xl font-extrabold tracking-tight text-zinc-950 dark:text-white"
+            className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#17202B] dark:text-[#F4F6F8]"
           >
             Certification
           </motion.h2>
@@ -66,7 +66,7 @@ export const Certification = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.14 }}
-            className="text-sm text-zinc-900 dark:text-zinc-200 max-w-2xl mx-auto leading-relaxed font-medium"
+            className="text-sm text-[#5B6573] dark:text-[#A7B0BC] max-w-2xl mx-auto leading-relaxed font-medium"
           >
             Verified certificates and completion badges across cloud architecture, generative AI, cybersecurity, and core programming.
           </motion.p>
@@ -89,8 +89,8 @@ export const Certification = () => {
                 onClick={() => setActiveCategory(id)}
                 className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all duration-200 cursor-pointer ${
                   isSelected
-                    ? 'liquid-btn-primary liquid-rim'
-                    : 'liquid-glass-well liquid-rim text-zinc-900 dark:text-zinc-200 hover:text-zinc-950 dark:hover:text-white'
+                    ? 'liquid-btn-primary'
+                    : 'liquid-glass-well text-[#5B6573] dark:text-[#A7B0BC] hover:text-[#17202B] dark:hover:text-[#F4F6F8]'
                 }`}
               >
                 <Icon className="w-3.5 h-3.5 shrink-0 relative z-10" aria-hidden="true" />
@@ -102,7 +102,7 @@ export const Certification = () => {
 
         {/* Dynamic Count Pill */}
         <div className="flex items-center justify-center">
-          <span className="text-xs font-mono px-3.5 py-1 rounded-full liquid-glass-well liquid-rim text-zinc-900 dark:text-zinc-200 font-medium">
+          <span className="text-xs font-mono px-3.5 py-1 rounded-full liquid-glass-well text-[#5B6573] dark:text-[#A7B0BC] font-medium">
             {visibleCertifications.length} {activeCategory === 'All' ? 'verified certificates' : `in ${activeCategory}`}
           </span>
         </div>
@@ -126,7 +126,7 @@ export const Certification = () => {
                     type="button"
                     onClick={() => openCertPreview(cert)}
                     aria-label={`View full certificate: ${cert.title}`}
-                    className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden bg-white/95 dark:bg-black/75 border border-white/80 dark:border-white/25 shadow-inner group/img cursor-zoom-in block focus:outline-none focus:ring-2 focus:ring-white/60"
+                    className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden bg-white/95 dark:bg-black/75 border border-[#17202B]/10 dark:border-white/[0.09] shadow-inner group/img cursor-zoom-in block focus:outline-none focus:ring-2 focus:ring-[#087F79]/50 dark:focus:ring-[#55D6C8]/50"
                   >
                     <img
                       src={cert.imageUrl}
@@ -143,29 +143,29 @@ export const Certification = () => {
 
                 <div className="space-y-1.5">
                   <div className="flex items-center justify-between gap-2 text-[10px] font-mono">
-                    <span className="font-bold text-zinc-900 dark:text-zinc-200 uppercase tracking-wider truncate">
+                    <span className="font-bold text-[#5B6573] dark:text-[#A7B0BC] uppercase tracking-wider truncate">
                       {cert.issuer}
                     </span>
                     {cert.date && (
-                      <span className="px-2 py-0.5 rounded-full liquid-glass-well liquid-rim text-zinc-950 dark:text-white shrink-0 font-semibold">
+                      <span className="px-2 py-0.5 rounded-full liquid-glass-well text-[#17202B] dark:text-[#F4F6F8] shrink-0 font-semibold">
                         {cert.date}
                       </span>
                     )}
                   </div>
 
-                  <h3 className="text-base font-extrabold text-zinc-950 dark:text-white group-hover:opacity-85 transition-opacity leading-snug">
+                  <h3 className="text-base font-extrabold text-[#17202B] dark:text-[#F4F6F8] group-hover:opacity-85 transition-opacity leading-snug">
                     {cert.title}
                   </h3>
 
-                  <p className="text-xs text-zinc-900 dark:text-zinc-200 leading-relaxed font-sans pt-1">
+                  <p className="text-xs text-[#5B6573] dark:text-[#A7B0BC] leading-relaxed font-sans pt-1">
                     {cert.details}
                   </p>
                 </div>
               </div>
 
               {(cert.imageUrl || cert.credentialId || cert.credentialUrl) && (
-                <div className="pt-3 border-t border-zinc-950/20 dark:border-white/20 flex items-center justify-between gap-2 text-[10px] font-mono">
-                  <span className="text-zinc-900 dark:text-zinc-300 truncate font-medium">
+                <div className="pt-3 border-t border-[#17202B]/10 dark:border-white/[0.09] flex items-center justify-between gap-2 text-[10px] font-mono">
+                  <span className="text-[#5B6573] dark:text-[#A7B0BC] truncate font-medium">
                     {cert.credentialId ? `ID: ${cert.credentialId}` : 'Verified'}
                   </span>
 
@@ -174,7 +174,7 @@ export const Certification = () => {
                       <button
                         type="button"
                         onClick={() => openCertPreview(cert)}
-                        className="inline-flex items-center gap-1 px-3 py-1 rounded-full liquid-glass-well liquid-rim text-zinc-950 dark:text-white font-bold hover:opacity-80 transition-opacity cursor-pointer"
+                        className="inline-flex items-center gap-1 px-3 py-1 rounded-full liquid-glass-well text-[#17202B] dark:text-[#F4F6F8] font-bold hover:opacity-80 transition-opacity cursor-pointer"
                       >
                         <Eye className="w-3 h-3" />
                         <span>Preview</span>
@@ -185,7 +185,7 @@ export const Certification = () => {
                         href={cert.credentialUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 text-zinc-950 dark:text-white font-bold hover:underline"
+                        className="inline-flex items-center gap-1 text-[#087F79] dark:text-[#55D6C8] font-bold hover:underline"
                       >
                         <span>Credential</span>
                         <ExternalLink className="w-3 h-3" />

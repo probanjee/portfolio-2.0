@@ -83,7 +83,7 @@ export const Navbar = () => {
                   aria-current={active ? 'page' : undefined}
                   className={`relative px-2.5 xl:px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider font-mono rounded-full transition-colors whitespace-nowrap cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#087F79] dark:focus-visible:ring-[#55D6C8] ${
                     active
-                      ? 'bg-[#087F79]/12 text-[#087F79] border border-[#087F79]/30 dark:bg-[#55D6C8]/14 dark:text-[#55D6C8] dark:border-[#55D6C8]/35'
+                      ? 'bg-[#087F79]/15 text-[#087F79] border border-[#087F79]/30 dark:bg-[#55D6C8]/15 dark:text-[#55D6C8] dark:border-[#55D6C8]/35'
                       : 'text-[#5B6573] hover:text-[#17202B] hover:bg-[#E8EDF1]/80 dark:text-[#A7B0BC] dark:hover:text-[#F4F6F8] dark:hover:bg-[#1D242E]/80 border border-transparent'
                   }`}
                 >
@@ -142,7 +142,7 @@ export const Navbar = () => {
                     aria-current={active ? 'page' : undefined}
                     className={`text-left py-2.5 px-3.5 min-h-[44px] text-xs uppercase tracking-wider font-semibold font-mono rounded-xl transition-colors flex justify-between items-center cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#087F79] dark:focus-visible:ring-[#55D6C8] ${
                       active
-                        ? 'bg-[#087F79]/12 text-[#087F79] border border-[#087F79]/30 dark:bg-[#55D6C8]/14 dark:text-[#55D6C8] dark:border-[#55D6C8]/35'
+                        ? 'bg-[#087F79]/15 text-[#087F79] border border-[#087F79]/30 dark:bg-[#55D6C8]/15 dark:text-[#55D6C8] dark:border-[#55D6C8]/35'
                         : 'text-[#5B6573] dark:text-[#A7B0BC] hover:text-[#17202B] dark:hover:text-[#F4F6F8] hover:bg-[#E8EDF1]/80 dark:hover:bg-[#1D242E]/80 border border-transparent'
                     }`}
                   >

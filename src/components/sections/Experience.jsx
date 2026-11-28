@@ -44,7 +44,7 @@ export const Experience = () => {
         </div>
 
         {/* COMPACT TIMELINE */}
-        <div className="space-y-6 relative before:absolute before:left-3.5 sm:before:left-5 before:top-4 before:bottom-4 before:w-px before:bg-[#17202B]/15 dark:before:bg-white/12 pointer-events-auto">
+        <div className="space-y-6 relative before:absolute before:left-3.5 sm:before:left-5 before:top-4 before:bottom-4 before:w-px before:bg-[#17202B]/15 dark:before:bg-white/15 pointer-events-auto">
           {experience.map((job, idx) => (
             <motion.div
               initial={{ opacity: 0, y: 18 }}

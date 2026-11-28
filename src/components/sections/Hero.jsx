@@ -170,7 +170,7 @@ export const Hero = () => {
             <div className="absolute inset-0 rounded-full border border-[#087F79]/20 dark:border-[#55D6C8]/20" aria-hidden="true" />
 
             {/* Calm Frosted Portrait Frame */}
-            <div className="relative w-[88%] h-[88%] rounded-full p-2 bg-[#E8EDF1] dark:bg-[#1D242E] border border-[#17202B]/12 dark:border-white/12 shadow-[0_14px_34px_-12px_rgba(0,0,0,0.4)] flex items-center justify-center overflow-hidden cursor-grab active:cursor-grabbing">
+            <div className="relative w-[88%] h-[88%] rounded-full p-2 bg-[#E8EDF1] dark:bg-[#1D242E] border border-[#17202B]/15 dark:border-white/15 shadow-[0_14px_34px_-12px_rgba(0,0,0,0.4)] flex items-center justify-center overflow-hidden cursor-grab active:cursor-grabbing">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={currentSlide}
