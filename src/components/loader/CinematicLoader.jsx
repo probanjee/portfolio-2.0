@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion } from 'framer-motion';
+import { useTheme } from '../../hooks/useTheme';
 
 const BACK_WAVE_PATH =
   'M 0 0 C 60 -10, 120 10, 180 0 C 240 -10, 300 10, 360 0 C 420 -10, 480 10, 540 0 C 600 -10, 660 10, 720 0 C 780 -10, 840 10, 900 0 C 960 -10, 1020 10, 1080 0 C 1140 -10, 1200 10, 1260 0 C 1320 -10, 1380 10, 1440 0 C 1500 -10, 1560 10, 1620 0 C 1680 -10, 1740 10, 1800 0 C 1860 -10, 1920 10, 1980 0 C 2040 -10, 2100 10, 2160 0';
@@ -16,6 +17,7 @@ const TEXT_STYLE = {
 };
 
 export const CinematicLoader = ({ onComplete }) => {
+  const { isDark } = useTheme();
   const [progress, setProgress] = useState(0);
   const completedRef = useRef(false);
 
@@ -59,30 +61,63 @@ export const CinematicLoader = ({ onComplete }) => {
   // Rise smoothly from letter baseline (174) above letter cap top (46)
   const waterLevelY = 174 - (progress / 100) * 128;
 
+  const palette = isDark
+    ? {
+        surfaceGradStart: '#2EC4B6',
+        surfaceGradMid: '#55D6C8',
+        surfaceGradEnd: '#89E6DC',
+        deepGradStart: '#134E4A',
+        deepGradMid: '#1B7A72',
+        deepGradEnd: '#2BB5A7',
+        meniscusGlow: '#55D6C8',
+        meniscusEdge: '#C6F7F2',
+        bubbleFill: 'rgba(244, 246, 248, 0.72)',
+        shimmerMid: 'rgba(255, 255, 255, 0.30)',
+        letterEmptyFill: '#151A22',
+        letterOutlineStroke: 'rgba(85, 214, 200, 0.36)',
+        ambientGlow:
+          'radial-gradient(circle at 50% 52%, rgba(85, 214, 200, 0.08), rgba(21, 26, 34, 0.38) 42%, transparent 74%)',
+        progressFill: 'linear-gradient(90deg, rgba(85, 214, 200, 0.45) 0%, #55D6C8 100%)',
+      }
+    : {
+        surfaceGradStart: '#065F5B',
+        surfaceGradMid: '#087F79',
+        surfaceGradEnd: '#0E9F98',
+        deepGradStart: '#134E4A',
+        deepGradMid: '#0F766E',
+        deepGradEnd: '#087F79',
+        meniscusGlow: '#0E9F98',
+        meniscusEdge: '#55D6C8',
+        bubbleFill: 'rgba(243, 245, 247, 0.70)',
+        shimmerMid: 'rgba(255, 255, 255, 0.28)',
+        letterEmptyFill: '#E8EDF1',
+        letterOutlineStroke: 'rgba(8, 127, 121, 0.35)',
+        ambientGlow:
+          'radial-gradient(circle at 50% 52%, rgba(8, 127, 121, 0.075), rgba(232, 237, 241, 0.65) 44%, transparent 76%)',
+        progressFill: 'linear-gradient(90deg, rgba(8, 127, 121, 0.45) 0%, #087F79 100%)',
+      };
+
   return (
     <motion.div
       initial={{ opacity: 1 }}
       exit={{
         opacity: 0,
-        y: -48,
-        filter: 'blur(16px)',
+        y: -36,
+        filter: 'blur(12px)',
       }}
       transition={{
-        duration: 0.75,
+        duration: 0.65,
         ease: [0.16, 1, 0.3, 1],
       }}
       aria-live="polite"
       aria-label="Loading portfolio"
-      className="fixed inset-0 z-[10000] flex flex-col justify-between bg-gradient-to-br from-[#7E828B] via-[#8C9099] to-[#797D86] dark:from-[#020203] dark:via-[#060608] dark:to-[#030304] text-zinc-950 dark:text-white overflow-hidden select-none"
+      className="fixed inset-0 z-[10000] flex flex-col justify-between bg-[#F3F5F7] dark:bg-[#0B0D10] text-[#17202B] dark:text-[#F4F6F8] overflow-hidden select-none transition-colors duration-300"
     >
-      {/* Subtle monochrome ambient glow */}
+      {/* Calm teal-tinted ambient atmosphere matching CyberBackground */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 pointer-events-none opacity-40 dark:opacity-25"
-        style={{
-          background:
-            'radial-gradient(circle at 50% 52%, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.08) 38%, transparent 72%)',
-        }}
+        className="absolute inset-0 pointer-events-none"
+        style={{ background: palette.ambientGlow }}
       />
 
       {/* Top balance spacer */}
@@ -100,25 +135,25 @@ export const CinematicLoader = ({ onComplete }) => {
           >
             <defs>
               <linearGradient id="water-surface-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#FFFFFF" />
-                <stop offset="45%" stopColor="#E4E4E7" />
-                <stop offset="100%" stopColor="#A1A1AA" />
+                <stop offset="0%" stopColor={palette.surfaceGradStart} />
+                <stop offset="50%" stopColor={palette.surfaceGradMid} />
+                <stop offset="100%" stopColor={palette.surfaceGradEnd} />
               </linearGradient>
 
               <linearGradient id="water-deep-grad" x1="100%" y1="0%" x2="0%" y2="0%">
-                <stop offset="0%" stopColor="#52525B" />
-                <stop offset="45%" stopColor="#A1A1AA" />
-                <stop offset="100%" stopColor="#F4F4F5" />
+                <stop offset="0%" stopColor={palette.deepGradStart} />
+                <stop offset="50%" stopColor={palette.deepGradMid} />
+                <stop offset="100%" stopColor={palette.deepGradEnd} />
               </linearGradient>
 
               <linearGradient id="water-shimmer-grad" x1="0%" y1="0%" x2="100%" y2="0%">
                 <stop offset="0%" stopColor="transparent" />
-                <stop offset="50%" stopColor="rgba(255, 255, 255, 0.55)" />
+                <stop offset="50%" stopColor={palette.shimmerMid} />
                 <stop offset="100%" stopColor="transparent" />
               </linearGradient>
 
               <filter id="water-meniscus-glow" x="-20%" y="-20%" width="140%" height="140%">
-                <feGaussianBlur stdDeviation="3" result="blur" />
+                <feGaussianBlur stdDeviation="2.5" result="blur" />
                 <feMerge>
                   <feMergeNode in="blur" />
                   <feMergeNode in="SourceGraphic" />
@@ -138,20 +173,21 @@ export const CinematicLoader = ({ onComplete }) => {
               </clipPath>
             </defs>
 
-            {/* Empty Hollow Letter Container Outline */}
+            {/* Clean Architectural Letter Tank Base (opaque fill hides internal font contour overlaps) */}
             <text
               x="560"
               y="115"
               textAnchor="middle"
               dominantBaseline="middle"
-              className="fill-white/[0.06] stroke-white/40 dark:fill-white/[0.03] dark:stroke-white/30"
+              fill={palette.letterEmptyFill}
+              stroke={palette.letterOutlineStroke}
               strokeWidth="1.8"
               style={TEXT_STYLE}
             >
               PROSUN BANERJEE
             </text>
 
-            {/* Clipped Dynamic Water Wave & Bubbles */}
+            {/* Clipped Dynamic Teal Liquid Wave & Bubbles */}
             <g clipPath="url(#prosun-letters-clip)">
               <g
                 style={{
@@ -159,7 +195,7 @@ export const CinematicLoader = ({ onComplete }) => {
                   transition: 'transform 0.08s linear',
                 }}
               >
-                <g className="animate-water-back opacity-80">
+                <g className="animate-water-back opacity-85">
                   <path d={`${BACK_WAVE_PATH} L 2160 400 L 0 400 Z`} fill="url(#water-deep-grad)" />
                 </g>
 
@@ -168,27 +204,27 @@ export const CinematicLoader = ({ onComplete }) => {
                   <path
                     d={FRONT_WAVE_PATH}
                     fill="none"
-                    stroke="#FFFFFF"
-                    strokeWidth="5"
-                    strokeOpacity="0.45"
+                    stroke={palette.meniscusGlow}
+                    strokeWidth="4"
+                    strokeOpacity="0.38"
                     filter="url(#water-meniscus-glow)"
                   />
                   <path
                     d={FRONT_WAVE_PATH}
                     fill="none"
-                    stroke="#FFFFFF"
-                    strokeWidth="2"
-                    strokeOpacity="0.9"
+                    stroke={palette.meniscusEdge}
+                    strokeWidth="1.75"
+                    strokeOpacity="0.82"
                   />
                 </g>
 
                 <g>
-                  <circle cx="150" cy="50" r="3.5" fill="rgba(255,255,255,0.85)" className="animate-bubble-1" />
-                  <circle cx="340" cy="70" r="4.5" fill="rgba(255,255,255,0.75)" className="animate-bubble-2" />
-                  <circle cx="520" cy="55" r="3.5" fill="rgba(255,255,255,0.70)" className="animate-bubble-3" />
-                  <circle cx="710" cy="78" r="5" fill="rgba(255,255,255,0.85)" className="animate-bubble-1" />
-                  <circle cx="880" cy="60" r="3.5" fill="rgba(255,255,255,0.8)" className="animate-bubble-2" />
-                  <circle cx="1010" cy="72" r="4" fill="rgba(255,255,255,0.75)" className="animate-bubble-3" />
+                  <circle cx="150" cy="50" r="3" fill={palette.bubbleFill} className="animate-bubble-1" />
+                  <circle cx="340" cy="70" r="4" fill={palette.bubbleFill} className="animate-bubble-2" />
+                  <circle cx="520" cy="55" r="3" fill={palette.bubbleFill} className="animate-bubble-3" />
+                  <circle cx="710" cy="78" r="4.5" fill={palette.bubbleFill} className="animate-bubble-1" />
+                  <circle cx="880" cy="60" r="3" fill={palette.bubbleFill} className="animate-bubble-2" />
+                  <circle cx="1010" cy="72" r="3.5" fill={palette.bubbleFill} className="animate-bubble-3" />
                 </g>
               </g>
 
@@ -204,13 +240,13 @@ export const CinematicLoader = ({ onComplete }) => {
           </svg>
         </div>
 
-        {/* Sleek Gradient Progress Track */}
-        <div className="w-full mt-4 h-[2.5px] bg-white/25 dark:bg-white/15 relative overflow-hidden rounded-full">
+        {/* Sleek Teal Progress Track */}
+        <div className="w-full mt-4 h-[3px] bg-[#E8EDF1] dark:bg-[#1D242E] border border-[#17202B]/10 dark:border-white/10 relative overflow-hidden rounded-full">
           <div
-            className="h-full transition-[width] duration-100 ease-out"
+            className="h-full transition-[width] duration-100 ease-out rounded-full"
             style={{
               width: `${progress}%`,
-              background: 'linear-gradient(90deg, rgba(255,255,255,0.45) 0%, #FFFFFF 100%)',
+              background: palette.progressFill,
             }}
           />
         </div>
@@ -218,20 +254,20 @@ export const CinematicLoader = ({ onComplete }) => {
         {/* Clean Percentage Counter */}
         <div className="w-full mt-3 flex items-center justify-end font-mono text-[11px] sm:text-xs">
           <div className="flex items-center gap-1.5 font-medium tracking-tight shrink-0">
-            <span className="text-zinc-900 dark:text-zinc-300 font-light">loading...</span>
-            <span className="text-base sm:text-lg font-bold text-zinc-950 dark:text-white font-mono min-w-[3ch] text-right tabular-nums">
+            <span className="text-[#5B6573] dark:text-[#A7B0BC] font-normal">loading...</span>
+            <span className="text-base sm:text-lg font-bold text-[#17202B] dark:text-[#F4F6F8] font-mono min-w-[3ch] text-right tabular-nums">
               {progress}
             </span>
-            <span className="text-zinc-950 dark:text-white font-mono text-sm font-bold">%</span>
+            <span className="text-[#087F79] dark:text-[#55D6C8] font-mono text-sm font-bold">%</span>
           </div>
         </div>
       </div>
 
       {/* Clean Footer Line */}
-      <div className="relative z-10 w-full px-6 sm:px-12 py-6 flex items-center justify-start font-mono text-[10px] sm:text-[11px] tracking-widest text-zinc-900 dark:text-zinc-300 border-t border-white/25 dark:border-white/15">
+      <div className="relative z-10 w-full px-6 sm:px-12 py-6 flex items-center justify-start font-mono text-[10px] sm:text-[11px] tracking-widest text-[#5B6573] dark:text-[#A7B0BC] border-t border-[#17202B]/10 dark:border-white/[0.08]">
         <div>
-          <span>&copy; 2026 PROSUN BANERJEE</span>
-          <span className="hidden sm:inline text-zinc-900/80 dark:text-zinc-400"> — C++ &amp; SECURITY SYSTEMS</span>
+          <span className="text-[#17202B] dark:text-[#F4F6F8] font-semibold">&copy; 2026 PROSUN BANERJEE</span>
+          <span className="hidden sm:inline"> — C++ &amp; SECURITY SYSTEMS</span>
         </div>
       </div>
     </motion.div>
