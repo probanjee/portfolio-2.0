@@ -10,7 +10,7 @@ export const CertificateLightbox = ({ group, onClose }) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
-    setActiveIndex(0);
+    setActiveIndex(group?.initialIndex ?? 0);
   }, [group]);
 
   useEffect(() => {
@@ -132,7 +132,7 @@ export const CertificateLightbox = ({ group, onClose }) => {
                     onClick={() => setActiveIndex(idx)}
                     className={`flex items-center gap-2 px-2.5 py-1.5 rounded-xl text-[11px] font-mono font-semibold transition-all cursor-pointer shrink-0 ${
                       idx === activeIndex
-                        ? 'liquid-btn-primary text-white'
+                        ? 'liquid-btn-primary'
                         : 'liquid-glass-well text-[#17202B] dark:text-[#A7B0BC] hover:text-[#17202B] dark:hover:text-[#F4F6F8]'
                     }`}
                   >

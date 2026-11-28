@@ -256,6 +256,29 @@ export const portfolioData = {
 
   certifications: [
     {
+      title: "Gen AI Tools — Gold Assessment & Scorecard",
+      issuer: "FutureSkills Prime · MeitY & Nasscom",
+      category: "AI & Cloud",
+      date: "Sep 2026",
+      credentialId: "FSP/2026/9/10375889",
+      imageUrl: "/assets/certificates/nasscom-gen-ai-tools-gold.jpg",
+      previewImages: [
+        {
+          label: "Gold Assessment Certificate",
+          imageUrl: "/assets/certificates/nasscom-gen-ai-tools-gold.jpg",
+          date: "Sep 2026",
+          credentialId: "FSP/2026/9/10375889"
+        },
+        {
+          label: "Detailed Scorecard (93 / 100 · 93%)",
+          imageUrl: "/assets/certificates/nasscom-gen-ai-tools-scorecard.jpg",
+          date: "Sep 2026",
+          credentialId: "FSP/2026/9/10375889"
+        }
+      ],
+      details: "Cleared the Gen AI Tools competency assessment in the Gold category (70%+) with an overall score of 93/100 (93.00%) across modules M001–M004."
+    },
+    {
       title: "Gen AI Tools",
       issuer: "FutureSkills Prime · MeitY & Nasscom",
       category: "AI & Cloud",
